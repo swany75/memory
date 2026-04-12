@@ -8,18 +8,19 @@ package memory;
  *
  * @author Juan
  */
-public class Memory {
+public class Memory { // Codi Principal
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         // TODO code application logic here
         (new Memory()).run();
     }
     
     private void run() {
-        
+        new MainFrame();
     }
     
 }

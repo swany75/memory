@@ -1,0 +1,849 @@
+Folder PATH listing
+Volume serial number is B271-5665
+C:.
+│   .gitattributes
+│   .gitignore
+│   build.xml
+│   Enunciat Pràctica 2025-26 Memory - Català.pdf
+│   LICENSE
+│   manifest.mf
+│   README.md
+│   test.txt
+│   
+├───nbproject
+│   │   build-impl.xml
+│   │   genfiles.properties
+│   │   project.properties
+│   │   project.xml
+│   │   
+│   └───private
+│           private.properties
+│           private.xml
+│           
+├───src
+│   ├───exemples de codi utils
+│   │   │   EsquemaEstructuralInterfaceUsuarioTaller2.pdf
+│   │   │   normes_boncodi_java.pdf
+│   │   │   Resum de Javadoc.pdf
+│   │   │   
+│   │   ├───barraProgresionTemporal
+│   │   │   │   build.xml
+│   │   │   │   manifest.mf
+│   │   │   │   
+│   │   │   ├───build
+│   │   │   │   └───classes
+│   │   │   │       │   .netbeans_automatic_build
+│   │   │   │       │   .netbeans_update_resources
+│   │   │   │       │   
+│   │   │   │       └───barraprogresiontemporal
+│   │   │   │               BarraProgresionTemporal.class
+│   │   │   │               problemaImplementacionBarraProgresionTemporal_v1$1.class
+│   │   │   │               problemaImplementacionBarraProgresionTemporal_v1.class
+│   │   │   │               problemaImplementacionBarraProgresionTemporal_v2$1.class
+│   │   │   │               problemaImplementacionBarraProgresionTemporal_v2.class
+│   │   │   │               
+│   │   │   ├───nbproject
+│   │   │   │   │   build-impl.xml
+│   │   │   │   │   genfiles.properties
+│   │   │   │   │   project.properties
+│   │   │   │   │   project.xml
+│   │   │   │   │   
+│   │   │   │   └───private
+│   │   │   │           private.properties
+│   │   │   │           private.xml
+│   │   │   │           
+│   │   │   ├───src
+│   │   │   │   └───barraprogresiontemporal
+│   │   │   │           BarraProgresionTemporal.java
+│   │   │   │           problemaImplementacionBarraProgresionTemporal_v1.java
+│   │   │   │           problemaImplementacionBarraProgresionTemporal_v2.java
+│   │   │   │           
+│   │   │   └───test
+│   │   ├───LecturaLTGraficos
+│   │   │   │   build.xml
+│   │   │   │   manifest.mf
+│   │   │   │   
+│   │   │   ├───build
+│   │   │   │   └───classes
+│   │   │   │       │   .netbeans_automatic_build
+│   │   │   │       │   .netbeans_update_resources
+│   │   │   │       │   
+│   │   │   │       └───lecturaLTGraficos
+│   │   │   │               ejemploLecturaDatosJConLTGraficos$manipuladorEventos.class
+│   │   │   │               ejemploLecturaDatosJConLTGraficos.class
+│   │   │   │               LTGraficos$1.class
+│   │   │   │               LTGraficos.class
+│   │   │   │               
+│   │   │   ├───nbproject
+│   │   │   │   │   build-impl.xml
+│   │   │   │   │   genfiles.properties
+│   │   │   │   │   project.properties
+│   │   │   │   │   project.xml
+│   │   │   │   │   
+│   │   │   │   └───private
+│   │   │   │           private.properties
+│   │   │   │           private.xml
+│   │   │   │           
+│   │   │   ├───src
+│   │   │   │   └───lecturaLTGraficos
+│   │   │   │           ejemploLecturaDatosJConLTGraficos.java
+│   │   │   │           LTGraficos.java
+│   │   │   │           
+│   │   │   └───test
+│   │   ├───PulsadorConEstadosVisibles
+│   │   │   │   build.xml
+│   │   │   │   manifest.mf
+│   │   │   │   
+│   │   │   ├───build
+│   │   │   │   └───classes
+│   │   │   │       │   .netbeans_automatic_build
+│   │   │   │       │   .netbeans_update_resources
+│   │   │   │       │   
+│   │   │   │       └───pulsadorConEstadosVisibles
+│   │   │   │               BotonPulsadorInteractivoConEstadosVisibles.class
+│   │   │   │               
+│   │   │   ├───ICONOS
+│   │   │   │       iconoConfiguracion.jpeg
+│   │   │   │       iconoHistorial.jpeg
+│   │   │   │       iconoHistorialSelectivo.jpeg
+│   │   │   │       iconoJugar.jpeg
+│   │   │   │       iconoSalir.jpeg
+│   │   │   │       
+│   │   │   ├───imagenesBotones
+│   │   │   │       AJUSTES.jpeg
+│   │   │   │       AJUSTES_PULSADO.jpeg
+│   │   │   │       AJUSTES_SIN.jpeg
+│   │   │   │       CONFIGURACIO_SIN.jpeg
+│   │   │   │       CONFIGURACIÓ_PULSADO.jpeg
+│   │   │   │       hf_20260312_150011_610e9b99-1161-43a3-a23a-5c8e1d37ee82.jpeg
+│   │   │   │       HISTORIAL_GENERAL.jpeg
+│   │   │   │       HISTORIAL_GENERAL_SIN.jpeg
+│   │   │   │       HISTORIAL_PULSADO.jpeg
+│   │   │   │       HISTORIAL_SELECTIU.jpeg
+│   │   │   │       HISTORIAL_SELECTIU_PULSADO.jpeg
+│   │   │   │       HISTORIAL_SELECTIVO.jpeg
+│   │   │   │       HISTORIAL_SELECTIVO_PULSADO.jpeg
+│   │   │   │       HISTORIAL_SELECTIVO_SIN.jpeg
+│   │   │   │       HISTORIAL_SIN.jpeg
+│   │   │   │       imagen1.png
+│   │   │   │       imagen1Recortada.png
+│   │   │   │       JUGAR_PULSADO.jpeg
+│   │   │   │       JUGAR_SIN.jpeg
+│   │   │   │       NOVA PARTIDA.jpeg
+│   │   │   │       NOVA_PARTIDA_SIN.jpeg
+│   │   │   │       NUEVA_PARTIDA.jpeg
+│   │   │   │       NUEVA_PARTIDA1.jpg
+│   │   │   │       NUEVA_PARTIDA5.jpeg
+│   │   │   │       NUEVA_PARTIDA6.jpeg
+│   │   │   │       NUEVA_PARTIDA7.jpg
+│   │   │   │       NUEVA_PARTIDA8.jpg
+│   │   │   │       NUEVA_PARTIDA9.jpeg
+│   │   │   │       NUEVA_PARTIDA_HOVER.png
+│   │   │   │       NUEVA_PARTIDA_PULSADO.png
+│   │   │   │       NUEVA_PARTIDA_SIN.png
+│   │   │   │       nueva_partida_sin_fondo.jpeg
+│   │   │   │       nueva_partida_sin_fondo2.jpeg
+│   │   │   │       SALIR.jpeg
+│   │   │   │       SALIR_PULSADO.jpeg
+│   │   │   │       SALIR_SIN.jpeg
+│   │   │   │       SORTIR_PULSADO.jpeg
+│   │   │   │       SORTIR_SIN.jpeg
+│   │   │   │       UIB1.jpeg
+│   │   │   │       UNIVERSITAT.jpeg
+│   │   │   │       
+│   │   │   ├───nbproject
+│   │   │   │   │   build-impl.xml
+│   │   │   │   │   genfiles.properties
+│   │   │   │   │   project.properties
+│   │   │   │   │   project.xml
+│   │   │   │   │   
+│   │   │   │   └───private
+│   │   │   │           private.properties
+│   │   │   │           private.xml
+│   │   │   │           
+│   │   │   ├───src
+│   │   │   │   └───pulsadorConEstadosVisibles
+│   │   │   │           BotonPulsadorInteractivoConEstadosVisibles.java
+│   │   │   │           
+│   │   │   └───test
+│   │   ├───ReproductorSonidos
+│   │   │   │   build.xml
+│   │   │   │   manifest.mf
+│   │   │   │   
+│   │   │   ├───build
+│   │   │   │   └───classes
+│   │   │   │       │   .netbeans_automatic_build
+│   │   │   │       │   .netbeans_update_resources
+│   │   │   │       │   
+│   │   │   │       └───reproductorsonidos
+│   │   │   │               ejemploReproductorSonidos$1.class
+│   │   │   │               ejemploReproductorSonidos.class
+│   │   │   │               
+│   │   │   ├───nbproject
+│   │   │   │   │   build-impl.xml
+│   │   │   │   │   genfiles.properties
+│   │   │   │   │   project.properties
+│   │   │   │   │   project.xml
+│   │   │   │   │   
+│   │   │   │   └───private
+│   │   │   │           private.properties
+│   │   │   │           private.xml
+│   │   │   │           
+│   │   │   ├───sonidos
+│   │   │   │       do.wav
+│   │   │   │       fa.wav
+│   │   │   │       la.wav
+│   │   │   │       mi.wav
+│   │   │   │       re.wav
+│   │   │   │       si.wav
+│   │   │   │       sol.wav
+│   │   │   │       
+│   │   │   ├───src
+│   │   │   │   └───reproductorsonidos
+│   │   │   │           ejemploReproductorSonidos.java
+│   │   │   │           
+│   │   │   └───test
+│   │   ├───TableroConGiroAnimadoDeCasillas
+│   │   │   │   build.xml
+│   │   │   │   manifest.mf
+│   │   │   │   
+│   │   │   ├───build
+│   │   │   │   └───classes
+│   │   │   │       │   .netbeans_automatic_build
+│   │   │   │       │   .netbeans_update_resources
+│   │   │   │       │   
+│   │   │   │       ├───imagenes
+│   │   │   │       │       imagen1.png
+│   │   │   │       │       imagen10.png
+│   │   │   │       │       imagen100.png
+│   │   │   │       │       imagen11.png
+│   │   │   │       │       imagen12.png
+│   │   │   │       │       imagen13.png
+│   │   │   │       │       imagen14.png
+│   │   │   │       │       imagen15.png
+│   │   │   │       │       imagen16.png
+│   │   │   │       │       imagen17.png
+│   │   │   │       │       imagen18.png
+│   │   │   │       │       imagen19.png
+│   │   │   │       │       imagen2.png
+│   │   │   │       │       imagen20.png
+│   │   │   │       │       imagen21.png
+│   │   │   │       │       imagen22.png
+│   │   │   │       │       imagen23.png
+│   │   │   │       │       imagen24.png
+│   │   │   │       │       imagen25.png
+│   │   │   │       │       imagen26.png
+│   │   │   │       │       imagen27.png
+│   │   │   │       │       imagen28.png
+│   │   │   │       │       imagen29.png
+│   │   │   │       │       imagen3.png
+│   │   │   │       │       imagen30.png
+│   │   │   │       │       imagen31.png
+│   │   │   │       │       imagen32.png
+│   │   │   │       │       imagen33.png
+│   │   │   │       │       imagen34.png
+│   │   │   │       │       imagen35.png
+│   │   │   │       │       imagen36.png
+│   │   │   │       │       imagen37.png
+│   │   │   │       │       imagen38.png
+│   │   │   │       │       imagen39.png
+│   │   │   │       │       imagen4.png
+│   │   │   │       │       imagen40.png
+│   │   │   │       │       imagen41.png
+│   │   │   │       │       imagen42.png
+│   │   │   │       │       imagen43.png
+│   │   │   │       │       imagen44.png
+│   │   │   │       │       imagen45.png
+│   │   │   │       │       imagen46.png
+│   │   │   │       │       imagen47.png
+│   │   │   │       │       imagen48.png
+│   │   │   │       │       imagen49.png
+│   │   │   │       │       imagen5.png
+│   │   │   │       │       imagen50.png
+│   │   │   │       │       imagen51.png
+│   │   │   │       │       imagen52.png
+│   │   │   │       │       imagen53.png
+│   │   │   │       │       imagen54.png
+│   │   │   │       │       imagen55.png
+│   │   │   │       │       imagen56.png
+│   │   │   │       │       imagen57.png
+│   │   │   │       │       imagen58.png
+│   │   │   │       │       imagen59.png
+│   │   │   │       │       imagen6.png
+│   │   │   │       │       imagen60.png
+│   │   │   │       │       imagen61.png
+│   │   │   │       │       imagen62.png
+│   │   │   │       │       imagen63.png
+│   │   │   │       │       imagen64.png
+│   │   │   │       │       imagen65.png
+│   │   │   │       │       imagen66.png
+│   │   │   │       │       imagen67.png
+│   │   │   │       │       imagen68.png
+│   │   │   │       │       imagen69.png
+│   │   │   │       │       imagen7.png
+│   │   │   │       │       imagen70.png
+│   │   │   │       │       imagen71.png
+│   │   │   │       │       imagen72.png
+│   │   │   │       │       imagen73.png
+│   │   │   │       │       imagen74.png
+│   │   │   │       │       imagen75.png
+│   │   │   │       │       imagen76.png
+│   │   │   │       │       imagen77.png
+│   │   │   │       │       imagen78.png
+│   │   │   │       │       imagen79.png
+│   │   │   │       │       imagen8.png
+│   │   │   │       │       imagen80.png
+│   │   │   │       │       imagen81.png
+│   │   │   │       │       imagen82.png
+│   │   │   │       │       imagen83.png
+│   │   │   │       │       imagen84.png
+│   │   │   │       │       imagen85.png
+│   │   │   │       │       imagen86.png
+│   │   │   │       │       imagen87.png
+│   │   │   │       │       imagen88.png
+│   │   │   │       │       imagen89.png
+│   │   │   │       │       imagen9.png
+│   │   │   │       │       imagen90.png
+│   │   │   │       │       imagen91.png
+│   │   │   │       │       imagen92.png
+│   │   │   │       │       imagen93.png
+│   │   │   │       │       imagen94.png
+│   │   │   │       │       imagen95.png
+│   │   │   │       │       imagen96.png
+│   │   │   │       │       imagen97.png
+│   │   │   │       │       imagen98.png
+│   │   │   │       │       imagen99.png
+│   │   │   │       │       reverso.png
+│   │   │   │       │       
+│   │   │   │       ├───resources
+│   │   │   │       │       img1.jpg.jpg
+│   │   │   │       │       img1.png
+│   │   │   │       │       img2.jpg.jpg
+│   │   │   │       │       img2.png
+│   │   │   │       │       img3.jpg.jpg
+│   │   │   │       │       img3.png
+│   │   │   │       │       img4.jpg.jpg
+│   │   │   │       │       img4.png
+│   │   │   │       │       reverso.png
+│   │   │   │       │       
+│   │   │   │       └───TableroConGiroAnimadoDeCasillas
+│   │   │   │               Casilla$1.class
+│   │   │   │               Casilla.class
+│   │   │   │               Principal.class
+│   │   │   │               Tablero.class
+│   │   │   │               
+│   │   │   ├───nbproject
+│   │   │   │   │   build-impl.xml
+│   │   │   │   │   genfiles.properties
+│   │   │   │   │   project.properties
+│   │   │   │   │   project.xml
+│   │   │   │   │   
+│   │   │   │   └───private
+│   │   │   │           private.properties
+│   │   │   │           
+│   │   │   ├───src
+│   │   │   │   ├───imagenes
+│   │   │   │   │       imagen1.png
+│   │   │   │   │       imagen10.png
+│   │   │   │   │       imagen100.png
+│   │   │   │   │       imagen11.png
+│   │   │   │   │       imagen12.png
+│   │   │   │   │       imagen13.png
+│   │   │   │   │       imagen14.png
+│   │   │   │   │       imagen15.png
+│   │   │   │   │       imagen16.png
+│   │   │   │   │       imagen17.png
+│   │   │   │   │       imagen18.png
+│   │   │   │   │       imagen19.png
+│   │   │   │   │       imagen2.png
+│   │   │   │   │       imagen20.png
+│   │   │   │   │       imagen21.png
+│   │   │   │   │       imagen22.png
+│   │   │   │   │       imagen23.png
+│   │   │   │   │       imagen24.png
+│   │   │   │   │       imagen25.png
+│   │   │   │   │       imagen26.png
+│   │   │   │   │       imagen27.png
+│   │   │   │   │       imagen28.png
+│   │   │   │   │       imagen29.png
+│   │   │   │   │       imagen3.png
+│   │   │   │   │       imagen30.png
+│   │   │   │   │       imagen31.png
+│   │   │   │   │       imagen32.png
+│   │   │   │   │       imagen33.png
+│   │   │   │   │       imagen34.png
+│   │   │   │   │       imagen35.png
+│   │   │   │   │       imagen36.png
+│   │   │   │   │       imagen37.png
+│   │   │   │   │       imagen38.png
+│   │   │   │   │       imagen39.png
+│   │   │   │   │       imagen4.png
+│   │   │   │   │       imagen40.png
+│   │   │   │   │       imagen41.png
+│   │   │   │   │       imagen42.png
+│   │   │   │   │       imagen43.png
+│   │   │   │   │       imagen44.png
+│   │   │   │   │       imagen45.png
+│   │   │   │   │       imagen46.png
+│   │   │   │   │       imagen47.png
+│   │   │   │   │       imagen48.png
+│   │   │   │   │       imagen49.png
+│   │   │   │   │       imagen5.png
+│   │   │   │   │       imagen50.png
+│   │   │   │   │       imagen51.png
+│   │   │   │   │       imagen52.png
+│   │   │   │   │       imagen53.png
+│   │   │   │   │       imagen54.png
+│   │   │   │   │       imagen55.png
+│   │   │   │   │       imagen56.png
+│   │   │   │   │       imagen57.png
+│   │   │   │   │       imagen58.png
+│   │   │   │   │       imagen59.png
+│   │   │   │   │       imagen6.png
+│   │   │   │   │       imagen60.png
+│   │   │   │   │       imagen61.png
+│   │   │   │   │       imagen62.png
+│   │   │   │   │       imagen63.png
+│   │   │   │   │       imagen64.png
+│   │   │   │   │       imagen65.png
+│   │   │   │   │       imagen66.png
+│   │   │   │   │       imagen67.png
+│   │   │   │   │       imagen68.png
+│   │   │   │   │       imagen69.png
+│   │   │   │   │       imagen7.png
+│   │   │   │   │       imagen70.png
+│   │   │   │   │       imagen71.png
+│   │   │   │   │       imagen72.png
+│   │   │   │   │       imagen73.png
+│   │   │   │   │       imagen74.png
+│   │   │   │   │       imagen75.png
+│   │   │   │   │       imagen76.png
+│   │   │   │   │       imagen77.png
+│   │   │   │   │       imagen78.png
+│   │   │   │   │       imagen79.png
+│   │   │   │   │       imagen8.png
+│   │   │   │   │       imagen80.png
+│   │   │   │   │       imagen81.png
+│   │   │   │   │       imagen82.png
+│   │   │   │   │       imagen83.png
+│   │   │   │   │       imagen84.png
+│   │   │   │   │       imagen85.png
+│   │   │   │   │       imagen86.png
+│   │   │   │   │       imagen87.png
+│   │   │   │   │       imagen88.png
+│   │   │   │   │       imagen89.png
+│   │   │   │   │       imagen9.png
+│   │   │   │   │       imagen90.png
+│   │   │   │   │       imagen91.png
+│   │   │   │   │       imagen92.png
+│   │   │   │   │       imagen93.png
+│   │   │   │   │       imagen94.png
+│   │   │   │   │       imagen95.png
+│   │   │   │   │       imagen96.png
+│   │   │   │   │       imagen97.png
+│   │   │   │   │       imagen98.png
+│   │   │   │   │       imagen99.png
+│   │   │   │   │       reverso.png
+│   │   │   │   │       
+│   │   │   │   ├───resources
+│   │   │   │   │       img1.jpg.jpg
+│   │   │   │   │       img1.png
+│   │   │   │   │       img2.jpg.jpg
+│   │   │   │   │       img2.png
+│   │   │   │   │       img3.jpg.jpg
+│   │   │   │   │       img3.png
+│   │   │   │   │       img4.jpg.jpg
+│   │   │   │   │       img4.png
+│   │   │   │   │       reverso.png
+│   │   │   │   │       
+│   │   │   │   └───TableroConGiroAnimadoDeCasillas
+│   │   │   │           Casilla.java
+│   │   │   │           Principal.java
+│   │   │   │           Tablero.java
+│   │   │   │           
+│   │   │   └───test
+│   │   └───TableroConGiroDeCasillas
+│   │       │   build.xml
+│   │       │   manifest.mf
+│   │       │   
+│   │       ├───build
+│   │       │   └───classes
+│   │       │       │   .netbeans_automatic_build
+│   │       │       │   .netbeans_update_resources
+│   │       │       │   
+│   │       │       ├───imagenes
+│   │       │       │       imagen1.png
+│   │       │       │       imagen10.png
+│   │       │       │       imagen100.png
+│   │       │       │       imagen11.png
+│   │       │       │       imagen12.png
+│   │       │       │       imagen13.png
+│   │       │       │       imagen14.png
+│   │       │       │       imagen15.png
+│   │       │       │       imagen16.png
+│   │       │       │       imagen17.png
+│   │       │       │       imagen18.png
+│   │       │       │       imagen19.png
+│   │       │       │       imagen2.png
+│   │       │       │       imagen20.png
+│   │       │       │       imagen21.png
+│   │       │       │       imagen22.png
+│   │       │       │       imagen23.png
+│   │       │       │       imagen24.png
+│   │       │       │       imagen25.png
+│   │       │       │       imagen26.png
+│   │       │       │       imagen27.png
+│   │       │       │       imagen28.png
+│   │       │       │       imagen29.png
+│   │       │       │       imagen3.png
+│   │       │       │       imagen30.png
+│   │       │       │       imagen31.png
+│   │       │       │       imagen32.png
+│   │       │       │       imagen33.png
+│   │       │       │       imagen34.png
+│   │       │       │       imagen35.png
+│   │       │       │       imagen36.png
+│   │       │       │       imagen37.png
+│   │       │       │       imagen38.png
+│   │       │       │       imagen39.png
+│   │       │       │       imagen4.png
+│   │       │       │       imagen40.png
+│   │       │       │       imagen41.png
+│   │       │       │       imagen42.png
+│   │       │       │       imagen43.png
+│   │       │       │       imagen44.png
+│   │       │       │       imagen45.png
+│   │       │       │       imagen46.png
+│   │       │       │       imagen47.png
+│   │       │       │       imagen48.png
+│   │       │       │       imagen49.png
+│   │       │       │       imagen5.png
+│   │       │       │       imagen50.png
+│   │       │       │       imagen51.png
+│   │       │       │       imagen52.png
+│   │       │       │       imagen53.png
+│   │       │       │       imagen54.png
+│   │       │       │       imagen55.png
+│   │       │       │       imagen56.png
+│   │       │       │       imagen57.png
+│   │       │       │       imagen58.png
+│   │       │       │       imagen59.png
+│   │       │       │       imagen6.png
+│   │       │       │       imagen60.png
+│   │       │       │       imagen61.png
+│   │       │       │       imagen62.png
+│   │       │       │       imagen63.png
+│   │       │       │       imagen64.png
+│   │       │       │       imagen65.png
+│   │       │       │       imagen66.png
+│   │       │       │       imagen67.png
+│   │       │       │       imagen68.png
+│   │       │       │       imagen69.png
+│   │       │       │       imagen7.png
+│   │       │       │       imagen70.png
+│   │       │       │       imagen71.png
+│   │       │       │       imagen72.png
+│   │       │       │       imagen73.png
+│   │       │       │       imagen74.png
+│   │       │       │       imagen75.png
+│   │       │       │       imagen76.png
+│   │       │       │       imagen77.png
+│   │       │       │       imagen78.png
+│   │       │       │       imagen79.png
+│   │       │       │       imagen8.png
+│   │       │       │       imagen80.png
+│   │       │       │       imagen81.png
+│   │       │       │       imagen82.png
+│   │       │       │       imagen83.png
+│   │       │       │       imagen84.png
+│   │       │       │       imagen85.png
+│   │       │       │       imagen86.png
+│   │       │       │       imagen87.png
+│   │       │       │       imagen88.png
+│   │       │       │       imagen89.png
+│   │       │       │       imagen9.png
+│   │       │       │       imagen90.png
+│   │       │       │       imagen91.png
+│   │       │       │       imagen92.png
+│   │       │       │       imagen93.png
+│   │       │       │       imagen94.png
+│   │       │       │       imagen95.png
+│   │       │       │       imagen96.png
+│   │       │       │       imagen97.png
+│   │       │       │       imagen98.png
+│   │       │       │       imagen99.png
+│   │       │       │       reverso.png
+│   │       │       │       reverso1.png
+│   │       │       │       
+│   │       │       ├───resources
+│   │       │       │       img1.jpg.jpg
+│   │       │       │       img1.png
+│   │       │       │       img2.jpg.jpg
+│   │       │       │       img2.png
+│   │       │       │       img3.jpg.jpg
+│   │       │       │       img3.png
+│   │       │       │       img4.jpg.jpg
+│   │       │       │       img4.png
+│   │       │       │       reverso.png
+│   │       │       │       
+│   │       │       └───TableroConGiroDeCasillas
+│   │       │               Casilla$1.class
+│   │       │               Casilla.class
+│   │       │               Principal.class
+│   │       │               Tablero.class
+│   │       │               
+│   │       ├───nbproject
+│   │       │   │   build-impl.xml
+│   │       │   │   genfiles.properties
+│   │       │   │   project.properties
+│   │       │   │   project.xml
+│   │       │   │   
+│   │       │   └───private
+│   │       │           private.properties
+│   │       │           private.xml
+│   │       │           
+│   │       ├───src
+│   │       │   ├───imagenes
+│   │       │   │       imagen1.png
+│   │       │   │       imagen10.png
+│   │       │   │       imagen100.png
+│   │       │   │       imagen11.png
+│   │       │   │       imagen12.png
+│   │       │   │       imagen13.png
+│   │       │   │       imagen14.png
+│   │       │   │       imagen15.png
+│   │       │   │       imagen16.png
+│   │       │   │       imagen17.png
+│   │       │   │       imagen18.png
+│   │       │   │       imagen19.png
+│   │       │   │       imagen2.png
+│   │       │   │       imagen20.png
+│   │       │   │       imagen21.png
+│   │       │   │       imagen22.png
+│   │       │   │       imagen23.png
+│   │       │   │       imagen24.png
+│   │       │   │       imagen25.png
+│   │       │   │       imagen26.png
+│   │       │   │       imagen27.png
+│   │       │   │       imagen28.png
+│   │       │   │       imagen29.png
+│   │       │   │       imagen3.png
+│   │       │   │       imagen30.png
+│   │       │   │       imagen31.png
+│   │       │   │       imagen32.png
+│   │       │   │       imagen33.png
+│   │       │   │       imagen34.png
+│   │       │   │       imagen35.png
+│   │       │   │       imagen36.png
+│   │       │   │       imagen37.png
+│   │       │   │       imagen38.png
+│   │       │   │       imagen39.png
+│   │       │   │       imagen4.png
+│   │       │   │       imagen40.png
+│   │       │   │       imagen41.png
+│   │       │   │       imagen42.png
+│   │       │   │       imagen43.png
+│   │       │   │       imagen44.png
+│   │       │   │       imagen45.png
+│   │       │   │       imagen46.png
+│   │       │   │       imagen47.png
+│   │       │   │       imagen48.png
+│   │       │   │       imagen49.png
+│   │       │   │       imagen5.png
+│   │       │   │       imagen50.png
+│   │       │   │       imagen51.png
+│   │       │   │       imagen52.png
+│   │       │   │       imagen53.png
+│   │       │   │       imagen54.png
+│   │       │   │       imagen55.png
+│   │       │   │       imagen56.png
+│   │       │   │       imagen57.png
+│   │       │   │       imagen58.png
+│   │       │   │       imagen59.png
+│   │       │   │       imagen6.png
+│   │       │   │       imagen60.png
+│   │       │   │       imagen61.png
+│   │       │   │       imagen62.png
+│   │       │   │       imagen63.png
+│   │       │   │       imagen64.png
+│   │       │   │       imagen65.png
+│   │       │   │       imagen66.png
+│   │       │   │       imagen67.png
+│   │       │   │       imagen68.png
+│   │       │   │       imagen69.png
+│   │       │   │       imagen7.png
+│   │       │   │       imagen70.png
+│   │       │   │       imagen71.png
+│   │       │   │       imagen72.png
+│   │       │   │       imagen73.png
+│   │       │   │       imagen74.png
+│   │       │   │       imagen75.png
+│   │       │   │       imagen76.png
+│   │       │   │       imagen77.png
+│   │       │   │       imagen78.png
+│   │       │   │       imagen79.png
+│   │       │   │       imagen8.png
+│   │       │   │       imagen80.png
+│   │       │   │       imagen81.png
+│   │       │   │       imagen82.png
+│   │       │   │       imagen83.png
+│   │       │   │       imagen84.png
+│   │       │   │       imagen85.png
+│   │       │   │       imagen86.png
+│   │       │   │       imagen87.png
+│   │       │   │       imagen88.png
+│   │       │   │       imagen89.png
+│   │       │   │       imagen9.png
+│   │       │   │       imagen90.png
+│   │       │   │       imagen91.png
+│   │       │   │       imagen92.png
+│   │       │   │       imagen93.png
+│   │       │   │       imagen94.png
+│   │       │   │       imagen95.png
+│   │       │   │       imagen96.png
+│   │       │   │       imagen97.png
+│   │       │   │       imagen98.png
+│   │       │   │       imagen99.png
+│   │       │   │       reverso.png
+│   │       │   │       reverso1.png
+│   │       │   │       
+│   │       │   ├───resources
+│   │       │   │       img1.jpg.jpg
+│   │       │   │       img1.png
+│   │       │   │       img2.jpg.jpg
+│   │       │   │       img2.png
+│   │       │   │       img3.jpg.jpg
+│   │       │   │       img3.png
+│   │       │   │       img4.jpg.jpg
+│   │       │   │       img4.png
+│   │       │   │       reverso.png
+│   │       │   │       
+│   │       │   └───TableroConGiroDeCasillas
+│   │       │           Casilla.java
+│   │       │           Principal.java
+│   │       │           Tablero.java
+│   │       │           
+│   │       └───test
+│   ├───files
+│   ├───fonts
+│   ├───icons
+│   │   └───default
+│   │           iconoAjustes.jpg
+│   │           iconoHistoriall.jpg
+│   │           iconoHistorialSelectivo.jpg
+│   │           iconoJugar.jpg
+│   │           iconoSalir.jpg
+│   │           
+│   ├───images
+│   │   │   UIB.jpg
+│   │   │   
+│   │   └───default
+│   │           imagen1.png
+│   │           imagen10.png
+│   │           imagen100.png
+│   │           imagen11.png
+│   │           imagen12.png
+│   │           imagen13.png
+│   │           imagen14.png
+│   │           imagen15.png
+│   │           imagen16.png
+│   │           imagen17.png
+│   │           imagen18.png
+│   │           imagen19.png
+│   │           imagen2.png
+│   │           imagen20.png
+│   │           imagen21.png
+│   │           imagen22.png
+│   │           imagen23.png
+│   │           imagen24.png
+│   │           imagen25.png
+│   │           imagen26.png
+│   │           imagen27.png
+│   │           imagen28.png
+│   │           imagen29.png
+│   │           imagen3.png
+│   │           imagen30.png
+│   │           imagen31.png
+│   │           imagen32.png
+│   │           imagen33.png
+│   │           imagen34.png
+│   │           imagen35.png
+│   │           imagen36.png
+│   │           imagen37.png
+│   │           imagen38.png
+│   │           imagen39.png
+│   │           imagen4.png
+│   │           imagen40.png
+│   │           imagen41.png
+│   │           imagen42.png
+│   │           imagen43.png
+│   │           imagen44.png
+│   │           imagen45.png
+│   │           imagen46.png
+│   │           imagen47.png
+│   │           imagen48.png
+│   │           imagen49.png
+│   │           imagen5.png
+│   │           imagen50.png
+│   │           imagen51.png
+│   │           imagen52.png
+│   │           imagen53.png
+│   │           imagen54.png
+│   │           imagen55.png
+│   │           imagen56.png
+│   │           imagen57.png
+│   │           imagen58.png
+│   │           imagen59.png
+│   │           imagen6.png
+│   │           imagen60.png
+│   │           imagen61.png
+│   │           imagen62.png
+│   │           imagen63.png
+│   │           imagen64.png
+│   │           imagen65.png
+│   │           imagen66.png
+│   │           imagen67.png
+│   │           imagen68.png
+│   │           imagen69.png
+│   │           imagen7.png
+│   │           imagen70.png
+│   │           imagen71.png
+│   │           imagen72.png
+│   │           imagen73.png
+│   │           imagen74.png
+│   │           imagen75.png
+│   │           imagen76.png
+│   │           imagen77.png
+│   │           imagen78.png
+│   │           imagen79.png
+│   │           imagen8.png
+│   │           imagen80.png
+│   │           imagen81.png
+│   │           imagen82.png
+│   │           imagen83.png
+│   │           imagen84.png
+│   │           imagen85.png
+│   │           imagen86.png
+│   │           imagen87.png
+│   │           imagen88.png
+│   │           imagen89.png
+│   │           imagen9.png
+│   │           imagen90.png
+│   │           imagen91.png
+│   │           imagen92.png
+│   │           imagen93.png
+│   │           imagen94.png
+│   │           imagen95.png
+│   │           imagen96.png
+│   │           imagen97.png
+│   │           imagen98.png
+│   │           imagen99.png
+│   │           reverso.png
+│   │           
+│   ├───memory
+│   │       Memory.java
+│   │       
+│   ├───music
+│   ├───sounds
+│   └───themes
+└───test
