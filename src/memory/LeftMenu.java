@@ -4,10 +4,16 @@
  */
 package memory;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Juan
  */
-public class EnchancedPrint { // Enchanced Print
+public class LeftMenu extends JFrame {
+    
+    public LeftMenu() {
+
+    }
     
 }
