@@ -27,7 +27,7 @@ public class ButtonBuilder {
         button.setContentAreaFilled(false);
 
         return button;
-    }
+    }   
     
     // Polsador per la barra lateral estil fusta
     public static JButton createPulsador(String normalPath, String pressedPath, String hoverPath) {

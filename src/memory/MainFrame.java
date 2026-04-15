@@ -92,8 +92,6 @@ public class MainFrame extends JFrame {
 
         toolBar.add(new Desplegable(this));
         
-        // Inicialitzem botoAlternarMenu. 
-        // Si el menú comença OBERT, l'icona que ha de mostrar el botó és la de TANCAR.
         lateralMenuButton = ButtonBuilder.createButton(RUTA_ICONES + "leftMenuClose.png", 32, 32, 
             e -> toggleLateralMenu());
         
@@ -139,11 +137,10 @@ public class MainFrame extends JFrame {
         menuObert = !menuObert;
         panellLateral.setVisible(menuObert);
 
-        // Usem exactament les teves variables d'icona
         if (menuObert) {
-            lateralMenuButton.setIcon(leftMenuClose); // Si s'obre, el botó permet tancar
+            lateralMenuButton.setIcon(leftMenuClose);
         } else {
-            lateralMenuButton.setIcon(leftMenuOpen);  // Si es tanca, el botó permet obrir
+            lateralMenuButton.setIcon(leftMenuOpen);
         }
 
         panellCos.revalidate();
