@@ -4,8 +4,11 @@
  */
 package memory;
 
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  *
@@ -29,19 +32,68 @@ public class ButtonBuilder {
         return button;
     }   
     
-    // Polsador per la barra lateral estil fusta
-    public static JButton createPulsador(String normalPath, String pressedPath, String hoverPath) {
-
-        JButton button = new JButton();
-
-        button.setIcon(ImageManager.loadIcon(normalPath));
-        button.setPressedIcon(ImageManager.loadIcon(pressedPath));
-        button.setRolloverIcon(ImageManager.loadIcon(hoverPath));
-
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
+    // Polsador per la barra lateral
+    public static JButton createPulsador(String texto, Color color, Font fuente) {
+        JButton button = new JButton(texto);
+        button.setFont(fuente);
+        button.setForeground(Color.WHITE);
+        button.setBackground(color);
         button.setFocusable(false);
-
+        button.setUI(new PulsadorUI());
         return button;
+    }
+
+    /*
+    * @font Hem obtingut el codi per fer polsadors de Stack Overflow
+    * Ho hem adaptat per al nostre cas en concret
+    * https://stackoverflow.com/questions/23698092/design-button-in-java-like-in-css
+    */
+
+    static class PulsadorUI extends BasicButtonUI {
+
+        @Override
+        public void installUI(JComponent c) {
+            super.installUI(c);
+            AbstractButton b = (AbstractButton) c;
+            b.setOpaque(false);
+            b.setBorder(new EmptyBorder(8, 20, 8, 20));
+        }
+
+        @Override
+        public void paint(Graphics g, JComponent c) {
+            AbstractButton b = (AbstractButton) c;
+            boolean pressed = b.getModel().isPressed();
+            paintBackground(g, b, pressed);
+            // Desplaza el texto hacia abajo al pulsar, dando sensación física
+            if (pressed) {
+                g.translate(0, 3);
+            }
+            super.paint(g, c);
+            if (pressed) {
+                g.translate(0, -3);
+            }
+        }
+
+        private void paintBackground(Graphics g, JComponent c, boolean pressed) {
+            Dimension size = c.getSize();
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            Color base = c.getBackground();
+            int sombra = 6; // altura del efecto 3D
+
+            if (!pressed) {
+                // Capa oscura inferior → simula la "profundidad"
+                g2.setColor(base.darker().darker());
+                g2.fillRoundRect(0, sombra, size.width, size.height - sombra, 15, 15);
+                // Capa principal encima
+                g2.setColor(base);
+                g2.fillRoundRect(0, 0, size.width, size.height - sombra, 15, 15);
+            } else {
+                // Al pulsar: solo la capa oscura, sin offset → botón "hundido"
+                g2.setColor(base.darker());
+                g2.fillRoundRect(0, sombra, size.width, size.height - sombra, 15, 15);
+            }
+        }
     }
 }

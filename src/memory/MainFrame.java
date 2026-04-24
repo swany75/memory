@@ -149,9 +149,9 @@ public class MainFrame extends JFrame {
 
     private void addSideButton(String baseName) {
         JButton button = ButtonBuilder.createPulsador(
-            RUTA_ICONES + baseName + "_normal.png",
-            RUTA_ICONES + baseName + "_pressed.png",
-            RUTA_ICONES + baseName + "_hover.png"
+            baseName, 
+            Color.DARK_GRAY, 
+            new Font("JetBrains Mono", Font.PLAIN, 12)
         );
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panellLateral.add(Box.createVerticalStrut(8));

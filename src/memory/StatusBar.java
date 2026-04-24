@@ -17,7 +17,7 @@ public class StatusBar extends JPanel {
     
     private Color BG_COLOR   = new Color(180, 220, 180);
     private Color TEXT_COLOR = new Color(30, 80, 30);
-
+    
     private static final String[] PHRASES = {
         "Is there anybody alive out there?",
         "Are you ready?",
@@ -59,7 +59,9 @@ public class StatusBar extends JPanel {
     }
     
     private String getRandomText() {
-        return PHRASES[RANDOM.nextInt(PHRASES.length)];
+        
+        //return PHRASES[RANDOM.nextInt(PHRASES.length)];
+        return  "DEFAULT TEXT";
     }
     
     public void setDefaultText() {
