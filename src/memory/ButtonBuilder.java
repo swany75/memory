@@ -16,6 +16,10 @@ import javax.swing.plaf.basic.BasicButtonUI;
  */
 public class ButtonBuilder {
 
+    // private static final Color TEXT_COLOR = new Color(0xFECD01);
+    private static final Color TEXT_COLOR = Color.WHITE;
+    
+    
     // Boto simple per la barra superior sense text i amb opcio d'ESCALAT!
     public static JButton createButton(String iconPath, int w, int h, ActionListener action) {
 
@@ -36,7 +40,7 @@ public class ButtonBuilder {
     public static JButton createPulsador(String texto, Color color, Font fuente) {
         JButton button = new JButton(texto);
         button.setFont(fuente);
-        button.setForeground(Color.WHITE);
+        button.setForeground(TEXT_COLOR);
         button.setBackground(color);
         button.setFocusable(false);
         button.setUI(new PulsadorUI());
@@ -64,7 +68,6 @@ public class ButtonBuilder {
             AbstractButton b = (AbstractButton) c;
             boolean pressed = b.getModel().isPressed();
             paintBackground(g, b, pressed);
-            // Desplaza el texto hacia abajo al pulsar, dando sensación física
             if (pressed) {
                 g.translate(0, 3);
             }
@@ -78,22 +81,23 @@ public class ButtonBuilder {
             Dimension size = c.getSize();
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
             Color base = c.getBackground();
-            int sombra = 6; // altura del efecto 3D
+            int sombra = 6;
 
             if (!pressed) {
-                // Capa oscura inferior → simula la "profundidad"
+                g2.setColor(base.darker().darker());
+                g2.fillRoundRect(0, 0, size.width, size.height, 15, 15);
                 g2.setColor(base.darker().darker());
                 g2.fillRoundRect(0, sombra, size.width, size.height - sombra, 15, 15);
-                // Capa principal encima
                 g2.setColor(base);
                 g2.fillRoundRect(0, 0, size.width, size.height - sombra, 15, 15);
             } else {
-                // Al pulsar: solo la capa oscura, sin offset → botón "hundido"
+                g2.setColor(base.darker());
+                g2.fillRoundRect(0, 0, size.width, size.height, 15, 15);
                 g2.setColor(base.darker());
                 g2.fillRoundRect(0, sombra, size.width, size.height - sombra, 15, 15);
             }
+
         }
     }
 }

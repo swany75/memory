@@ -34,6 +34,9 @@ public class MainFrame extends JFrame {
     private Timer timer = new Timer();
     private Random rand = new Random();
  
+    // Colors
+    private Color stockSoftPurple = new Color(0x3C1A7B);
+    
     // Rutes
     private static final String RUTA_ICONES  = "src/icons/default/";
     private static final String RUTA_IMATGES = "src/images/";
@@ -115,17 +118,19 @@ public class MainFrame extends JFrame {
 
         panellLateral = new JPanel();
         panellLateral.setLayout(new BoxLayout(panellLateral, BoxLayout.Y_AXIS));
-        panellLateral.setPreferredSize(new Dimension(70, 0));
+        panellLateral.setPreferredSize(new Dimension(128, 0));
+        panellLateral.setLayout(new GridLayout(5, 1, 0, 4));
+        panellLateral.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
 
-        addSideButton("play");
-        addSideButton("user");
-        addSideButton("historic");
-        addSideButton("settings");
-        addSideButton("exit");
+        addSideButton("PLAY");
+        addSideButton("USER");
+        addSideButton("HISTORIC");
+        addSideButton("SETTINGS");
+        addSideButton("EXIT");
 
         panellCentral = new JPanel(new BorderLayout());
         panellCentral.setBorder(BorderFactory.createLineBorder(
-                UIManager.getColor("Separator.foreground"), 1, true));
+                UIManager.getColor("Separator.foreground"), 0, true));
 
         panellCos.add(panellLateral, BorderLayout.WEST);
         panellCos.add(panellCentral, BorderLayout.CENTER);
@@ -150,15 +155,15 @@ public class MainFrame extends JFrame {
     private void addSideButton(String baseName) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 
-            Color.DARK_GRAY, 
-            new Font("JetBrains Mono", Font.PLAIN, 12)
+            stockSoftPurple, 
+            new Font("Montserrat", Font.BOLD, 16)
         );
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panellLateral.add(Box.createVerticalStrut(8));
         panellLateral.add(button);
+        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
  
-    private void setGamePanel() {
+    private void GamePanel() {
         panellCentral = new JPanel(new BorderLayout());
         panellCentral.setBorder(BorderFactory.createLineBorder(
                 UIManager.getColor("Separator.foreground"), 1, true));
