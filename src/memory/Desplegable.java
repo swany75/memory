@@ -16,12 +16,6 @@ public class Desplegable extends JMenuBar {
 
     // Ruta Icones
     private String RUTA_ICONES = "src/icons/default/";
-
-    // Colors
-    private Color TOOLBAR_BG = new Color(255, 255, 255);  // gris fosc blavós
-    private Color MENU_BG    = new Color(45, 45, 55);
-    private Color MENU_HOVER = new Color(70, 70, 85);
-    private Color MENU_FG    = new Color(220, 220, 220); // text clar
     
     // Font
     private Font  MENU_FONT  = new Font("Segoe UI", Font.PLAIN, 13);

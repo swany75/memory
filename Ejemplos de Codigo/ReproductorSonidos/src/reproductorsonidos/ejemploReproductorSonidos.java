@@ -4,8 +4,7 @@ EJEMPLO REPRODUCTOR DE SONIDOS
 PROGRAMACIÓN II
 JUAN MONTES DE OCA
 UNIVERSITAT DE LES ILLES BALEARS
-*/
-
+ */
 package reproductorsonidos;
 
 import java.awt.*;
@@ -26,77 +25,90 @@ import javax.swing.*;
 ////////////////////////////////////////////////////////////////////////////////    
 
 public class ejemploReproductorSonidos {
+
     //ATRIBUTOS
     private Container panelContenidos;
     private JFrame ventana;
-    
-                
 
     public static void main(String[] args) {
-        new ejemploReproductorSonidos().metodoPrincipal();        
+        new ejemploReproductorSonidos().metodoPrincipal();
     }
 
-    private void metodoPrincipal() {   
+    private void metodoPrincipal() {
         //declaración contenedor JFrame 
-        ventana=new JFrame();
+        ventana = new JFrame();
         //título contenedor pruebaBotones
         ventana.setTitle("EJEMPLO DE INTERFACE NÚMERO 1");
         //asignación a panelContenidos del panel de contenidos del contenedor
         //JFrame
-        panelContenidos=ventana.getContentPane();  
+        panelContenidos = ventana.getContentPane();
         inicializacion();
     }
 
     private void inicializacion() {
-        
-////////////////////////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////////////////////////
 //                              GESTOR DE EVENTOS                             //
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////MANIPULADOR DE EVENTOS gestorEventos
-        ActionListener gestorEventos=new ActionListener()  { 
-                String sonido;
-                @Override
-                public void actionPerformed(ActionEvent evento)  { 
-                        switch (evento.getActionCommand()) {
-                            case "DO"         :sonido="do.wav";break;
-                            case "RE"         :sonido="re.wav";break;
-                            case "MI"         :sonido="mi.wav";break;
-                            case "FA"         :sonido="fa.wav";break;
-                            case "SOL"        :sonido="sol.wav";break;
-                            case "LA"         :sonido="la.wav";break;
-                            case "SI"         :sonido="si.wav";break;
-                            case "SALIR"        ://Salir de la aplicación
-                                                 System.exit(0);
-                        }
-                        //reproducción sonido
-                        reproduccionSonido(sonido);
+        ActionListener gestorEventos = new ActionListener() {
+            String sonido;
+
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                switch (evento.getActionCommand()) {
+                    case "DO":
+                        sonido = "do.wav";
+                        break;
+                    case "RE":
+                        sonido = "re.wav";
+                        break;
+                    case "MI":
+                        sonido = "mi.wav";
+                        break;
+                    case "FA":
+                        sonido = "fa.wav";
+                        break;
+                    case "SOL":
+                        sonido = "sol.wav";
+                        break;
+                    case "LA":
+                        sonido = "la.wav";
+                        break;
+                    case "SI":
+                        sonido = "si.wav";
+                        break;
+                    case "SALIR"://Salir de la aplicación
+                        System.exit(0);
                 }
-        }; 
+                //reproducción sonido
+                reproduccionSonido(sonido);
+            }
+        };
 
-
-////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 //                      PANEL panelBotones y COMPONENTES                      //
 ////////////////////////////////////////////////////////////////////////////////
         
 /////////DECLARACIÓN CONTENEDOR JPanel panelBotones 
-        JPanel panelBotones = new JPanel();     
+        JPanel panelBotones = new JPanel();
         //asignación administrador GridLayout al contenedor con 8 filas y una
         //columna
-        panelBotones.setLayout(new GridLayout( 1, 7 ));
+        panelBotones.setLayout(new GridLayout(1, 7));
 
-////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 //    MODALIDAD DE DECLARACIÓN A TRAVÉS DE UN BUCLE ITERATIVO DE TODOS LOS    //
 //    JButton CORRESPONDIENTES A LAS OPCIONES DE COLOR                        //
 ////////////////////////////////////////////////////////////////////////////////
 //////// DECLARACIÓN COMPONENTES JButton de colores
         //declaración array de objetos JButton para almacenar los JButton corresppondientes
         //a las opciones de color
-        JButton [] botonesSonidos=new JButton[7];
-        String [] literales={"DO","RE","MI","FA","SOL","LA","SI"};
-        Color [] colores={Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.MAGENTA,Color.YELLOW,Color.PINK};
+        JButton[] botonesSonidos = new JButton[7];
+        String[] literales = {"DO", "RE", "MI", "FA", "SOL", "LA", "SI"};
+        Color[] colores = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.YELLOW, Color.PINK};
         //bucle iterativo de declaración de las componentes JButton
-        for (int indice=0;indice<botonesSonidos.length;indice++) {
+        for (int indice = 0; indice < botonesSonidos.length; indice++) {
             botonesSonidos[indice] = new JButton(literales[indice]);
             //asignación tipografia a la componente JButton botonesSonidos[indice]
             botonesSonidos[indice].setFont(new Font("arial", Font.BOLD, 20));
@@ -109,10 +121,9 @@ public class ejemploReproductorSonidos {
             botonesSonidos[indice].addActionListener(gestorEventos);
             //inclusión de la componente JButton rojo en el contenedor JPanel
             //panelColores
-            panelBotones.add(botonesSonidos[indice]);  
+            panelBotones.add(botonesSonidos[indice]);
         }
 
-      
         ////////////////////////////////////////////////////////////////////////
         //              PANEL panelSalir y COMPONENTE                         //
         //////////////////////////////////////////////////////////////////////// 
@@ -123,9 +134,9 @@ public class ejemploReproductorSonidos {
         JPanel panelSalir = new JPanel();
 
         //asignación administrador GridLayout 
-        panelSalir.setLayout(new  GridLayout());
+        panelSalir.setLayout(new GridLayout());
 
-////////COMPONENTE JButton salir
+        ////////COMPONENTE JButton salir
         JButton salir = new JButton("SALIR");
         //asignación tipografia a la componente JButton salir
         salir.setFont(new Font("arial", Font.BOLD, 18));
@@ -138,24 +149,21 @@ public class ejemploReproductorSonidos {
         salir.addActionListener(gestorEventos);
         //inclusión de la componente JButton salir en el contenedor JPanel
         //panelVarios
-        panelSalir.add(salir);  
+        panelSalir.add(salir);
 
-
- 
-////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 //   DISTRIBUCIÓN PANELES Y COMPONENTES EN EL CONTENEDOR JFrame ventana       //
 //////////////////////////////////////////////////////////////////////////////// 
         
 ////////INCLUSIÓN DEL CONTENEDOR JPanel panelBotones EN LA ZONA OESTE DEL BorderLayout 
 ////////EN EL PANEL DE CONTENIDOS DEL CONTENEDOR JFrame
-        panelContenidos.add(panelBotones, BorderLayout.NORTH);     
+        panelContenidos.add(panelBotones, BorderLayout.NORTH);
 
-////////INCLUSIÓN DEL CONTENEDOR JPanel panelSalir EN LA ZONA SUR DEL BorderLayout 
+        ////////INCLUSIÓN DEL CONTENEDOR JPanel panelSalir EN LA ZONA SUR DEL BorderLayout 
 ////////EN EL PANEL DE CONTENIDOS DEL CONTENEDOR JFrame
-        panelContenidos.add(panelSalir, BorderLayout.CENTER);        
-        
-        
-////////////////////////////////////////////////////////////////////////////////
+        panelContenidos.add(panelSalir, BorderLayout.CENTER);
+
+        ////////////////////////////////////////////////////////////////////////////////
 //                  ÚLTIMAS INTERVENCIONES CONTENEDOR JFrame                  //
 ////////////////////////////////////////////////////////////////////////////////  
         //DIMENSIONAMIENTO DEL CONTENEDOR JFrame ventana 
@@ -164,20 +172,21 @@ public class ejemploReproductorSonidos {
         ventana.setLocationRelativeTo(null);
         //ACTIVACIÓN DEL CIERRE INTERACTIVO VENTANA DE WINDOWS EN EL CONTENEDOR 
         //JFrame ventana
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //VISUALIZACIÓN CONTENEDOR JFrame ventana
         ventana.setVisible(true);
     }
+
     private void reproduccionSonido(String sonido) {
-        Clip clip=null;
-        AudioInputStream audioInputStream=null;
-      try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("sonidos/"+sonido).getAbsoluteFile());
+        Clip clip = null;
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sonidos/" + sonido).getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-            clip.start(); 
-      }catch (UnsupportedAudioFileException | LineUnavailableException | IOException error) {
-          System.err.println("ERROR: PROBLEMAS CON LA REPRODUCCIÓN SONIDO");
-      }
+            clip.start();
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException error) {
+            System.err.println("ERROR: PROBLEMAS CON LA REPRODUCCIÓN SONIDO");
+        }
     }
 }
