@@ -69,6 +69,7 @@ public class MainFrame extends JFrame {
 
         add(topPanel(), BorderLayout.NORTH);
         add(centerPanel(), BorderLayout.CENTER);
+        
         add(timer, BorderLayout.SOUTH);
         setVisible(true);
     }
