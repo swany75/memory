@@ -11,11 +11,13 @@ package memory;
 
 import javax.swing.*;
 import java.awt.*;
+
 public class Timer extends JProgressBar {
 
     private javax.swing.Timer crono;
     private int secTotals;
     private int secRestants;
+    private CustomColors CC = new CustomColors();
 
     public Timer() {
         super();
@@ -25,8 +27,8 @@ public class Timer extends JProgressBar {
         setStringPainted(true);
         setPreferredSize(new Dimension(0, 32));
         setFont(new Font("JetBrains Mono", Font.BOLD, 14));
-        setForeground(new Color(0x3C1A7B));
-        setBackground(new Color(0xDDCCFF));
+        setForeground(Color.white);
+        setBackground(CC.P3_DEEP_BLUE);
     }
 
     // JProgressBar usa este método para saber qué texto pintar
@@ -49,6 +51,13 @@ public class Timer extends JProgressBar {
         crono = new javax.swing.Timer(1000, e -> {
             secRestants--;
             setValue(secTotals - secRestants);
+            
+            if (secRestants <= secTotals * 0.05) {
+                setForeground(CC.P3_RED_ALERT);
+            } else {
+                setForeground(Color.WHITE);
+            }
+            
             repaint();                        
 
             if (secRestants <= 0) {
@@ -56,6 +65,7 @@ public class Timer extends JProgressBar {
                 JOptionPane.showMessageDialog(null, "GAME OVER!");
             }
         });
+
     }
 
     public void start() { 

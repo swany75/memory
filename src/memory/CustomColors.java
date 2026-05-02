@@ -44,4 +44,5 @@ public class CustomColors {
     
     public final Color EGG_White = new Color(0xF7EFE0);
     
+    public final Color UIB_BLUE = new Color(1, 93, 185);
 }

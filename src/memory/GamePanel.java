@@ -16,11 +16,10 @@ public class GamePanel extends JPanel {
     
     private boolean inGame = false;
     private ImageIcon welcomeIcon; 
-    private CustomColors CC = new CustomColors();
 
     public GamePanel() {
         this.setBackground(Color.WHITE);
-        this.welcomeIcon = ImageManager.loadIcon("src/images/favicon.png");
+        this.welcomeIcon = ImageManager.loadIcon("src/images/LogoUIB (Ben fet).png");
     }
 
     public void startGame() {
@@ -47,7 +46,7 @@ public class GamePanel extends JPanel {
 
             int margin = 100;
             int maxWidth = getWidth() - margin;
-            int maxHeight = getHeight() - margin - 50; // Extra para el texto abajo
+            int maxHeight = getHeight() - margin - 50;
 
             int imgWidth = welcomeIcon.getIconWidth();
             int imgHeight = welcomeIcon.getIconHeight();
@@ -71,7 +70,7 @@ public class GamePanel extends JPanel {
             String subtitle = "Marti Figuls Nolla & Juan Dalmau Santandreu";
             FontMetrics fm = g2d.getFontMetrics();
             int txtX = (getWidth() - fm.stringWidth(subtitle)) / 2;
-            int txtY = y + finalHeight + 40; // Justo debajo de la imagen escalada
+            int txtY = y + finalHeight + 40; 
 
             g2d.drawString(subtitle, txtX, txtY);
         }

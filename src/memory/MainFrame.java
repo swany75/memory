@@ -23,10 +23,9 @@ public class MainFrame extends JFrame {
     // Zones principals
     private JPanel panellCos;
     private JPanel panellLateral;
-    private JPanel panellCentral;
+
  
     // Estats
-    private boolean partidaEnCurs = false;
     private boolean menuObert = true;
     
     // Classes
@@ -38,7 +37,6 @@ public class MainFrame extends JFrame {
     
     // Rutes
     private static final String RUTA_ICONES  = "src/icons/default/";
-    private static final String RUTA_IMATGES = "src/images/";
  
     // Icons & Images
     private ImageIcon leftMenuOpen;
@@ -134,8 +132,7 @@ public class MainFrame extends JFrame {
         addSideButton("EXIT");
 
         gamePanel = new GamePanel(); 
-        gamePanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 10));
-
+        
         panellCos.add(panellLateral, BorderLayout.WEST);
         panellCos.add(gamePanel, BorderLayout.CENTER);
         return panellCos;
@@ -158,7 +155,7 @@ public class MainFrame extends JFrame {
     private void addSideButton(String baseName) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 
-            CC.P3_DEEP_BLUE, 
+            CC.UIB_BLUE, 
             new Font("Montserrat", Font.BOLD, 16)
         );
         button.setAlignmentX(Component.CENTER_ALIGNMENT);

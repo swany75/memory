@@ -17,22 +17,25 @@ public class Desplegable extends JMenuBar {
     // Ruta Icones
     private String RUTA_ICONES = "src/icons/default/";
     
-    // Font
-    private Font  MENU_FONT  = new Font("Segoe UI", Font.PLAIN, 13);
+    // Font & Colors
+    private Font  MENU_FONT  = new Font("Jet Brains Mono", Font.PLAIN, 12);
+    private CustomColors CC = new CustomColors();
 
     public Desplegable(MainFrame frame) {
-        setOpaque(false);
+        setOpaque(true);
         setBorder(BorderFactory.createEmptyBorder());
 
         JMenu menu = new JMenu();
         menu.setIcon(ImageManager.loadScaledIcon(RUTA_ICONES + "desplegable.png", 32, 32));
         menu.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-
-        JMenuItem itemPlay = new JMenuItem("Play");
-        JMenuItem itemHistory = new JMenuItem("Historic");
-        JMenuItem itemSelectiveHistory = new JMenuItem("Stats");
-        JMenuItem itemSettings = new JMenuItem("Settings");
-        JMenuItem itemExit = new JMenuItem("Exit");
+        menu.setFont(MENU_FONT);
+        menu.setForeground(CC.P3_BRIGHT_CYAN);
+        
+        JMenuItem itemPlay = createStyledMenuItem("Play");
+        JMenuItem itemHistory = createStyledMenuItem("Historic");
+        JMenuItem itemSelectiveHistory = createStyledMenuItem("Stats");
+        JMenuItem itemSettings = createStyledMenuItem("Settings");
+        JMenuItem itemExit = createStyledMenuItem("Exit");
 
         // Afegir al desplegable  
         menu.add(itemPlay);
@@ -46,4 +49,18 @@ public class Desplegable extends JMenuBar {
 
         add(menu);
     }
+    
+    private JMenuItem createStyledMenuItem(String text) {
+
+        JMenuItem item = new JMenuItem(text);
+        
+        item.setFont(MENU_FONT);
+        item.setForeground(Color.BLACK);
+        item.setOpaque(false);
+        item.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        return item;
+    
+    }
+
 }
