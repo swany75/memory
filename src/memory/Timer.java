@@ -28,7 +28,7 @@ public class Timer extends JProgressBar {
         setPreferredSize(new Dimension(0, 32));
         setFont(new Font("JetBrains Mono", Font.BOLD, 14));
         setForeground(Color.white);
-        setBackground(CC.P3_DEEP_BLUE);
+        setBackground(CC.P3_CYAN);
     }
 
     // JProgressBar usa este método para saber qué texto pintar
@@ -82,7 +82,7 @@ public class Timer extends JProgressBar {
 
     public void reset() {
         stop();
-        secTotals   = 0;
+        secTotals = 0;
         secRestants = 0;
         setValue(0);
         repaint();

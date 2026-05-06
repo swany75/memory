@@ -32,8 +32,8 @@ public class Desplegable extends JMenuBar {
         menu.setForeground(CC.P3_BRIGHT_CYAN);
         
         JMenuItem itemPlay = createStyledMenuItem("Play");
-        JMenuItem itemHistory = createStyledMenuItem("Historic");
-        JMenuItem itemSelectiveHistory = createStyledMenuItem("Stats");
+        JMenuItem itemHistory = createStyledMenuItem("User");
+        JMenuItem itemSelectiveHistory = createStyledMenuItem("Historic");
         JMenuItem itemSettings = createStyledMenuItem("Settings");
         JMenuItem itemExit = createStyledMenuItem("Exit");
 

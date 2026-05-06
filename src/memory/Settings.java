@@ -4,10 +4,13 @@
  */
 package memory;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author Juan
  */
-public class Settings { // Classe dels Settings
+
+public class Settings extends JPanel { // Classe dels Settings
     
 }

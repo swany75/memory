@@ -10,20 +10,24 @@ package memory;
  */
 public class GameManager { // Gestio Partida
     
-    int NUM_ROWS = 6;
-    int NUM_COLS = 6;
-    int[][] MATRIX = new int[NUM_COLS][NUM_ROWS];
+    private static boolean running = false;
+
+    int NUM_ROWS;
+    int NUM_COLS;
+    int[][] MATRIX;
 
 
     private GameManager() {
-        // Constructor privado para evitar instanciación
-
         generateInitialMatrix();
-
     }
 
     private void generateInitialMatrix() {
         // Implementación para generar la matriz inicial
+    }
+
+
+    public static boolean isRunning() {
+        return running;
     }
 
     public void setDificulty(int dificulty) {

@@ -36,7 +36,7 @@ public class ButtonBuilder {
         return button;
     }   
     
-    // Polsador per la barra lateral
+    // Pulsador per la barra lateral
     public static JButton createPulsador(String texto, Color color, Font fuente) {
         JButton button = new JButton(texto);
         button.setFont(fuente);
@@ -48,7 +48,7 @@ public class ButtonBuilder {
     }
 
     /*
-    * @font Hem obtingut el codi per fer polsadors de Stack Overflow
+    * @font Hem obtingut el codi per fer pulsadors de Stack Overflow
     * Ho hem adaptat per al nostre cas en concret
     * https://stackoverflow.com/questions/23698092/design-button-in-java-like-in-css
     */
@@ -97,7 +97,6 @@ public class ButtonBuilder {
                 g2.setColor(base.darker());
                 g2.fillRoundRect(0, sombra, size.width, size.height - sombra, 15, 15);
             }
-
         }
     }
 }

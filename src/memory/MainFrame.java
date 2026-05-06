@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
     private Timer timer = new Timer();
     private Random rand = new Random();
     private CustomColors CC = new CustomColors();
-    private GamePanel gamePanel = new GamePanel();
+    private ContentPanel contentPanel;
     
     // Rutes
     private static final String RUTA_ICONES  = "src/icons/default/";
@@ -98,11 +98,11 @@ public class MainFrame extends JFrame {
         
         toolBar.add(lateralMenuButton);
         
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> createTEST("Play")));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "user.png", 32, 32, e -> createTEST("History")));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, e -> createTEST("Selective History")));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, e -> createTEST("Settings")));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, e -> createTEST("Exit")));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.GAME)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "user.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.USER)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.HISTORY)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SETTINGS)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, e -> secureExit()));
 
         return toolBar;
     }
@@ -114,6 +114,8 @@ public class MainFrame extends JFrame {
     private JPanel centerPanel() {
         panellCos = new JPanel(new BorderLayout(4, 0));
         
+        // Create ContentPanel FIRST before creating buttons that reference it
+        contentPanel = new ContentPanel();
 
         panellLateral = new JPanel();
         panellLateral.setLayout(new BoxLayout(panellLateral, BoxLayout.Y_AXIS));
@@ -125,16 +127,14 @@ public class MainFrame extends JFrame {
         separadorEsquerra.setPreferredSize(new Dimension(1, 0));
         separadorEsquerra.setBackground(panellCos.getBackground());
         
-        addSideButton("PLAY");
-        addSideButton("USER");
-        addSideButton("HISTORIC");
-        addSideButton("SETTINGS");
-        addSideButton("EXIT");
-
-        gamePanel = new GamePanel(); 
+        addSideButton("PLAY", e -> contentPanel.switchPanel(ContentPanel.GAME));
+        addSideButton("USER", e -> contentPanel.switchPanel(ContentPanel.USER));
+        addSideButton("HISTORIC", e -> contentPanel.switchPanel(ContentPanel.HISTORY));
+        addSideButton("SETTINGS", e -> contentPanel.switchPanel(ContentPanel.SETTINGS));
+        addSideButton("EXIT", e -> secureExit());
         
         panellCos.add(panellLateral, BorderLayout.WEST);
-        panellCos.add(gamePanel, BorderLayout.CENTER);
+        panellCos.add(contentPanel, BorderLayout.CENTER);
         return panellCos;
     }
     
@@ -152,26 +152,27 @@ public class MainFrame extends JFrame {
         panellCos.repaint();
     }
 
-    private void addSideButton(String baseName) {
+    private void addSideButton(String baseName, java.awt.event.ActionListener action) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 
             CC.UIB_BLUE, 
             new Font("Montserrat", Font.BOLD, 16)
         );
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.addActionListener(action);
         panellLateral.add(button);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-    /// Trash //////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
-    
-    private void createTEST(String text) {
-        JFrame newWindow = new JFrame(text);
-        newWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        newWindow.setSize(450, 200);
-        newWindow.setLocationRelativeTo(null);
-        newWindow.setVisible(true);
+    // METHODS
+    private void secureExit() {
+        if (GameManager.isRunning()) {
+            statusBar.setText("[!] Error: You should finish the round");
+        } else {
+            statusBar.setText("[+] Exit simulation");
+        }
     }
+
+    
+
 }
