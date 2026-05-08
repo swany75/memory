@@ -30,10 +30,12 @@ public class ContentPanel extends JPanel {
     
     private StatusBar statusBar;
     
-    public ContentPanel(StatusBar st) { 
-        cardLayout = new CardLayout();
-        this.setLayout(cardLayout);
+    public ContentPanel(StatusBar st) {
+        
         this.statusBar = st;
+        
+        cardLayout = new CardLayout();
+        setLayout(cardLayout);
         
         gamePanel = new GamePanel();
         settings = new Settings();
@@ -45,30 +47,42 @@ public class ContentPanel extends JPanel {
         this.add(historic, HISTORY);
         this.add(selectiveHistoric, USER);
 
-        // Show GamePanel by default
-        cardLayout.show(this, GAME);
-        currentPanel = GAME;
+        switchPanel(GAME);
     }
     
     public void switchPanel(String panelName) {
+
         if (panelName == null || panelName.equals(currentPanel)) {
             return;
         }
 
+        cardLayout.show(this, panelName);
+        currentPanel = panelName;
+
         switch (panelName) {
+
             case GAME:
+                statusBar.setDefaultText();
+                break;
+
             case SETTINGS:
+                statusBar.setText("Settings");
+                break;
+
             case HISTORY:
+                statusBar.setText("History");
+                break;
+
             case USER:
-                cardLayout.show(this, panelName);
-                currentPanel = panelName;
+                statusBar.setText("User History");
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknown panel: " + panelName);
+                statusBar.clearText();
+                break;
         }
     }
-    
+
     public GamePanel getGamePanel() {
         return gamePanel;
     }

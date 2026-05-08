@@ -143,7 +143,7 @@ public class StatusBar extends JPanel {
         setBackground(BG_COLOR);
         setOpaque(true);
 
-        label = new JLabel(getRandomText());
+        label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setFont(new Font("Monospaced", Font.BOLD, 14));
         label.setForeground(TEXT_COLOR);
