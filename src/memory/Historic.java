@@ -7,6 +7,11 @@ package memory;
 
 import javax.swing.JPanel;
 
+/**
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
+ */
+
 public class Historic extends JPanel {
     
 }

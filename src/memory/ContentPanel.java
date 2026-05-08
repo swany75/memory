@@ -10,9 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Manages multiple content panels using CardLayout for seamless switching
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
+
 public class ContentPanel extends JPanel {
     
     private CardLayout cardLayout;
@@ -27,9 +28,12 @@ public class ContentPanel extends JPanel {
     public static final String HISTORY = "HISTORY";
     public static final String USER = "USER";
     
-    public ContentPanel() { 
+    private StatusBar statusBar;
+    
+    public ContentPanel(StatusBar st) { 
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
+        this.statusBar = st;
         
         gamePanel = new GamePanel();
         settings = new Settings();
@@ -51,8 +55,18 @@ public class ContentPanel extends JPanel {
             return;
         }
 
-        cardLayout.show(this, panelName);
-        currentPanel = panelName;
+        switch (panelName) {
+            case GAME:
+            case SETTINGS:
+            case HISTORY:
+            case USER:
+                cardLayout.show(this, panelName);
+                currentPanel = panelName;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown panel: " + panelName);
+        }
     }
     
     public GamePanel getGamePanel() {

@@ -7,8 +7,8 @@ package memory;
 import java.awt.Color;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 
 public class CustomColors {

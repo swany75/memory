@@ -10,8 +10,8 @@ import java.awt.event.*;
 import java.util.Random;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 
 public class MainFrame extends JFrame {
@@ -115,7 +115,7 @@ public class MainFrame extends JFrame {
         panellCos = new JPanel(new BorderLayout(4, 0));
         
         // Create ContentPanel FIRST before creating buttons that reference it
-        contentPanel = new ContentPanel();
+        contentPanel = new ContentPanel(statusBar);
 
         panellLateral = new JPanel();
         panellLateral.setLayout(new BoxLayout(panellLateral, BoxLayout.Y_AXIS));
@@ -172,7 +172,4 @@ public class MainFrame extends JFrame {
             statusBar.setText("[+] Exit simulation");
         }
     }
-
-    
-
 }

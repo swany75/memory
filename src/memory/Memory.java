@@ -8,6 +8,7 @@ package memory;
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
+
 public class Memory { // Codi Principal
 
     /**

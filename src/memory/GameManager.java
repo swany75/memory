@@ -5,8 +5,8 @@
 package memory;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 public class GameManager { // Gestio Partida
     

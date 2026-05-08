@@ -9,9 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
+
 public class ImageManager { // Gestió de les Imatges
     
     public static ImageIcon loadIcon(String path) {

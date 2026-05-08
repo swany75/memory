@@ -7,8 +7,8 @@ package memory;
 import javax.swing.JPanel;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 
 public class Settings extends JPanel { // Classe dels Settings

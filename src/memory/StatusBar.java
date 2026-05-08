@@ -5,8 +5,8 @@
 package memory;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 
 import javax.swing.*;
@@ -18,12 +18,12 @@ public class StatusBar extends JPanel {
     private Color BG_COLOR   = new Color(180, 220, 180);
     private Color TEXT_COLOR = new Color(30, 80, 30);
     
-    // Bruce Springsteen Phrases
+    // Rock n roll & Nu-Metal Phrases
     private static final String[] PHRASES = {
         "Is there anybody alive out there?",
         "Are you ready?",
         "Are you really ready?",
-        "Are yoy really really ready?",
+        "Are you really really ready?",
         "Are you ready to have a good time?",
         "One, two, three, four!",
         "Come on!",
@@ -31,10 +31,46 @@ public class StatusBar extends JPanel {
         "Let me hear you!",
         "Tonight we ride!",
         "No retreat, no surrender!",
-        "Is everybody ready?"
+        "Is everybody ready?",
+        "Take me down to the paradise city",
+        "Hello, Cleveland!",
+        "For those about to rock, we salute you!",
+        "I can't hear you!",
+        "Rock and roll will never die!",
+        "Scream for me!",
+        "Let's see some hands in the air!",
+        "Welcome to the jungle!",
+        "Alright partner, keep on rollin' baby!",
+        "Ladies and gentlemen... introducing!",
+        "Get up, come on, get down with the sickness!",
+        "Cut my life into pieces, this is my last resort!",
+        "Wake up! Grab a brush and put a little makeup!",
+        "Let the bodies hit the... FLOOOOOOR!",
+        "Crawling in my skin, these wounds they will not heal!",
+        "I've given up! On infectious energy!",
+        "Bring me to life! (Wake me up inside)",
+        "Du... Du hast... Du hast mich!",
+        "Welcome to the Black Parade!",
+        "Whiskey in the jar-o!",
+        "We will, we will, rock you!",
+        "But in the end, it doesn't even matter!",
+        "Oh shit, here we go again",
+        "It's about reality and making some noise",
+        "Final lap I'm on top of the world",
+        "Do you think you can survive the top?",
+        "One two three, four five, Six Seven...",
+        "I am the storm that is approaching",
+        "Bury the light deep within",
+        "You cannot kill me... I am Omega",
+        "You cannot kill me... I am Subhuman",
+        "Bang, bang, bang, pull my Devil Trigger",
+        "All of these thoughts runnin' through my head",
+        "Devil's never cry",
+        "I've finally found what I was looking for",
+        "Rules of Nature!"
     };
     
-    // Nice Moves (Success)
+    // Nice Moves
     private static final String[] NICE_MOVE_PHRASES = {
         "Amazing! You have the memory of an elephant!",
         "Boom! Match found!",
@@ -50,10 +86,24 @@ public class StatusBar extends JPanel {
         "Nothing escapes you!",
         "Impressive work!",
         "Great find!",
-        "You're killing it!"
+        "You're killing it!",
+        "Mi Bombo!",
+        "Bomboclat! Rich, Millonare!",
+        "Let him cook! I repeat, LET. HIM. COOK.",
+        "Sheesh! That memory is built different!",
+        "Bro is playing in 4K. Absolute gigachad energy.",
+        "Big brain move right there!",
+        "Outstanding move! (Insert Chess Meme Here)",
+        "We are so back!",
+        "Is it possible to learn this power?",
+        "Simple history, absolute cinema.",
+        "W memory. No cap, pure rizz.",
+        "They're beginning to believe...",
+        "Calculated. Just like you planned.",
+        "This is ten percent luck. Twenty percent skill..."
     };
 
-    // Bad Moves (Try again)
+    // Bad Moves
     private static final String[] BAD_MOVE_PHRASES = {
         "Oh, so close! Try again.",
         "Mmm... not that one.",
@@ -69,7 +119,19 @@ public class StatusBar extends JPanel {
         "On the bright side, now you know where they AREN'T!",
         "Keep calm and play on!",
         "Close, but no cigar!",
-        "Hang in there, you got this!"
+        "Hang in there, you got this!",
+        "WASTED",
+        "It's over. We're cooked.",
+        "Emotional damage!",
+        "Bruh. That wasn't it.",
+        "Mission failed, we'll get 'em next time.",
+        "My disappointment is immeasurable, and my day is ruined.",
+        "Wait, that's illegal.",
+        "Instructions unclear, matched the wrong cards.",
+        "So that was a lie.",
+        "Press F to pay respects to that attempt.",
+        "Not like this... NOT LIKE THIS!",
+        "Error 404: Match not found."
     };
     
     private static final Random RANDOM = new Random();

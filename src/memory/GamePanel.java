@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
 
 public class GamePanel extends JPanel { 

@@ -11,9 +11,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
- *
- * @author Juan
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
  */
+
 public class ButtonBuilder {
 
     // private static final Color TEXT_COLOR = new Color(0xFECD01);
