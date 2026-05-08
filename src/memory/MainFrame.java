@@ -6,7 +6,6 @@ package memory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.Random;
 
 /**
@@ -24,7 +23,6 @@ public class MainFrame extends JFrame {
     private JPanel panellCos;
     private JPanel panellLateral;
 
- 
     // Estats
     private boolean menuObert = true;
     
@@ -36,7 +34,7 @@ public class MainFrame extends JFrame {
     private ContentPanel contentPanel;
     
     // Rutes
-    private static final String RUTA_ICONES  = "src/icons/default/";
+    private static final String RUTA_ICONES  = "media/icons/default/";
  
     // Icons & Images
     private ImageIcon leftMenuOpen;
@@ -60,10 +58,13 @@ public class MainFrame extends JFrame {
         leftMenuOpen = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuOpen.png", 32, 32);
         leftMenuClose = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuClose.png", 32, 32);
 
-        setSize(950, 680);
+        setSize(1280, 720);
+        setMinimumSize(new Dimension(1280, 720));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(4, 4));
 
+        contentPanel = new ContentPanel(statusBar);
+        
         add(topPanel(), BorderLayout.NORTH);
         add(centerPanel(), BorderLayout.CENTER);
         
@@ -91,7 +92,7 @@ public class MainFrame extends JFrame {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
 
-        toolBar.add(new Desplegable(this));
+        toolBar.add(new Desplegable(this, contentPanel));
         
         lateralMenuButton = ButtonBuilder.createButton(RUTA_ICONES + "leftMenuClose.png", 32, 32, 
             e -> toggleLateralMenu());
@@ -99,7 +100,7 @@ public class MainFrame extends JFrame {
         toolBar.add(lateralMenuButton);
         
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.GAME)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "user.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.USER)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "user.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SELECTIVE)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.HISTORY)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SETTINGS)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, e -> secureExit()));
@@ -113,13 +114,10 @@ public class MainFrame extends JFrame {
     
     private JPanel centerPanel() {
         panellCos = new JPanel(new BorderLayout(4, 0));
-        
-        // Create ContentPanel FIRST before creating buttons that reference it
-        contentPanel = new ContentPanel(statusBar);
 
         panellLateral = new JPanel();
         panellLateral.setLayout(new BoxLayout(panellLateral, BoxLayout.Y_AXIS));
-        panellLateral.setPreferredSize(new Dimension(128, 0));
+        panellLateral.setPreferredSize(new Dimension(192, 0));
         panellLateral.setLayout(new GridLayout(5, 1, 0, 4));
         panellLateral.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
 
@@ -127,9 +125,9 @@ public class MainFrame extends JFrame {
         separadorEsquerra.setPreferredSize(new Dimension(1, 0));
         separadorEsquerra.setBackground(panellCos.getBackground());
         
-        addSideButton("PLAY", e -> contentPanel.switchPanel(ContentPanel.GAME));
-        addSideButton("USER", e -> contentPanel.switchPanel(ContentPanel.USER));
-        addSideButton("HISTORIC", e -> contentPanel.switchPanel(ContentPanel.HISTORY));
+        addSideButton("GAME", e -> contentPanel.switchPanel(ContentPanel.GAME));
+        addSideButton("SELECTIVE", e -> contentPanel.switchPanel(ContentPanel.SELECTIVE));
+        addSideButton("HISTORY", e -> contentPanel.switchPanel(ContentPanel.HISTORY));
         addSideButton("SETTINGS", e -> contentPanel.switchPanel(ContentPanel.SETTINGS));
         addSideButton("EXIT", e -> secureExit());
         
@@ -137,6 +135,19 @@ public class MainFrame extends JFrame {
         panellCos.add(contentPanel, BorderLayout.CENTER);
         return panellCos;
     }
+   
+    private void addSideButton(String baseName, java.awt.event.ActionListener action) {
+        JButton button = ButtonBuilder.createPulsador(
+            baseName, 
+            CC.UIB_BLUE, 
+            new Font("Montserrat", Font.BOLD, 16)
+        );
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.addActionListener(action);
+        panellLateral.add(button);
+        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+    }
+    
     
     private void toggleLateralMenu() {
         menuObert = !menuObert;
@@ -151,21 +162,9 @@ public class MainFrame extends JFrame {
         panellCos.revalidate();
         panellCos.repaint();
     }
-
-    private void addSideButton(String baseName, java.awt.event.ActionListener action) {
-        JButton button = ButtonBuilder.createPulsador(
-            baseName, 
-            CC.UIB_BLUE, 
-            new Font("Montserrat", Font.BOLD, 16)
-        );
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(action);
-        panellLateral.add(button);
-        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-    }
     
     // METHODS
-    private void secureExit() {
+    public void secureExit() {
         if (GameManager.isRunning()) {
             statusBar.setText("[!] Error: You should finish the round");
         } else {

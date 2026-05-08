@@ -24,14 +24,13 @@ public class Timer extends JProgressBar {
         setMinimum(0);
         setMaximum(100);
         setValue(0);
-        setStringPainted(true);
+        setStringPainted(false);
         setPreferredSize(new Dimension(0, 32));
         setFont(new Font("JetBrains Mono", Font.BOLD, 14));
         setForeground(Color.white);
-        setBackground(CC.P3_CYAN);
+        setBackground(CC.P3_BLUE);
     }
 
-    // JProgressBar usa este método para saber qué texto pintar
     @Override
     public String getString() {
         if (secTotals == 0) return "--:--";
@@ -87,4 +86,17 @@ public class Timer extends JProgressBar {
         setValue(0);
         repaint();
     }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        g.setFont(getFont());
+        String text = getString();
+        FontMetrics fm = g.getFontMetrics();
+        int x = (getWidth() - fm.stringWidth(text)) / 2;
+        int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+        g.drawString(text, x, y);
+    }
+    
 }

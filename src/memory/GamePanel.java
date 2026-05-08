@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         this.setBackground(Color.WHITE);
-        this.welcomeIcon = ImageManager.loadIcon("src/images/LogoUIB (Ben fet).png");
+        this.welcomeIcon = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
     }
 
     public void startGame() {

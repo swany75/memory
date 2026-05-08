@@ -26,7 +26,7 @@ public class ContentPanel extends JPanel {
     public static final String GAME = "GAME";
     public static final String SETTINGS = "SETTINGS";
     public static final String HISTORY = "HISTORY";
-    public static final String USER = "USER";
+    public static final String SELECTIVE = "SELECTIVE";
     
     private StatusBar statusBar;
     
@@ -45,7 +45,7 @@ public class ContentPanel extends JPanel {
         this.add(gamePanel, GAME);
         this.add(settings, SETTINGS);
         this.add(historic, HISTORY);
-        this.add(selectiveHistoric, USER);
+        this.add(selectiveHistoric, SELECTIVE);
 
         switchPanel(GAME);
     }
@@ -73,8 +73,8 @@ public class ContentPanel extends JPanel {
                 statusBar.setText("History");
                 break;
 
-            case USER:
-                statusBar.setText("User History");
+            case SELECTIVE:
+                statusBar.setText("Selective History");
                 break;
 
             default:

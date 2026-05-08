@@ -15,13 +15,13 @@ import java.awt.*;
 public class Desplegable extends JMenuBar {
 
     // Ruta Icones
-    private String RUTA_ICONES = "src/icons/default/";
+    private String RUTA_ICONES = "media/icons/default/";
     
     // Font & Colors
-    private Font  MENU_FONT  = new Font("Jet Brains Mono", Font.PLAIN, 12);
+    private Font MENU_FONT = new Font("Jet Brains Mono", Font.PLAIN, 12);
     private CustomColors CC = new CustomColors();
 
-    public Desplegable(MainFrame frame) {
+    public Desplegable(MainFrame frame, ContentPanel cp) {
         setOpaque(true);
         setBorder(BorderFactory.createEmptyBorder());
 
@@ -31,17 +31,39 @@ public class Desplegable extends JMenuBar {
         menu.setFont(MENU_FONT);
         menu.setForeground(CC.P3_BRIGHT_CYAN);
         
+        // 1. Create Menu Items
         JMenuItem itemPlay = createStyledMenuItem("Play");
-        JMenuItem itemHistory = createStyledMenuItem("User");
-        JMenuItem itemSelectiveHistory = createStyledMenuItem("Historic");
+        JMenuItem itemSelective = createStyledMenuItem("Selective");
+        JMenuItem itemHistory = createStyledMenuItem("Historic");
         JMenuItem itemSettings = createStyledMenuItem("Settings");
         JMenuItem itemExit = createStyledMenuItem("Exit");
 
-        // Afegir al desplegable  
+        // 2. Map Actions to the ContentPanel
+        itemPlay.addActionListener(e -> {
+            cp.switchPanel(ContentPanel.GAME);
+        });
+
+        itemSelective.addActionListener(e -> {
+            cp.switchPanel(ContentPanel.SELECTIVE);
+        });
+
+        itemHistory.addActionListener(e -> {
+            cp.switchPanel(ContentPanel.HISTORY);
+        });
+
+        itemSettings.addActionListener(e -> {
+            cp.switchPanel(ContentPanel.SETTINGS);
+        });
+
+        itemExit.addActionListener(e -> {
+            frame.secureExit();
+        });
+        
+        // 3. Assemble the Dropdown Menu
         menu.add(itemPlay);
         menu.addSeparator();
+        menu.add(itemSelective);
         menu.add(itemHistory);
-        menu.add(itemSelectiveHistory);
         menu.addSeparator();
         menu.add(itemSettings);
         menu.addSeparator();
@@ -51,7 +73,6 @@ public class Desplegable extends JMenuBar {
     }
     
     private JMenuItem createStyledMenuItem(String text) {
-
         JMenuItem item = new JMenuItem(text);
         
         item.setFont(MENU_FONT);
@@ -60,7 +81,5 @@ public class Desplegable extends JMenuBar {
         item.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
         return item;
-    
     }
-
 }

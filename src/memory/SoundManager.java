@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
- * Font d'inspiració: https://www.coderslexicon.com/playing-and-thottling-sound-clips-in-java/
  */
 public class SoundManager {
  
