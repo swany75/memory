@@ -18,6 +18,7 @@ public class Timer extends JProgressBar {
     private int secTotals;
     private int secRestants;
     private CustomColors CC = new CustomColors();
+    private PopUpManager popup = new PopUpManager();
 
     public Timer() {
         super();
@@ -27,8 +28,7 @@ public class Timer extends JProgressBar {
         setStringPainted(false);
         setPreferredSize(new Dimension(0, 32));
         setFont(new Font("JetBrains Mono", Font.BOLD, 14));
-        setForeground(Color.white);
-        setBackground(CC.P3_BLUE);
+        setBackground(CC.PASTEL_YELLOW);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class Timer extends JProgressBar {
             repaint();                        
 
             if (secRestants <= 0) {
+                popup.displayMessage("Game Over!", GameManager.getGameStatus());
                 stop();
-                JOptionPane.showMessageDialog(null, "GAME OVER!");
             }
         });
 
@@ -90,13 +90,14 @@ public class Timer extends JProgressBar {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.setFont(getFont());
         String text = getString();
         FontMetrics fm = g.getFontMetrics();
         int x = (getWidth() - fm.stringWidth(text)) / 2;
         int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
         g.drawString(text, x, y);
+        setBorderPainted(false);
     }
     
 }

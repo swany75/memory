@@ -21,8 +21,7 @@ public class StatusBar extends JPanel {
     private static final Random RANDOM = new Random();
     
     private JLabel label;
-    
-    
+
     private static final String[] PHRASES = {
         "Are you ready?",
         "Are you really ready?",
@@ -49,10 +48,12 @@ public class StatusBar extends JPanel {
         "Bring me to life! (Wake me up inside)",
         "Du... Du hast... Du hast mich!",
         "We will, we will, rock you!",
-        "Oh shit, here we go again",
+        "Oh sh*t, here we go again",
         "Star Platinum: Za Warudo!",
         "Do you think you can survive the top?",
-        "This is ten percent luck. Twenty percent skill..."
+        "This is ten percent luck. Twenty percent skill...",
+        "Here I am! Rock you like a hurricane!",
+        "Disturbing the peace. Look into my eyes"
     };
     
     // Nice Moves

@@ -31,15 +31,13 @@ public class Desplegable extends JMenuBar {
         menu.setFont(MENU_FONT);
         menu.setForeground(CC.P3_BRIGHT_CYAN);
         
-        // 1. Create Menu Items
-        JMenuItem itemPlay = createStyledMenuItem("Play");
+        JMenuItem itemGame = createStyledMenuItem("Game");
         JMenuItem itemSelective = createStyledMenuItem("Selective");
         JMenuItem itemHistory = createStyledMenuItem("Historic");
         JMenuItem itemSettings = createStyledMenuItem("Settings");
         JMenuItem itemExit = createStyledMenuItem("Exit");
 
-        // 2. Map Actions to the ContentPanel
-        itemPlay.addActionListener(e -> {
+        itemGame.addActionListener(e -> {
             cp.switchPanel(ContentPanel.GAME);
         });
 
@@ -59,8 +57,7 @@ public class Desplegable extends JMenuBar {
             frame.secureExit();
         });
         
-        // 3. Assemble the Dropdown Menu
-        menu.add(itemPlay);
+        menu.add(itemGame);
         menu.addSeparator();
         menu.add(itemSelective);
         menu.add(itemHistory);

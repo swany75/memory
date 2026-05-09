@@ -11,7 +11,8 @@ package memory;
 public class GameManager { // Gestio Partida
     
     private static boolean running = false;
-
+    private static boolean win = false;
+    
     int NUM_ROWS;
     int NUM_COLS;
     int[][] MATRIX;
@@ -50,5 +51,14 @@ public class GameManager { // Gestio Partida
         MATRIX = new int[NUM_ROWS][NUM_COLS];
     }
 
-
+    public static String getGameStatus() {
+        String res = "";
+        if (win) {
+            res = "You Win!";
+        } else {
+            res = "You Lose!";
+        }
+        return res;
+    }
+    
 }

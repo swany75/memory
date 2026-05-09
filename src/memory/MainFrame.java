@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
     private Random rand = new Random();
     private CustomColors CC = new CustomColors();
     private ContentPanel contentPanel;
+    private PopUpManager popup;
     
     // Rutes
     private static final String RUTA_ICONES  = "media/icons/default/";
@@ -100,7 +101,7 @@ public class MainFrame extends JFrame {
         toolBar.add(lateralMenuButton);
         
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.GAME)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "user.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SELECTIVE)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "selectiveHistoric.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SELECTIVE)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.HISTORY)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SETTINGS)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, e -> secureExit()));
@@ -165,10 +166,19 @@ public class MainFrame extends JFrame {
     
     // METHODS
     public void secureExit() {
+        
         if (GameManager.isRunning()) {
-            statusBar.setText("[!] Error: You should finish the round");
-        } else {
+            statusBar.setText("A game is currently in progress");
+            popup.displayMessage("You must finish the current game before exiting!",
+                "The game is still in progress");
+            return;
+        }
+
+        boolean confirmExit = popup.confirmAction("Exit the application");
+
+        if (confirmExit) {
             statusBar.setText("[+] Exit simulation");
+            // System.exit(0); // If you want to close the JVM here
         }
     }
 }
