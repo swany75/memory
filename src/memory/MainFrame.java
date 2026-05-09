@@ -140,7 +140,7 @@ public class MainFrame extends JFrame {
     private void addSideButton(String baseName, java.awt.event.ActionListener action) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 
-            CC.UIB_BLUE, 
+            CC.AMSTRAD_BLUE, 
             new Font("Montserrat", Font.BOLD, 16)
         );
         button.setAlignmentX(Component.CENTER_ALIGNMENT);

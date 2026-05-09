@@ -32,15 +32,15 @@ public class CustomColors {
     public static final Color P3_RED_ALERT = new Color(255, 75, 75);
     
     // Amstrad CPC 464
-    public static final int AMSTRAD_DARK_GREY = 0x373A36;
-    public static final int AMSTRAD_LIGHT_GREY = 0x53565A;
-    public static final int AMSTRAD_RED = 0xE10600;
-    public static final int AMSTRAD_BLUE = 0x0061A0;
-    public static final int AMSTRAD_GREEN = 0x48A23F;
-    public static final int HACKER_GREEN = 0x00FF00;
-    public static final int TERMINAL = 0x1C262C;
-    public static final int BACKGROUND = 0x263238;
-    public static final int CYAN_KHAN = 0x16B290;
+    public static final Color AMSTRAD_DARK_GREY = new Color(0x373A36);
+    public static final Color AMSTRAD_LIGHT_GREY = new Color(0x53565A);
+    public static final Color AMSTRAD_RED = new Color(0xE10600);
+    public static final Color AMSTRAD_BLUE = new Color(0x0061A0);
+    public static final Color AMSTRAD_GREEN = new Color(0x48A23F);
+    public static final Color HACKER_GREEN = new Color(0x00FF00);
+    public static final Color TERMINAL = new Color(0x1C262C);
+    public static final Color BACKGROUND = new Color(0x263238);
+    public static final Color CYAN_KHAN = new Color(0x16B290);
     
     // Other Colors
     public static final Color EGG_White = new Color(0xF7EFE0);

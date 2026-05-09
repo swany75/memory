@@ -20,8 +20,8 @@ public class ContentPanel extends JPanel {
     private String currentPanel;
     private GamePanel gamePanel;
     private Settings settings;
-    private Historic historic;
-    private SelectiveHistoric selectiveHistoric;
+    private Historial historic;
+    private Historial selectiveHistoric;
     
     public static final String GAME = "GAME";
     public static final String SETTINGS = "SETTINGS";
@@ -39,44 +39,36 @@ public class ContentPanel extends JPanel {
         
         gamePanel = new GamePanel();
         settings = new Settings();
-        historic = new Historic();
-        selectiveHistoric = new SelectiveHistoric();
+        historic = new Historial(false);           // historial general
+        selectiveHistoric = new Historial(true);   // historial selectivo
         
         this.add(gamePanel, GAME);
         this.add(settings, SETTINGS);
         this.add(historic, HISTORY);
         this.add(selectiveHistoric, SELECTIVE);
-
+        
         switchPanel(GAME);
     }
     
     public void switchPanel(String panelName) {
-
         if (panelName == null || panelName.equals(currentPanel)) {
             return;
         }
-
         cardLayout.show(this, panelName);
         currentPanel = panelName;
-
         switch (panelName) {
-
             case GAME:
                 statusBar.setDefaultText();
                 break;
-
             case SETTINGS:
                 statusBar.setText("Settings");
                 break;
-
             case HISTORY:
                 statusBar.setText("History");
                 break;
-
             case SELECTIVE:
                 statusBar.setText("Selective History");
                 break;
-
             default:
                 statusBar.clearText();
                 break;
@@ -91,11 +83,11 @@ public class ContentPanel extends JPanel {
         return settings;
     }
     
-    public Historic getHistoryPanel() {
+    public Historial getHistoryPanel() {
         return historic;
     }
     
-    public SelectiveHistoric getUserPanel() {
+    public Historial getSelectiveHistoryPanel() {
         return selectiveHistoric;
     }
 }

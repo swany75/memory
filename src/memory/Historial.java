@@ -11,6 +11,19 @@ import javax.swing.JPanel;
  * @author Juan Dalmau Santandreu
  */
 
-public class SelectiveHistoric extends JPanel {
+public class Historial extends JPanel {
+    
+    boolean selective = false;
+    
+    Historial(boolean sel) {
+        this.selective = sel;
+        
+        if (selective) {
+            
+        } else { 
+            
+        }
+        
+    }
     
 }

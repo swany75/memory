@@ -1,0 +1,93 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package memory;
+
+/**
+ * @author Marti Figuls Nolla
+ * @author Juan Dalmau Santandreu
+ */
+
+import java.io.Serializable;
+
+public class Partida implements Serializable {
+    // Es una buena práctica añadir un serialVersionUID al implementar Serializable
+    private static final long serialVersionUID = 1L;
+
+    public enum GameState { WIN, LOSE, INTERRUPTED }
+    public enum Difficulty { EASY, NORMAL, HARD } // Corregido: "Difficulty" con doble 'f'
+    
+    private String playerName; 
+    private Difficulty dificultat; // Tipo corregido a Difficulty
+    private int totalParelles;
+    private int parellesEncertades;
+    private GameState estat;
+    private int points;
+    private int duracio;
+    
+    public Partida(String playerName, Difficulty dificultat, int totalParelles) {
+        this.playerName = playerName; 
+        this.dificultat = dificultat;
+        this.totalParelles = totalParelles;
+        this.parellesEncertades = 0;
+        this.estat = GameState.INTERRUPTED;
+        this.points = 0;
+        this.duracio = 0;
+    }
+    
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public Difficulty getDificultat() {
+        return dificultat;
+    }
+
+    public int getTotalParelles() {
+        return totalParelles;
+    }
+
+    public int getParellesEncertades() {
+        return parellesEncertades;
+    }
+
+    public void setParellesEncertades(int parellesEncertades) {
+        this.parellesEncertades = parellesEncertades;
+    }
+
+    public GameState getEstat() {
+        return estat;
+    }
+
+    public void setEstat(GameState estat) {
+        this.estat = estat;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getDuracio() {
+        return duracio;
+    }
+
+    public void setDuracio(int duracio) {
+        this.duracio = duracio;
+    }
+
+    @Override
+    public String toString() {
+        return playerName + "," + 
+               dificultat + "," + 
+               parellesEncertades + "," + 
+               totalParelles + "," + 
+               estat + "," + 
+               points + "," + 
+               duracio;
+    }    
+}
