@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
         leftMenuOpen = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuOpen.png", 32, 32);
         leftMenuClose = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuClose.png", 32, 32);
 
-        setSize(1280, 720);
+        setSize(670, 720);
         setMinimumSize(new Dimension(1280, 720));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(4, 4));
