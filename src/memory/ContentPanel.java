@@ -15,38 +15,35 @@ import java.awt.*;
  */
 
 public class ContentPanel extends JPanel {
-    
+
     private CardLayout cardLayout;
     private String currentPanel;
     private GamePanel gamePanel;
     private Settings settings;
-    private Historial historic;
-    private Historial selectiveHistoric;
-    
-    public static final String GAME = "GAME";
-    public static final String SETTINGS = "SETTINGS";
-    public static final String HISTORY = "HISTORY";
+    private Historial historic;         // único panel, dos modos
+
+    public static final String GAME      = "GAME";
+    public static final String SETTINGS  = "SETTINGS";
+    public static final String HISTORY   = "HISTORY";
     public static final String SELECTIVE = "SELECTIVE";
-    
+
     private StatusBar statusBar;
-    
+
     public ContentPanel(StatusBar st) {
-        
         this.statusBar = st;
-        
+
         cardLayout = new CardLayout();
         setLayout(cardLayout);
-        
+
         gamePanel = new GamePanel();
-        settings = new Settings();
-        historic = new Historial(false);           // historial general
-        selectiveHistoric = new Historial(true);   // historial selectivo
-        
+        settings  = new Settings();
+        historic  = new Historial();    // una sola instancia
+
         this.add(gamePanel, GAME);
-        this.add(settings, SETTINGS);
-        this.add(historic, HISTORY);
-        this.add(selectiveHistoric, SELECTIVE);
-        
+        this.add(settings,  SETTINGS);
+        this.add(historic,  HISTORY);
+        this.add(historic,  SELECTIVE); // mismo panel, misma instancia
+
         switchPanel(GAME);
     }
     
@@ -65,9 +62,11 @@ public class ContentPanel extends JPanel {
                 break;
             case HISTORY:
                 statusBar.setText("History");
+                historic.refresh(false);
                 break;
             case SELECTIVE:
                 statusBar.setText("Selective History");
+                historic.refresh(true);
                 break;
             default:
                 statusBar.clearText();
@@ -87,7 +86,4 @@ public class ContentPanel extends JPanel {
         return historic;
     }
     
-    public Historial getSelectiveHistoryPanel() {
-        return selectiveHistoric;
-    }
 }
