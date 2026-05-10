@@ -3,66 +3,75 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package memory;
- 
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
- 
 
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
+
 public class SoundManager {
  
-    private static String[] paths;
-    private static Clip[]   clips;
+    private static Clip musicClip;
+    private static float soundVolume = 1.0f;
+    private static float musicVolume = 0.8f;
+    private static boolean muted = false;
  
-    public static void load(String[] sounds) {
-        paths = sounds;
-        clips = new Clip[sounds.length];
- 
-        for (int i = 0; i < sounds.length; i++) {
-            try {
-                AudioInputStream ais = AudioSystem.getAudioInputStream(new File(sounds[i]));
-                Clip clip = AudioSystem.getClip();
-                clip.open(ais);
-                clips[i] = clip;
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.err.println("SoundManager: could not load \"" + sounds[i] + "\": " + e.getMessage());
-            }
-        }
-    }
-    
-    
-    public static void reproduce(String path) {
-        if (clips == null) return;
-
-        for (int i = 0; i < paths.length; i++) {
-            if (paths[i].equals(path) && clips[i] != null) {
-                if (clips[i].isRunning()) {
-                    clips[i].stop();
-                }
-                clips[i].setFramePosition(0);
-                clips[i].start();
-                return;
-            }
-        }
-
-        System.err.println("SoundManager: \"" + path + "\" was not found. Did you load it?");
-    }
-    
-    /* Metode amb sense solapament
-    public static void reproduce(String path) {
+    public static void playSound(String path) {
+        if (muted) return;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
+            applyVolume(clip, soundVolume);
+            clip.addLineListener(event -> {
+                if (event.getType() == LineEvent.Type.STOP) clip.close();
+            });
             clip.start();
-        } catch (Exception e) {
-            System.err.println("SoundManager: error reproduciendo " + path);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("SoundManager: error reproduciendo \"" + path + "\": " + e.getMessage());
         }
     }
-    */
-}
  
+    public static void playMusic(String path) {
+        if (muted) return;
+        if (musicClip != null) {
+            musicClip.stop();
+            musicClip.close();
+        }
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
+            musicClip = AudioSystem.getClip();
+            musicClip.open(ais);
+            applyVolume(musicClip, musicVolume);
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+            musicClip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("SoundManager: error reproduciendo \"" + path + "\": " + e.getMessage());
+        }
+    }
+ 
+    public static void setSoundVolume(float volume) {
+        soundVolume = volume;
+    }
+ 
+    public static void setMusicVolume(float volume) {
+        musicVolume = volume;
+        if (musicClip != null) applyVolume(musicClip, musicVolume);
+    }
+ 
+    public static void setMuted(boolean value) {
+        muted = value;
+    }
+ 
+    private static void applyVolume(Clip clip, float volume) {
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float dB = volume <= 0f ? gain.getMinimum() : (float) (20.0 * Math.log10(volume));
+            gain.setValue(Math.max(gain.getMinimum(), Math.min(gain.getMaximum(), dB)));
+        }
+    }
+}

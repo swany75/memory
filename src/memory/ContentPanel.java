@@ -20,12 +20,14 @@ public class ContentPanel extends JPanel {
     private String currentPanel;
     private GamePanel gamePanel;
     private Settings settings;
-    private Historial historic;         // único panel, dos modos
+    private Historial historic;
+    private DevTools devTools;
 
     public static final String GAME      = "GAME";
     public static final String SETTINGS  = "SETTINGS";
     public static final String HISTORY   = "HISTORY";
     public static final String SELECTIVE = "SELECTIVE";
+    public static final String DEVTOOLS = "DEVTOOLS"; 
 
     private StatusBar statusBar;
 
@@ -37,12 +39,14 @@ public class ContentPanel extends JPanel {
 
         gamePanel = new GamePanel();
         settings  = new Settings();
-        historic  = new Historial();    // una sola instancia
+        historic  = new Historial();
+        devTools = new DevTools();
 
         this.add(gamePanel, GAME);
         this.add(settings,  SETTINGS);
         this.add(historic,  HISTORY);
-        this.add(historic,  SELECTIVE); // mismo panel, misma instancia
+        this.add(historic,  SELECTIVE);
+        this.add(devTools, DEVTOOLS);
 
         switchPanel(GAME);
     }
@@ -67,6 +71,9 @@ public class ContentPanel extends JPanel {
             case SELECTIVE:
                 statusBar.setText("Selective History");
                 historic.refresh(true);
+                break;
+            case DEVTOOLS:
+                statusBar.setText("How did you get here?");
                 break;
             default:
                 statusBar.clearText();
