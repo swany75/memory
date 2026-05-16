@@ -17,7 +17,6 @@ public class PopUpManager {
         String message = "Are you sure you want to " + actionText + "?";
         int response = -1;
 
-        // Keep showing the dialog if the user tries to close it with the "X" button
         while (response == JOptionPane.CLOSED_OPTION) {
             response = JOptionPane.showConfirmDialog(
                     null, 

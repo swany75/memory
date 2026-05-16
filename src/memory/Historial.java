@@ -6,41 +6,40 @@ package memory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
+
 public class Historial extends JPanel {
 
     boolean selective = false;
 
-    // Panel superior: barra de búsqueda + botones
     private JPanel searchPanel;
     private JTextField searchField;
     private JButton searchButton;
     private JButton clearButton;
 
-    // Panel inferior: área de historial con scroll
     private JPanel historialPanel;
     private JTextArea historialArea;
     private JScrollPane scrollPane;
 
-    // Datos cargados del fichero
-    private List<String> allLines = new ArrayList<>();
+    private String[] allLines;
+    private int numLines;
 
     private static final String FILENAME = "media/files/historial";
+    private static final int INCREMENT = 10;
 
     Historial() {
+        allLines = new String[10];
+        numLines = 0;
         setLayout(new BorderLayout(0, 8));
         setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         setPanels();
         setListeners();
     }
 
-    // ── Refresh: llamado desde ContentPanel al cambiar de pestaña ────────
     public void refresh(boolean selective) {
         this.selective = selective;
         searchField.setText("");
@@ -50,10 +49,10 @@ public class Historial extends JPanel {
             searchField.requestFocusInWindow();
         } else {
             loadAll();
+            SwingUtilities.invokeLater(() -> scrollPane.requestFocusInWindow());
         }
     }
 
-    // ── Construcción de paneles ───────────────────────────────────────────
     private void setPanels() {
         setTopPanel();
         setHistorialPanel();
@@ -68,15 +67,14 @@ public class Historial extends JPanel {
         searchField = new JTextField();
         searchField.setToolTipText("Buscar en el historial...");
 
-        // Botones tamaño fijo e igual
         JPanel buttonsPanel = new JPanel(new GridLayout(1, 2, 4, 0));
         searchButton = new JButton("Buscar");
         clearButton  = new JButton("Clear");
         buttonsPanel.add(searchButton);
         buttonsPanel.add(clearButton);
 
-        searchPanel.add(searchField,  BorderLayout.CENTER); // se estira todo lo posible
-        searchPanel.add(buttonsPanel, BorderLayout.EAST);   // tamaño fijo
+        searchPanel.add(searchField,  BorderLayout.CENTER);
+        searchPanel.add(buttonsPanel, BorderLayout.EAST);
     }
 
     private void setHistorialPanel() {
@@ -95,69 +93,87 @@ public class Historial extends JPanel {
         historialPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
-    // ── Listeners ─────────────────────────────────────────────────────────
     private void setListeners() {
         searchButton.addActionListener(e -> search());
-        searchField.addActionListener(e -> search()); // Enter también busca
+        searchField.addActionListener(e -> search());
 
         clearButton.addActionListener(e -> {
             searchField.setText("");
             if (selective) {
                 historialArea.setText("");
             } else {
-                showLines(allLines); // restaura el historial completo
+                showLines(allLines, numLines);
             }
         });
     }
 
-    // ── Lógica de datos ───────────────────────────────────────────────────
-    private void loadAll() {
-        allLines = readFile();
-        showLines(allLines);
+        private void loadAll() {
+        int[] count = {0};
+        allLines = readFileInto(count);
+        numLines = count[0];
+        showLines(allLines, numLines);
     }
 
-    private List<String> readFile() {
-        List<String> lines = new ArrayList<>();
+    private String[] readFileInto(int[] count) {
+        String[] lines = new String[10];
+        int n = 0;
         FileRead fr = new FileRead(FILENAME);
         fr.open();
         String line;
         while ((line = fr.readLine()) != null) {
-            lines.add(line);
+            if (n == lines.length) {
+                String[] bigger = new String[lines.length + INCREMENT];
+                for (int i = 0; i < n; i++) bigger[i] = lines[i];
+                lines = bigger;
+            }
+            lines[n++] = line;
         }
         fr.close();
+        count[0] = n;
         return lines;
     }
 
-    private void showLines(List<String> lines) {
+    private void showLines(String[] lines, int n) {
         StringBuilder sb = new StringBuilder();
-        for (String l : lines) {
-            sb.append("- ").append(l).append("\n");
+        for (int i = 0; i < n; i++) {
+            sb.append("- ").append(lines[i]).append("\n");
         }
         historialArea.setText(sb.toString());
-        historialArea.setCaretPosition(0); // volver arriba
+        historialArea.setCaretPosition(0);
     }
 
     private void search() {
         String query = searchField.getText().trim().toLowerCase();
 
         if (query.isEmpty()) {
-            if (!selective) showLines(allLines);
+            if (!selective) showLines(allLines, numLines);
             return;
         }
 
-        List<String> source = selective ? readFile() : allLines;
-        List<String> results = new ArrayList<>();
+        String[] source;
+        int sourceCount;
+        if (selective) {
+            int[] count = {0};
+            source = readFileInto(count);
+            sourceCount = count[0];
+        } else {
+            source = allLines;
+            sourceCount = numLines;
+        }
 
-        for (String line : source) {
-            if (line.toLowerCase().contains(query)) {
-                results.add(line);
+        String[] results = new String[sourceCount];
+        int numResults = 0;
+        for (int i = 0; i < sourceCount; i++) {
+            if (source[i].toLowerCase().contains(query)) {
+                results[numResults++] = source[i];
             }
         }
 
-        if (results.isEmpty()) {
+        if (numResults == 0) {
             historialArea.setText("No se encontraron resultados para: \"" + query + "\"");
         } else {
-            showLines(results);
+            showLines(results, numResults);
         }
     }
+     
 }

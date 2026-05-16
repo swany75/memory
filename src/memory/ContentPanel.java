@@ -21,11 +21,10 @@ public class ContentPanel extends JPanel {
     private GamePanel gamePanel;
     private Settings settings;
     private Historial historic;
-    private DevTools devTools;
-
-    public static final String GAME      = "GAME";
-    public static final String SETTINGS  = "SETTINGS";
-    public static final String HISTORY   = "HISTORY";
+   
+    public static final String GAME = "GAME";
+    public static final String SETTINGS = "SETTINGS";
+    public static final String HISTORY = "HISTORY";
     public static final String SELECTIVE = "SELECTIVE";
     public static final String DEVTOOLS = "DEVTOOLS"; 
 
@@ -40,13 +39,12 @@ public class ContentPanel extends JPanel {
         gamePanel = new GamePanel();
         settings  = new Settings();
         historic  = new Historial();
-        devTools = new DevTools();
+
 
         this.add(gamePanel, GAME);
         this.add(settings,  SETTINGS);
         this.add(historic,  HISTORY);
         this.add(historic,  SELECTIVE);
-        this.add(devTools, DEVTOOLS);
 
         switchPanel(GAME);
     }

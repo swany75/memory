@@ -5,9 +5,6 @@
 package memory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import memory.Partida;
 
 /**
  * @author Marti Figuls Nolla
@@ -15,34 +12,52 @@ import memory.Partida;
  */
 
 public class Player implements Serializable {
-    // Definimos el ID de serialización para asegurar la compatibilidad del archivo binario
-    private static final long serialVersionUID = 1L;
     
+    private static final long serialVersionUID = 1L;
+
     private String name;
-    private List<Partida> partides;
+    private Partida[] partides;
+    private int numPartides;
+    private static final int INCREMENT = 10;
     
     public Player(String nom) {
         this.name = nom;
-        this.partides = new ArrayList<>();
+        this.partides = new Partida[INCREMENT];
+        this.numPartides = 0;
     }
-    
+
     public String getName() {
         return name;
     }
-    
-    public List<Partida> getPartides() {
-        return partides;
+
+    public Partida[] getPartides() {
+        Partida[] result = new Partida[numPartides];
+        for (int i = 0; i < numPartides; i++) {
+            result[i] = partides[i];
+        }
+        return result;
     }
-    
+
+    public int getNumPartides() {
+        return numPartides;
+    }
+
     public void addGame(Partida game) {
-        partides.add(game);
+        if (numPartides == partides.length) {
+            Partida[] nouArray = new Partida[partides.length + INCREMENT];
+            for (int i = 0; i < numPartides; i++) {
+                nouArray[i] = partides[i];
+            }
+            partides = nouArray;
+        }
+        partides[numPartides] = game;
+        numPartides++;
     }
-    
+
     public int getTotalPoints() {
         int total = 0;
-        // Bucle for-each más limpio y eficiente
-        for (Partida p : partides) {
-            total += p.getPoints();
+        for (int i = 0; i < numPartides; i++) {
+            total += partides[i].getPoints();
         }
         return total;
     }
