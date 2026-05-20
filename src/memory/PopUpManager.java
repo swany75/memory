@@ -16,36 +16,37 @@ public class PopUpManager {
     public static boolean confirmAction(String actionText) {
         String message = "Are you sure you want to " + actionText + "?";
         int response = -1;
-
         while (response == JOptionPane.CLOSED_OPTION) {
             response = JOptionPane.showConfirmDialog(
-                    null, 
-                    message, 
-                    "Confirmation Required", 
-                    JOptionPane.YES_NO_OPTION, 
+                    null,
+                    message,
+                    "Confirmation Required",
+                    JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE
             );
         }
-
-        // Returns true if YES, false if NO
         return response == JOptionPane.YES_OPTION;
     }
-    
-    public static void displayMessage(String message, String action) {
-        int response = -1;
 
+    
+    public static void displayMessage(String message, String title) {
+        int response = -1;
         while (response == JOptionPane.CLOSED_OPTION) {
             response = JOptionPane.showOptionDialog(
-                    null, 
-                    message, 
-                    action, 
-                    JOptionPane.DEFAULT_OPTION, 
-                    JOptionPane.WARNING_MESSAGE, 
-                    null, 
+                    null,
+                    message,
+                    title,
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
                     new Object[]{"OK"},
                     "OK"
             );
         }
     }
+
     
+    public static void displayMessage(String message) {
+        displayMessage(message, "Game Over");
+    }
 }

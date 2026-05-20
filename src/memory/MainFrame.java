@@ -166,19 +166,20 @@ public class MainFrame extends JFrame {
     
     // METHODS
     public void secureExit() {
-        
         if (GameManager.isRunning()) {
             statusBar.setText("A game is currently in progress");
-            popup.displayMessage("You must finish the current game before exiting!",
-                "The game is still in progress");
+            PopUpManager.displayMessage(
+                "You must finish the current game before exiting!",
+                "The game is still in progress"
+            );
             return;
-        }
+        }   
 
-        boolean confirmExit = popup.confirmAction("Exit the application");
+        boolean confirmExit = PopUpManager.confirmAction("Exit the application");
 
         if (confirmExit) {
             statusBar.setText("[+] Exit simulation");
-            // System.exit(0); // If you want to close the JVM here
+            // System.exit(0);
         }
     }
 }

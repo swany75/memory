@@ -1,0 +1,22 @@
+Memory.java -> Clase Memory: punto de entrada; main() llama a run() y crea el MainFrame.
+MainFrame.java -> Clase MainFrame: ventana principal (JFrame); construye paneles, botones y cambia de vista; secureExit() controla salida segura.
+GameManager.java -> Clase GameManager: gestiona estado de partida y dificultad; setDificulty() configura filas/columnas y matriz; getGameStatus() devuelve Win/Lose.
+GamePanel.java -> Clase GamePanel: panel del juego; muestra pantalla de bienvenida y arranca partida con startGame() al hacer click.
+ContentPanel.java -> Clase ContentPanel: contenedor con CardLayout; switchPanel() cambia GAME/SETTINGS/HISTORY/SELECTIVE y actualiza StatusBar.
+ButtonBuilder.java -> Clase ButtonBuilder: crea botones estándar y "pulsador"; incluye clase interna PulsadorUI que dibuja el efecto 3D y el estado presionado.
+Card.java -> Clase Card: modelo de carta con imagen frontal/trasera; flip() alterna estado y getCurrentImage() devuelve la imagen visible.
+Couple.java -> Clase Couple: par de cartas iguales; isCouple() comprueba coincidencia y mantiene estado de pareja encontrada.
+Casella.java -> Clase Casella: clase vacía (placeholder).
+CustomColors.java -> Clase CustomColors: paleta de colores y utilidades; shadowColor()/hoverColor() derivan colores para UI.
+Desplegable.java -> Clase Desplegable: JMenuBar con opciones de navegación; crea items y llama a ContentPanel/MainFrame.
+FileRead.java -> Clase FileRead: lector de ficheros .dat; open(), readLine() y close() gestionan lectura secuencial.
+FileWrite.java -> Clase FileWrite: escritor de ficheros .dat; writeLine() añade líneas y close() cierra el buffer.
+Historial.java -> Clase Historial: panel de historial con búsqueda; refresh() carga datos y search() filtra líneas del fichero.
+ImageManager.java -> Clase ImageManager: carga iconos e imágenes escaladas; loadIcon(), loadScaledIcon(), loadBufferedImage().
+Partida.java -> Clase Partida: partida serializable con dificultad, puntos y estado; toString() serializa en CSV.
+Player.java -> Clase Player: jugador con lista de partidas; addGame() añade y getTotalPoints() suma puntos.
+PopUpManager.java -> Clase PopUpManager: diálogos de confirmación y aviso; confirmAction() y displayMessage().
+Settings.java -> Clase Settings: panel de ajustes vacío (placeholder).
+SoundManager.java -> Clase SoundManager: reproduce sonidos y música; playSound()/playMusic() y control de volumen/mute.
+StatusBar.java -> Clase StatusBar: barra de estado con frases aleatorias; setDefaultText()/setRandomNiceMovePhrase()/setRandomBadMovePhrase().
+Timer.java -> Clase Timer: barra de progreso con cuenta atrás; prepararCountdown() crea el temporizador y muestra fin de juego.

@@ -18,7 +18,6 @@ public class Timer extends JProgressBar {
     private int secTotals;
     private int secRestants;
     private CustomColors CC = new CustomColors();
-    private PopUpManager popup = new PopUpManager();
 
     public Timer() {
         super();
@@ -60,7 +59,7 @@ public class Timer extends JProgressBar {
             repaint();                        
 
             if (secRestants <= 0) {
-                popup.displayMessage("Game Over!", GameManager.getGameStatus());
+                PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
                 stop();
             }
         });
