@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package ui;
 
 /**
  * @author Marti Figuls Nolla
@@ -11,6 +11,7 @@ package memory;
 
 import javax.swing.*;
 import java.awt.*;
+import memory.MainFrame;
 
 public class Desplegable extends JMenuBar {
 

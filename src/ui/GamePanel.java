@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package ui;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import model.Card;
+import model.Casella;
+import game.GameManager;
 
 /**
  * @author Marti Figuls Nolla
@@ -44,7 +47,8 @@ public class GamePanel extends JPanel {
     }
 
     public void startGame() {
-        gameManager.setDifficulty(1); // TODO: receive difficulty from Settings
+        setBackground(new Color(24, 61, 39));
+        gameManager.setDifficulty(1);
         gameManager.startGame();
 
         inGame = true;

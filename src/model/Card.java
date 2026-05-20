@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package model;
 
 /**
  * @author Marti Figuls Nolla
@@ -11,7 +11,7 @@ package memory;
 
 public class Card {
     private String frontImage;
-    private static final String BACK_IMAGE = "media/images/backImage.png";
+    private static final String BACK_IMAGE = "media/images/backImage1.png";
     private boolean isFlipped;
 
     public Card(String frontImage) {

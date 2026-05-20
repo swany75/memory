@@ -4,6 +4,15 @@
  */
 package memory;
 
+import ui.PopUpManager;
+import game.Timer;
+import game.GameManager;
+import ui.ButtonBuilder;
+import ui.ContentPanel;
+import ui.ImageManager;
+import ui.CustomColors;
+import ui.StatusBar;
+import ui.Desplegable;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -59,7 +68,7 @@ public class MainFrame extends JFrame {
         leftMenuOpen = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuOpen.png", 32, 32);
         leftMenuClose = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuClose.png", 32, 32);
 
-        setSize(670, 720);
+        setSize(1920, 1080);
         setMinimumSize(new Dimension(1280, 720));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(4, 4));

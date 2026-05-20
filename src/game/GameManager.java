@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package game;
 
+import model.Couple;
+import model.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class GameManager {
 
-    private static final String IMAGE_PATH = "media/images/default/imagen";
+    private static final String IMAGE_PATH = "media/images/cards/imagen";
     private static final String IMAGE_EXT  = ".png";
 
     public int numRows;

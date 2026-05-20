@@ -2,15 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package game;
 
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
 
+import ui.CustomColors;
 import javax.swing.*;
 import java.awt.*;
+import ui.PopUpManager;
 
 public class Timer extends JProgressBar {
 
