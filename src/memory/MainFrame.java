@@ -16,6 +16,7 @@ import ui.Desplegable;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import audio.SoundManager;
 
 /**
  * @author Marti Figuls Nolla
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
     private Random rand = new Random();
     private CustomColors CC = new CustomColors();
     private ContentPanel contentPanel;
-    private PopUpManager popup;
+    private SoundManager sm = new SoundManager();
     
     // Rutes
     private static final String RUTA_ICONES  = "media/icons/default/";
@@ -62,23 +63,23 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // LOAD Icons & Images
-        ImageIcon icono = new ImageIcon(RUTA_ICONES + ("icon" + rand.nextInt(5 - 1) + ".png"));
+        ImageIcon icono = new ImageIcon(RUTA_ICONES + ("icon" + (rand.nextInt(4) + 1) + ".png"));
         setIconImage(icono.getImage());
-
+        
         leftMenuOpen = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuOpen.png", 32, 32);
         leftMenuClose = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuClose.png", 32, 32);
 
-        setSize(1920, 1080);
+        setSize(1280, 720);
         setMinimumSize(new Dimension(1280, 720));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(4, 4));
 
-        contentPanel = new ContentPanel(statusBar);
+        contentPanel = new ContentPanel(statusBar, timer, sm);
         
         add(topPanel(), BorderLayout.NORTH);
         add(centerPanel(), BorderLayout.CENTER);
-        
         add(timer, BorderLayout.SOUTH);
+        
         setVisible(true);
     }
 
@@ -126,7 +127,6 @@ public class MainFrame extends JFrame {
         panellCos = new JPanel(new BorderLayout(4, 0));
 
         panellLateral = new JPanel();
-        panellLateral.setLayout(new BoxLayout(panellLateral, BoxLayout.Y_AXIS));
         panellLateral.setPreferredSize(new Dimension(192, 0));
         panellLateral.setLayout(new GridLayout(5, 1, 0, 4));
         panellLateral.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
@@ -146,6 +146,8 @@ public class MainFrame extends JFrame {
         return panellCos;
     }
    
+    
+    
     private void addSideButton(String baseName, java.awt.event.ActionListener action) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 

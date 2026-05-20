@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import model.Historial;
 import config.Settings;
+import audio.SoundManager;
+import game.Timer;
 
 /**
  * @author Marti Figuls Nolla
@@ -23,6 +25,8 @@ public class ContentPanel extends JPanel {
     private GamePanel gamePanel;
     private Settings settings;
     private Historial historic;
+    private game.Timer timer;
+    private SoundManager soundManager;
    
     public static final String GAME = "GAME";
     public static final String SETTINGS = "SETTINGS";
@@ -32,22 +36,17 @@ public class ContentPanel extends JPanel {
 
     private StatusBar statusBar;
 
-    public ContentPanel(StatusBar st) {
+    public ContentPanel(StatusBar st, Timer timer, SoundManager sm) {
         this.statusBar = st;
-
+        this.soundManager = sm;
         cardLayout = new CardLayout();
         setLayout(cardLayout);
-
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(st, timer, sm);
         settings  = new Settings();
         historic  = new Historial();
-
-
         this.add(gamePanel, GAME);
         this.add(settings,  SETTINGS);
         this.add(historic,  HISTORY);
-        this.add(historic,  SELECTIVE);
-
         switchPanel(GAME);
     }
     
@@ -66,14 +65,13 @@ public class ContentPanel extends JPanel {
                 break;
             case HISTORY:
                 statusBar.setText("History");
-                historic.refresh(false);
+                cardLayout.show(this, HISTORY);
+                SwingUtilities.invokeLater(() -> historic.refresh(false));
                 break;
             case SELECTIVE:
                 statusBar.setText("Selective History");
-                historic.refresh(true);
-                break;
-            case DEVTOOLS:
-                statusBar.setText("How did you get here?");
+                cardLayout.show(this, HISTORY);
+                SwingUtilities.invokeLater(() -> historic.refresh(true));
                 break;
             default:
                 statusBar.clearText();

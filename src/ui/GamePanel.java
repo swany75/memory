@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import model.Card;
 import model.Casella;
 import game.GameManager;
+import game.Timer;
+import audio.SoundManager;
 
 /**
  * @author Marti Figuls Nolla
@@ -20,18 +22,23 @@ import game.GameManager;
 public class GamePanel extends JPanel {
 
     private GameManager gameManager;
+    private Timer timer;
     private Casella[][] casellas;
     private boolean inGame = false;
     private ImageIcon welcomeIcon;
+    private StatusBar statusBar;
+    private SoundManager soundManager;
 
-    // Flip logic state
     private Casella firstFlipped  = null;
     private Casella secondFlipped = null;
     private boolean waitingForReset = false;
 
-    public GamePanel() {
-        this.gameManager  = new GameManager();
-        this.welcomeIcon  = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
+    public GamePanel(StatusBar sb, Timer timer, SoundManager sm) {
+        this.gameManager = new GameManager(sb, timer, sm);
+        this.statusBar   = sb;
+        this.soundManager = sm;
+        this.timer       = timer;
+        this.welcomeIcon = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
         this.setBackground(Color.WHITE);
 
         this.addMouseListener(new MouseAdapter() {
@@ -51,10 +58,14 @@ public class GamePanel extends JPanel {
         gameManager.setDifficulty(1);
         gameManager.startGame();
 
-        inGame = true;
+        inGame          = true;
         waitingForReset = false;
         firstFlipped    = null;
         secondFlipped   = null;
+
+        timer.reset();
+        timer.prepararCountdown(2);
+        timer.start();
 
         buildBoard();
     }
@@ -121,6 +132,7 @@ public class GamePanel extends JPanel {
             secondFlipped = null;
 
             if (!gameManager.isRunning()) {
+                timer.stop();               // ← detener timer al ganar
                 javax.swing.Timer endDelay = new javax.swing.Timer(600, e -> showGameOver());
                 endDelay.setRepeats(false);
                 endDelay.start();
@@ -143,7 +155,18 @@ public class GamePanel extends JPanel {
     }
 
     private void showGameOver() {
+        timer.stop();
         PopUpManager.displayMessage(gameManager.getGameStatus());
+        boolean playAgain = PopUpManager.confirmAction("play again");
+        if (playAgain) {
+            startGame();
+        } else {
+            inGame = false;
+            setBackground(Color.WHITE);
+            removeAll();
+            revalidate();
+            repaint();
+        }
     }
 
     @Override

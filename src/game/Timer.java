@@ -19,6 +19,7 @@ public class Timer extends JProgressBar {
     private javax.swing.Timer crono;
     private int secTotals;
     private int secRestants;
+    private int gameDuration;
     private CustomColors CC = new CustomColors();
 
     public Timer() {
@@ -40,7 +41,7 @@ public class Timer extends JProgressBar {
         return String.format("%02d:%02d", min, seg);
     }
 
-    public void prepararCountdown(int minuts) {
+    public final void prepararCountdown(int minuts) {
         this.secTotals   = minuts * 60;
         this.secRestants = secTotals;
 
@@ -61,11 +62,11 @@ public class Timer extends JProgressBar {
             repaint();                        
 
             if (secRestants <= 0) {
-                PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
+                GameManager.timeOut();
                 stop();
+                PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
             }
         });
-
     }
 
     public void start() { 
@@ -77,10 +78,17 @@ public class Timer extends JProgressBar {
     public void stop()  { 
         if (crono != null) {
             crono.stop();
-        }  
+        }
+        
+        this.gameDuration = this.secTotals - this.secRestants;
+        this.secTotals = 0;
+        this.secRestants = 0;
+        setValue(0);
+        repaint();
+        
     }
 
-    public void reset() {
+    public final void reset() {
         stop();
         secTotals = 0;
         secRestants = 0;
@@ -88,6 +96,10 @@ public class Timer extends JProgressBar {
         repaint();
     }
     
+    public int getGameDuration() {
+        return gameDuration;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

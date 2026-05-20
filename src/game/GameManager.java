@@ -4,11 +4,14 @@
  */
 package game;
 
+import audio.SoundManager;
+import java.io.File;
 import model.Couple;
 import model.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ui.StatusBar;
 
 /**
  * @author Marti Figuls Nolla
@@ -17,76 +20,139 @@ import java.util.List;
 
 public class GameManager {
 
-    private static final String IMAGE_PATH = "media/images/cards/imagen";
+    private static final String IMAGE_DIR  = "media/images/cards/";
+    private static final String IMAGE_PATH = IMAGE_DIR + "imagen";
     private static final String IMAGE_EXT  = ".png";
+
+    private int totalAvailableImages = 0;
 
     public int numRows;
     public int numCols;
     private Card[][] board;
 
+    private Timer timer;     
+    private StatusBar statusBar;
+    private SoundManager soundManager;
+    
+    
     private static boolean running = false;
     private static boolean win     = false;
 
     private int matchesFound = 0;
     private int totalPairs;
 
-    public GameManager() {}
+    public GameManager(StatusBar sb, Timer timer, SoundManager sm) {
+        this.soundManager = sm;
+        this.statusBar = sb;
+        this.timer = timer;
+        this.setDifficulty(12);
+        
+    }
 
-    public void setDifficulty(int difficulty) {
+    public int getMaxDifficulty() {
+        int available = countAvailableImages();
+        for (int d = 12; d >= 0; d--) {
+            int[] dims = getDimsForDifficulty(d);
+            int pairs = (dims[0] * dims[1]) / 2;
+            if (pairs <= available) {
+                return d;
+            }
+        }
+        return 0;
+    }
+
+    private int[] getDimsForDifficulty(int difficulty) {
         switch (difficulty) {
-            case 0:  numRows = 2; numCols = 2;  break;
-            case 1:  numRows = 2; numCols = 4;  break;
-            case 2:  numRows = 3; numCols = 4;  break;
-            case 3:  numRows = 4; numCols = 4;  break;
-            case 4:  numRows = 4; numCols = 5;  break;
-            case 5:  numRows = 4; numCols = 6;  break;
-            case 6:  numRows = 5; numCols = 6;  break;
-            case 7:  numRows = 6; numCols = 6;  break;
-            case 8:  numRows = 6; numCols = 7;  break;
-            case 9:  numRows = 7; numCols = 8;  break;
-            case 10: numRows = 8; numCols = 8;  break;
-            case 11: numRows = 8; numCols = 10; break;
-            case 12: numRows = 10; numCols = 10; break;
-            default: numRows = 4; numCols = 6;  break;
+            case 0:  return new int[]{2,  2};
+            case 1:  return new int[]{2,  4};
+            case 2:  return new int[]{3,  4};
+            case 3:  return new int[]{4,  4};
+            case 4:  return new int[]{4,  5};
+            case 5:  return new int[]{4,  6};
+            case 6:  return new int[]{5,  6};
+            case 7:  return new int[]{6,  6};
+            case 8:  return new int[]{6,  7};
+            case 9:  return new int[]{7,  8};
+            case 10: return new int[]{8,  8};
+            case 11: return new int[]{8, 10};
+            case 12: return new int[]{10, 10};
+            default: return new int[]{2,  4};
         }
     }
 
+    public void setDifficulty(int difficulty) {
+        int[] dims = getDimsForDifficulty(difficulty);
+        numRows = dims[0];
+        numCols = dims[1];
+    }
+
     public void startGame() {
-        totalPairs   = (numRows * numCols) / 2;
-        matchesFound = 0;
-        win          = false;
-        running      = true;
-        board        = generateBoard();
+        totalAvailableImages = countAvailableImages();
+        totalPairs           = (numRows * numCols) / 2;
+        matchesFound         = 0;
+        win                  = false;
+        running              = true;
+
+        if (totalPairs > totalAvailableImages) {
+            throw new IllegalStateException(
+                "Not enough images: need " + totalPairs + ", have " + totalAvailableImages
+            );
+        }
+
+        board = generateBoard();
     }
 
     private Card[][] generateBoard() {
-        // Build a flat list with two Cards per pair (one Couple per pair)
+        // 1. Lista de todos los índices disponibles
+        List<Integer> allIndices = new ArrayList<>();
+        for (int i = 1; i <= totalAvailableImages; i++) {
+            allIndices.add(i);
+        }
+
+        // 2. Shuffle de parejas → coger las primeras totalPairs
+        Collections.shuffle(allIndices);
+        List<Integer> selectedIndices = allIndices.subList(0, totalPairs);
+
+        // 3. Crear las cartas con las parejas seleccionadas
         List<Card> cards = new ArrayList<>();
-        for (int i = 1; i <= totalPairs; i++) {
-            String imagePath = IMAGE_PATH + i + IMAGE_EXT;
+        for (int index : selectedIndices) {
+            String imagePath = IMAGE_PATH + index + IMAGE_EXT;
             Couple couple = new Couple(imagePath);
             cards.add(couple.getCardA());
             cards.add(couple.getCardB());
         }
 
-        // Shuffle
+        // 4. Shuffle de cartas
         Collections.shuffle(cards);
 
-        // Fill the board matrix
+        // 5. Colocar en el tablero
         Card[][] result = new Card[numRows][numCols];
-        int index = 0;
+        int idx = 0;
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-                result[row][col] = cards.get(index++);
+                result[row][col] = cards.get(idx++);
             }
         }
         return result;
     }
 
-    /**
-     * Called by GamePanel when two cards are flipped.
-     * Returns true if they match.
-     */
+    private int countAvailableImages() {
+        int count = 0;
+        File folder = new File(IMAGE_DIR);
+        if (!folder.exists() || !folder.isDirectory()) return 0;
+
+        File[] files = folder.listFiles();
+        if (files == null) return 0;
+
+        for (File f : files) {
+            String name = f.getName();
+            if (name.startsWith("imagen") && name.endsWith(IMAGE_EXT)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public boolean checkMatch(Card c1, Card c2) {
         if (c1.getFrontImage().equals(c2.getFrontImage())) {
             matchesFound++;
@@ -99,11 +165,25 @@ public class GameManager {
         return false;
     }
 
-    public Card[][] getBoard()    { return board;   }
-    public static boolean isRunning()    { return running; }
-    public boolean isWin()        { return win;     }
+    public Card[][]      getBoard()       { return board;   }
+    public static boolean isRunning()     { return running; }
+    public boolean        isWin()         { return win;     }
+    public int            getTotalPairs() { return totalPairs; }
 
     public static String getGameStatus() {
-        return win ? "You Win!" : "You Lose!";
+        String res = "";
+        if (win) {
+            res = "You Win!";
+        } else {
+            res = "You Lose...";
+        }
+        return res;
     }
+    
+    public static void timeOut() {
+        win     = false;
+        running = false;
+    }
+    
+
 }

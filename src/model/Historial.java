@@ -108,7 +108,7 @@ public class Historial extends JPanel {
         });
     }
 
-        private void loadAll() {
+    private void loadAll() {
         int[] count = {0};
         allLines = readFileInto(count);
         numLines = count[0];

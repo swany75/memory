@@ -31,6 +31,10 @@ public class Card {
         return isFlipped;
     }
 
+    public String getBackImage() {
+        return BACK_IMAGE;
+    }
+    
     public String getFrontImage() {
         return frontImage;
     }
