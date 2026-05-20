@@ -6,6 +6,8 @@ package memory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author Marti Figuls Nolla
@@ -20,6 +22,19 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         this.setBackground(Color.WHITE);
         this.welcomeIcon = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!inGame) {
+                    boolean start = PopUpManager.confirmAction("start a new Game");
+                    if (start) {
+                        startGame();
+                    } else {
+                        repaint();
+                    }
+                }
+            }
+        });
     }
 
     public void startGame() {

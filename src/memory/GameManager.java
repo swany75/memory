@@ -19,7 +19,7 @@ public class GameManager { // Gestio Partida
 
 
     private GameManager() {
-        generateInitialMatrix();
+        
     }
 
     private void generateInitialMatrix() {
