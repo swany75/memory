@@ -14,12 +14,12 @@ import java.io.IOException;
  */
 
 public class SoundManager {
- 
+
     private static Clip musicClip;
     private static float soundVolume = 1.0f;
     private static float musicVolume = 0.8f;
     private static boolean muted = false;
- 
+
     public static void playSound(String path) {
         if (muted) return;
         try {
@@ -35,13 +35,15 @@ public class SoundManager {
             System.err.println("SoundManager: error reproduciendo \"" + path + "\": " + e.getMessage());
         }
     }
- 
+
     public static void playMusic(String path) {
-        if (muted) return;
+        // Detener siempre la música anterior, independientemente del mute
         if (musicClip != null) {
             musicClip.stop();
             musicClip.close();
+            musicClip = null;
         }
+        if (muted) return;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
             musicClip = AudioSystem.getClip();
@@ -53,25 +55,55 @@ public class SoundManager {
             System.err.println("SoundManager: error reproduciendo \"" + path + "\": " + e.getMessage());
         }
     }
- 
-    public static void setSoundVolume(float volume) {
-        soundVolume = volume;
+
+    public static void stopMusic() {
+        if (musicClip != null) {
+            musicClip.stop();
+            musicClip.close();
+            musicClip = null;
+        }
     }
- 
+
+    public static void setSoundVolume(float volume) {
+        soundVolume = Math.max(0f, Math.min(1f, volume));
+    }
+
     public static void setMusicVolume(float volume) {
-        musicVolume = volume;
+        musicVolume = Math.max(0f, Math.min(1f, volume));
         if (musicClip != null) applyVolume(musicClip, musicVolume);
     }
- 
+
     public static void setMuted(boolean value) {
         muted = value;
+        if (musicClip != null) {
+            if (muted) musicClip.stop();
+            else musicClip.start();
+        }
     }
- 
+
+    public static boolean isMuted() { return muted; }
+    public static float getSoundVolume() { return soundVolume; }
+    public static float getMusicVolume() { return musicVolume; }
+
     private static void applyVolume(Clip clip, float volume) {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float dB = volume <= 0f ? gain.getMinimum() : (float) (20.0 * Math.log10(volume));
             gain.setValue(Math.max(gain.getMinimum(), Math.min(gain.getMaximum(), dB)));
         }
+    }
+    
+    public static void stopMusicWithFadeOut() {
+        if (musicClip == null || !musicClip.isRunning()) return;
+
+        new Thread(() -> {
+            float vol = musicVolume;
+            while (vol > 0f) {
+                vol -= 0.05f;
+                applyVolume(musicClip, Math.max(0f, vol));
+                try { Thread.sleep(50); } catch (InterruptedException ignored) {}
+            }
+            stopMusic();
+        }).start();
     }
 }

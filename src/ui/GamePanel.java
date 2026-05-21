@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
     private ImageIcon welcomeIcon;
     private StatusBar statusBar;
     private SoundManager soundManager;
-
+    
     private Casella firstFlipped  = null;
     private Casella secondFlipped = null;
     private boolean waitingForReset = false;
@@ -39,7 +39,7 @@ public class GamePanel extends JPanel {
         this.statusBar   = sb;
         this.soundManager = sm;
         this.timer       = timer;
-        this.welcomeIcon = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
+        this.welcomeIcon = ImageManager.loadIcon("media/images/mainImage.jpg");
         this.boardBackground  = ImageManager.loadIcon("media/images/board.png").getImage();
         this.setBackground(Color.WHITE);
 
@@ -48,7 +48,10 @@ public class GamePanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (!inGame) {
                     boolean start = PopUpManager.confirmAction("start a new Game");
-                    if (start) startGame();
+                    if (start) {
+                        SoundManager.playSound("media/sounds/shuffle.wav");
+                        startGame();
+                    }
                     else repaint();
                 }
             }
@@ -70,7 +73,8 @@ public class GamePanel extends JPanel {
         timer.prepararCountdown(2);
         timer.setOnTimeOut(this::showGameOver); 
         timer.start();
-
+        
+        SoundManager.playMusic("media/music/gameTheme.wav");
         buildBoard();
     }
 
@@ -89,6 +93,8 @@ public class GamePanel extends JPanel {
                 casellas[row][col] = casella;
                 addFlipListener(casella);
                 add(casella);
+                int delay = (row * gameManager.numCols + col) * 40; // 👈 40ms entre carta y carta
+                casella.fadeIn(delay);
             }
         }
 
@@ -132,12 +138,12 @@ public class GamePanel extends JPanel {
         Card c2 = secondFlipped.getCard();
 
         if (gameManager.checkMatch(c1, c2)) {
-            
+            SoundManager.playSound("media/sounds/match.wav");
             firstFlipped  = null;
             secondFlipped = null;
 
             if (!gameManager.isRunning()) {
-                timer.stop();               // ← detener timer al ganar
+                timer.stop();
                 javax.swing.Timer endDelay = new javax.swing.Timer(600, e -> showGameOver());
                 endDelay.setRepeats(false);
                 endDelay.start();
@@ -146,7 +152,7 @@ public class GamePanel extends JPanel {
             statusBar.setRandomNiceMovePhrase(); 
             
         } else {
-            
+            SoundManager.playSound("media/sounds/error.wav");
             waitingForReset = true;
             Casella toFlipA = firstFlipped;
             Casella toFlipB = secondFlipped;
@@ -168,6 +174,14 @@ public class GamePanel extends JPanel {
 
     private void showGameOver() {
         timer.stop();
+        SoundManager.stopMusicWithFadeOut();
+        
+        if (gameManager.isWin()) {
+            SoundManager.playSound("media/sounds/you_win.wav");
+        } else {
+            SoundManager.playSound("media/sounds/you_lose.wav");
+        }
+        
         statusBar.setText(gameManager.getGameStatus()); 
         PopUpManager.displayMessage(gameManager.getGameStatus());
         boolean playAgain = PopUpManager.confirmAction("play again");
@@ -229,34 +243,7 @@ public class GamePanel extends JPanel {
     }
     
     private void drawWelcomeScreen(Graphics g) {
-        statusBar.setDefaultText();
         if (welcomeIcon == null) return;
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,    RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-        int margin    = 100;
-        int maxWidth  = getWidth()  - margin;
-        int maxHeight = getHeight() - margin - 50;
-        int imgWidth  = welcomeIcon.getIconWidth();
-        int imgHeight = welcomeIcon.getIconHeight();
-        double ratio  = (double) imgWidth / imgHeight;
-
-        int finalWidth  = maxWidth;
-        int finalHeight = (int)(finalWidth / ratio);
-        if (finalHeight > maxHeight) {
-            finalHeight = maxHeight;
-            finalWidth  = (int)(finalHeight * ratio);
-        }
-
-        int x = (getWidth()  - finalWidth)  / 2;
-        int y = (getHeight() - finalHeight) / 2 - 20;
-
-        g2d.drawImage(welcomeIcon.getImage(), x, y, finalWidth, finalHeight, null);
-        g2d.setColor(Color.GRAY);
-        g2d.setFont(new Font("Times New Roman", Font.BOLD, 24));
-        String subtitle = "Marti Figuls Nolla & Juan Dalmau Santandreu";
-        FontMetrics fm  = g2d.getFontMetrics();
-        g2d.drawString(subtitle, (getWidth() - fm.stringWidth(subtitle)) / 2, y + finalHeight + 40);
+        g.drawImage(welcomeIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }

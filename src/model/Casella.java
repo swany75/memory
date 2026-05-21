@@ -4,14 +4,13 @@
  */
 package model;
 
+import audio.SoundManager;
+import java.awt.AlphaComposite;
 import ui.ImageManager;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -29,6 +28,8 @@ public class Casella extends JPanel {
     private double scale = 1.0;
     private boolean contractingPhase;
     private Timer flipTimer;
+    private SoundManager sm;
+    private float alpha = 0f;    
     
     // Almacenamos las imágenes en memoria para no leer el disco constantemente
     private Image frontImage;
@@ -55,7 +56,8 @@ public class Casella extends JPanel {
                 scale -= 0.1;
                 if (scale <= 0.0) {
                     scale = 0.0;
-                    card.flip(); // Actualiza el estado lógico (flipped = !flipped)
+                    sm.playSound("media/sounds/flip.wav");
+                    card.flip();
                     contractingPhase = false;
                 }
             } else {
@@ -83,32 +85,44 @@ public class Casella extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        // Filtros de alta calidad
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)); // 👈
+
         Image currentImage = card.isFlipped() ? frontImage : backImage;
-
-        // 1. FORZAR PROPORCIÓN CUADRADA: Buscamos el lado del cuadrado más grande que cabe
-        int availableWidth = getWidth();
+        int availableWidth  = getWidth();
         int availableHeight = getHeight();
-        int squareSize = Math.min(availableWidth, availableHeight);
-
-        // 2. CENTRADO: Calculamos los márgenes para que el cuadrado quede en el centro de la celda
-        int offsetX = (availableWidth - squareSize) / 2;
-        int offsetY = (availableHeight - squareSize) / 2;
-
-        // 3. ANIMACIÓN 3D: Aplicamos tu escala horizontal sobre el tamaño del cuadrado
+        int squareSize  = Math.min(availableWidth, availableHeight);
+        int offsetX     = (availableWidth  - squareSize) / 2;
+        int offsetY     = (availableHeight - squareSize) / 2;
         int scaledWidth = (int) (squareSize * scale);
         int x = offsetX + (squareSize - scaledWidth) / 2;
         int y = offsetY;
-
-        // 4. DIBUJADO: Pintamos la carta perfectamente cuadrada y centrada
         g2.drawImage(currentImage, x, y, scaledWidth, squareSize, this);
     }
 
     public Card getCard() {
         return card;
     }
+    
+    public void fadeIn(int delayMs) {
+        alpha = 0f;
+        javax.swing.Timer delay = new javax.swing.Timer(delayMs, null);
+        delay.setRepeats(false);
+        delay.addActionListener(e -> {
+            javax.swing.Timer fadeTimer = new javax.swing.Timer(15, null);
+            fadeTimer.addActionListener(ev -> {
+                alpha += 0.05f;
+                if (alpha >= 1f) {
+                    alpha = 1f;
+                    fadeTimer.stop();
+                }
+                repaint();
+            });
+            fadeTimer.start();
+        });
+        delay.start();
+    }
+    
 }
