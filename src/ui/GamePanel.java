@@ -32,13 +32,15 @@ public class GamePanel extends JPanel {
     private Casella firstFlipped  = null;
     private Casella secondFlipped = null;
     private boolean waitingForReset = false;
-
+    private Image boardBackground;
+    
     public GamePanel(StatusBar sb, Timer timer, SoundManager sm) {
         this.gameManager = new GameManager(sb, timer, sm);
         this.statusBar   = sb;
         this.soundManager = sm;
         this.timer       = timer;
         this.welcomeIcon = ImageManager.loadIcon("media/images/LogoUIB (Ben fet).png");
+        this.boardBackground  = ImageManager.loadIcon("media/images/board.png").getImage();
         this.setBackground(Color.WHITE);
 
         this.addMouseListener(new MouseAdapter() {
@@ -55,7 +57,7 @@ public class GamePanel extends JPanel {
 
     public void startGame() {
         setBackground(new Color(24, 61, 39));
-        gameManager.setDifficulty(1);
+        gameManager.setDifficulty(3);
         gameManager.startGame();
 
         inGame          = true;
@@ -63,8 +65,10 @@ public class GamePanel extends JPanel {
         firstFlipped    = null;
         secondFlipped   = null;
 
+        
         timer.reset();
         timer.prepararCountdown(2);
+        timer.setOnTimeOut(this::showGameOver); 
         timer.start();
 
         buildBoard();
@@ -74,8 +78,8 @@ public class GamePanel extends JPanel {
         this.removeAll();
         Card[][] board = gameManager.getBoard();
 
-        setLayout(new GridLayout(gameManager.numRows, gameManager.numCols, 5, 5));
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setLayout(null);
+        setBorder(null);
 
         casellas = new Casella[gameManager.numRows][gameManager.numCols];
 
@@ -91,7 +95,7 @@ public class GamePanel extends JPanel {
         revalidate();
         repaint();
     }
-
+    
     private void addFlipListener(Casella casella) {
         // Remove the default click listener from Casella
         // and manage flipping from here so we control game logic
@@ -128,6 +132,7 @@ public class GamePanel extends JPanel {
         Card c2 = secondFlipped.getCard();
 
         if (gameManager.checkMatch(c1, c2)) {
+            
             firstFlipped  = null;
             secondFlipped = null;
 
@@ -137,7 +142,11 @@ public class GamePanel extends JPanel {
                 endDelay.setRepeats(false);
                 endDelay.start();
             }
+            
+            statusBar.setRandomNiceMovePhrase(); 
+            
         } else {
+            
             waitingForReset = true;
             Casella toFlipA = firstFlipped;
             Casella toFlipB = secondFlipped;
@@ -149,13 +158,17 @@ public class GamePanel extends JPanel {
                 secondFlipped   = null;
                 waitingForReset = false;
             });
+            
             resetDelay.setRepeats(false);
             resetDelay.start();
+            
+            statusBar.setRandomBadMovePhrase();
         }
     }
 
     private void showGameOver() {
         timer.stop();
+        statusBar.setText(gameManager.getGameStatus()); 
         PopUpManager.displayMessage(gameManager.getGameStatus());
         boolean playAgain = PopUpManager.confirmAction("play again");
         if (playAgain) {
@@ -172,10 +185,51 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (inGame && boardBackground != null) {
+            g.drawImage(boardBackground, 0, 0, getWidth(), getHeight(), this);
+        }
         if (!inGame) drawWelcomeScreen(g);
     }
 
+    @Override
+    public void doLayout() {
+        if (!inGame || casellas == null) {
+            super.doLayout();
+            return;
+        }
+
+        int rows   = gameManager.numRows;
+        int cols   = gameManager.numCols;
+        int gap    = 4;
+        int margin = 15;
+
+        int availW = getWidth()  - 2 * margin;
+        int availH = getHeight() - 2 * margin;
+
+        // Tamaño máximo que puede tener cada carta (cuadrada) sin pasarse en ningún eje
+        int cardByW  = (availW - gap * (cols - 1)) / cols;
+        int cardByH  = (availH - gap * (rows - 1)) / rows;
+        int cardSize = Math.min(cardByW, cardByH); // cuadrada, pero lo más grande posible
+
+        // Tablero real
+        int boardW = cardSize * cols + gap * (cols - 1);
+        int boardH = cardSize * rows + gap * (rows - 1);
+
+        // Centrado
+        int startX = (getWidth()  - boardW) / 2;
+        int startY = (getHeight() - boardH) / 2;
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int x = startX + col * (cardSize + gap);
+                int y = startY + row * (cardSize + gap);
+                casellas[row][col].setBounds(x, y, cardSize, cardSize);
+            }
+        }
+    }
+    
     private void drawWelcomeScreen(Graphics g) {
+        statusBar.setDefaultText();
         if (welcomeIcon == null) return;
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,    RenderingHints.VALUE_ANTIALIAS_ON);

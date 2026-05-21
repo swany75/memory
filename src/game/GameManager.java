@@ -70,12 +70,12 @@ public class GameManager {
             case 4:  return new int[]{4,  5};
             case 5:  return new int[]{4,  6};
             case 6:  return new int[]{5,  6};
-            case 7:  return new int[]{6,  6};
-            case 8:  return new int[]{6,  7};
-            case 9:  return new int[]{7,  8};
-            case 10: return new int[]{8,  8};
+            case 7:  return new int[]{6,  8};
+            case 8:  return new int[]{6,  8};
+            case 9:  return new int[]{6, 10};
+            case 10: return new int[]{8, 10};
             case 11: return new int[]{8, 10};
-            case 12: return new int[]{10, 10};
+            case 12: return new int[]{8, 12};
             default: return new int[]{2,  4};
         }
     }

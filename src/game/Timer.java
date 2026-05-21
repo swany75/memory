@@ -16,6 +16,7 @@ import ui.PopUpManager;
 
 public class Timer extends JProgressBar {
 
+    private Runnable onTimeOut;
     private javax.swing.Timer crono;
     private int secTotals;
     private int secRestants;
@@ -65,6 +66,9 @@ public class Timer extends JProgressBar {
                 GameManager.timeOut();
                 stop();
                 PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
+                if (onTimeOut != null)  { 
+                    onTimeOut.run();
+                }  
             }
         });
     }
@@ -100,6 +104,10 @@ public class Timer extends JProgressBar {
         return gameDuration;
     }
 
+    public void setOnTimeOut(Runnable callback) {
+        this.onTimeOut = callback;
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
