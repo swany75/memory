@@ -8,9 +8,6 @@ import audio.SoundManager;
 import java.io.File;
 import model.Couple;
 import model.Card;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import ui.StatusBar;
 
 /**
@@ -103,37 +100,59 @@ public class GameManager {
     }
 
     private Card[][] generateBoard() {
-        // 1. Lista de todos los índices disponibles
-        List<Integer> allIndices = new ArrayList<>();
-        for (int i = 1; i <= totalAvailableImages; i++) {
-            allIndices.add(i);
+        // 1. Array de todos los índices disponibles
+        int[] allIndices = new int[totalAvailableImages];
+        for (int i = 0; i < totalAvailableImages; i++) {
+            allIndices[i] = i + 1;
         }
 
-        // 2. Shuffle de parejas → coger las primeras totalPairs
-        Collections.shuffle(allIndices);
-        List<Integer> selectedIndices = allIndices.subList(0, totalPairs);
+        // 2. Shuffle del array de índices
+        shuffleIntArray(allIndices);
 
-        // 3. Crear las cartas con las parejas seleccionadas
-        List<Card> cards = new ArrayList<>();
-        for (int index : selectedIndices) {
-            String imagePath = IMAGE_PATH + index + IMAGE_EXT;
+        // 3. Crear las cartas con las primeras totalPairs parejas
+        Card[] cards = new Card[totalPairs * 2];
+        int cardIdx = 0;
+        for (int i = 0; i < totalPairs; i++) {
+            String imagePath = IMAGE_PATH + allIndices[i] + IMAGE_EXT;
             Couple couple = new Couple(imagePath);
-            cards.add(couple.getCardA());
-            cards.add(couple.getCardB());
+            cards[cardIdx++] = couple.getCardA();
+            cards[cardIdx++] = couple.getCardB();
         }
 
         // 4. Shuffle de cartas
-        Collections.shuffle(cards);
+        shuffleCardArray(cards);
 
         // 5. Colocar en el tablero
         Card[][] result = new Card[numRows][numCols];
         int idx = 0;
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-                result[row][col] = cards.get(idx++);
+                result[row][col] = cards[idx++];
             }
         }
         return result;
+    }
+
+    // Fisher-Yates shuffle para int[]
+    private void shuffleIntArray(int[] arr) {
+        java.util.Random rand = new java.util.Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+    }
+
+    // Fisher-Yates shuffle para Card[]
+    private void shuffleCardArray(Card[] arr) {
+        java.util.Random rand = new java.util.Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            Card tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
     }
 
     private int countAvailableImages() {
@@ -184,6 +203,5 @@ public class GameManager {
         win     = false;
         running = false;
     }
-    
 
 }

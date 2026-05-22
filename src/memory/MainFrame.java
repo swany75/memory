@@ -46,13 +46,6 @@ public class MainFrame extends JFrame {
     
     // Rutes
     private static final String RUTA_ICONES  = "media/icons/default/";
- 
-    // Icons & Images
-    private ImageIcon leftMenuOpen;
-    private ImageIcon leftMenuClose;
- 
-    // Botons 
-    private JButton lateralMenuButton;
     
     ////////////////////////////////////////////////////////////////////////////
     // Constructor /////////////////////////////////////////////////////////////
@@ -60,15 +53,18 @@ public class MainFrame extends JFrame {
     
     public MainFrame() {
         super("Memory - UIB");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                secureExit();
+            }
+        });
 
         // LOAD Icons & Images
         ImageIcon icono = new ImageIcon(RUTA_ICONES + ("icon" + (rand.nextInt(4) + 1) + ".png"));
         setIconImage(icono.getImage());
         
-        leftMenuOpen = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuOpen.png", 32, 32);
-        leftMenuClose = ImageManager.loadScaledIcon(RUTA_ICONES + "leftMenuClose.png", 32, 32);
-
         setSize(1280, 720);
         setMinimumSize(new Dimension(1280, 720));
         setLocationRelativeTo(null);
@@ -104,11 +100,6 @@ public class MainFrame extends JFrame {
         toolBar.setFloatable(false);
 
         toolBar.add(new Desplegable(this, contentPanel));
-        
-        lateralMenuButton = ButtonBuilder.createButton(RUTA_ICONES + "leftMenuClose.png", 32, 32, 
-            e -> toggleLateralMenu());
-        
-        toolBar.add(lateralMenuButton);
         
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.GAME)));
         toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "selectiveHistoric.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SELECTIVE)));
@@ -161,20 +152,6 @@ public class MainFrame extends JFrame {
     }
     
     
-    private void toggleLateralMenu() {
-        menuObert = !menuObert;
-        panellLateral.setVisible(menuObert);
-
-        if (menuObert) {
-            lateralMenuButton.setIcon(leftMenuClose);
-        } else {
-            lateralMenuButton.setIcon(leftMenuOpen);
-        }
-
-        panellCos.revalidate();
-        panellCos.repaint();
-    }
-    
     // METHODS
     public void secureExit() {
         if (GameManager.isRunning()) {
@@ -189,8 +166,7 @@ public class MainFrame extends JFrame {
         boolean confirmExit = PopUpManager.confirmAction("Exit the application");
 
         if (confirmExit) {
-            statusBar.setText("[+] Exit simulation");
-            // System.exit(0);
+            System.exit(0);
         }
     }
 }

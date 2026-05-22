@@ -60,7 +60,7 @@ public class GamePanel extends JPanel {
 
     public void startGame() {
         setBackground(new Color(24, 61, 39));
-        gameManager.setDifficulty(3);
+        gameManager.setDifficulty(5);
         gameManager.startGame();
 
         inGame          = true;
