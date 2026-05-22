@@ -182,13 +182,12 @@ public class Historial extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             searchField.setText("");
-            if (selective) {
-                historialArea.setText("");
-            } else {
-                showLines(allLines, numLines);
-            }
+            historialArea.setText("");
+            historialArea.setCaretPosition(0);
         }
     }
+
+
 
     private class RequestFocusTask implements Runnable {
         @Override

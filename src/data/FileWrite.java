@@ -19,18 +19,24 @@ public class FileWrite {
     private String filename;
     private FileOutputStream fileStream;
     private BufferedOutputStream buffer;
+    private boolean append;
     
     public FileWrite(String fname) {
+        this(fname, false);
+    }
+
+    public FileWrite(String fname, boolean append) {
         if (fname != null && !fname.toLowerCase().endsWith(".dat")) {
             this.filename = fname + ".dat";
         } else {
             this.filename = fname;
         }
+        this.append = append;
     }
     
     public void open() {
         try {
-            fileStream = new FileOutputStream(filename);
+            fileStream = new FileOutputStream(filename, append);
             buffer = new BufferedOutputStream(fileStream);
         } catch (IOException ex) {
             ex.printStackTrace();

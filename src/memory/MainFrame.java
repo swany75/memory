@@ -9,7 +9,6 @@ import game.Timer;
 import game.GameManager;
 import ui.ButtonBuilder;
 import ui.ContentPanel;
-import ui.ImageManager;
 import ui.CustomColors;
 import ui.StatusBar;
 import ui.Desplegable;

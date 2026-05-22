@@ -4,6 +4,8 @@
  */
 package model;
 
+import config.GameSettings;
+
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
@@ -11,7 +13,6 @@ package model;
 
 public class Card {
     private String frontImage;
-    private static final String BACK_IMAGE = "media/images/backImage1.png";
     private boolean isFlipped;
 
     public Card(String frontImage) {
@@ -20,7 +21,7 @@ public class Card {
     }
 
     public String getCurrentImage() {
-        return isFlipped ? frontImage : BACK_IMAGE;
+        return isFlipped ? frontImage : getBackImage();
     }
 
     public void flip() {
@@ -32,7 +33,7 @@ public class Card {
     }
 
     public String getBackImage() {
-        return BACK_IMAGE;
+        return GameSettings.getBackImagePath();
     }
     
     public String getFrontImage() {

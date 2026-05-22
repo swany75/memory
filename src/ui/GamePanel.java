@@ -16,6 +16,10 @@ import model.Casella;
 import game.GameManager;
 import game.Timer;
 import audio.SoundManager;
+import config.GameSettings;
+import data.FileWrite;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Marti Figuls Nolla
@@ -23,6 +27,8 @@ import audio.SoundManager;
  */
 
 public class GamePanel extends JPanel {
+
+    private static final String HISTORY_FILE = "media/files/historial";
 
     private GameManager gameManager;
     private Timer timer;
@@ -36,6 +42,7 @@ public class GamePanel extends JPanel {
     private Casella secondFlipped = null;
     private boolean waitingForReset = false;
     private Image boardBackground;
+    private int currentDifficulty = GameSettings.getDifficulty();
     
     public GamePanel(StatusBar sb, Timer timer, SoundManager sm) {
         this.gameManager = new GameManager(sb, timer, sm);
@@ -50,9 +57,25 @@ public class GamePanel extends JPanel {
     }
 
     public void startGame() {
+        currentDifficulty = GameSettings.getDifficulty();
+        gameManager.setDifficulty(currentDifficulty);
+        try {
+            gameManager.startGame();
+        } catch (IllegalStateException ex) {
+            statusBar.setText("No hay suficientes cartas");
+            PopUpManager.displayMessage(
+                "No hay suficientes cartas para la dificultad seleccionada.",
+                "Cartas insuficientes"
+            );
+            inGame = false;
+            setBackground(Color.WHITE);
+            removeAll();
+            revalidate();
+            repaint();
+            return;
+        }
+
         setBackground(new Color(24, 61, 39));
-        gameManager.setDifficulty(5);
-        gameManager.startGame();
 
         inGame          = true;
         waitingForReset = false;
@@ -61,7 +84,7 @@ public class GamePanel extends JPanel {
 
         
         timer.reset();
-        timer.prepararCountdown(2);
+        timer.prepararCountdown(GameSettings.getTimerMinutes());
         timer.setOnTimeOut(new TimeOutHandler());
         timer.start();
         
@@ -153,7 +176,9 @@ public class GamePanel extends JPanel {
     }
 
     private void showGameOver() {
-        timer.stop();
+        if (timer.isRunning()) {
+            timer.stop();
+        }
         SoundManager.stopMusicWithFadeOut();
         
         if (gameManager.isWin()) {
@@ -163,6 +188,7 @@ public class GamePanel extends JPanel {
         }
         
         statusBar.setText(gameManager.getGameStatus()); 
+        appendHistoryEntry();
         PopUpManager.displayMessage(gameManager.getGameStatus());
         boolean playAgain = PopUpManager.confirmAction("play again");
         if (playAgain) {
@@ -174,6 +200,27 @@ public class GamePanel extends JPanel {
             revalidate();
             repaint();
         }
+    }
+
+    private void appendHistoryEntry() {
+        String player = GameSettings.getPlayerName();
+        String timestamp = LocalDateTime.now()
+            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        String difficultyTag = GameSettings.getDifficultyTag(currentDifficulty);
+        int matches = gameManager.getMatchesFound();
+        int totalPairs = gameManager.getTotalPairs();
+        String result = gameManager.isWin() ? "WIN" : "LOSE";
+        int points = matches * 100;
+        int duration = timer.getGameDuration();
+
+        String line = player + " " + timestamp + " - " + difficultyTag + " - " +
+            matches + "/" + totalPairs + " - " + result + " - " +
+            points + "pts - " + duration + "s";
+
+        FileWrite writer = new FileWrite(HISTORY_FILE, true);
+        writer.open();
+        writer.writeLine(line);
+        writer.close();
     }
 
     @Override

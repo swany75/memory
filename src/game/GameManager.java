@@ -5,6 +5,7 @@
 package game;
 
 import audio.SoundManager;
+import config.GameSettings;
 import java.io.File;
 import model.Couple;
 import model.Card;
@@ -17,11 +18,8 @@ import ui.StatusBar;
 
 public class GameManager {
 
-    private static final String IMAGE_DIR  = "media/images/cards/";
-    private static final String IMAGE_PATH = IMAGE_DIR + "imagen";
-    private static final String IMAGE_EXT  = ".png";
-
     private int totalAvailableImages = 0;
+    private String[] availableImages = new String[0];
 
     public int numRows;
     public int numCols;
@@ -84,45 +82,43 @@ public class GameManager {
     }
 
     public void startGame() {
-        totalAvailableImages = countAvailableImages();
+        availableImages = listAvailableImages();
+        totalAvailableImages = availableImages.length;
         totalPairs           = (numRows * numCols) / 2;
         matchesFound         = 0;
         win                  = false;
-        running              = true;
 
         if (totalPairs > totalAvailableImages) {
+            running = false;
             throw new IllegalStateException(
                 "Not enough images: need " + totalPairs + ", have " + totalAvailableImages
             );
         }
 
+        running = true;
         board = generateBoard();
     }
 
     private Card[][] generateBoard() {
-        // 1. Array de todos los índices disponibles
-        int[] allIndices = new int[totalAvailableImages];
-        for (int i = 0; i < totalAvailableImages; i++) {
-            allIndices[i] = i + 1;
-        }
+        // 1. Shuffle de las imágenes disponibles
+        String[] pool = new String[availableImages.length];
+        System.arraycopy(availableImages, 0, pool, 0, availableImages.length);
+        shuffleStringArray(pool);
 
-        // 2. Shuffle del array de índices
-        shuffleIntArray(allIndices);
-
-        // 3. Crear las cartas con las primeras totalPairs parejas
+        // 2. Crear las cartas con las primeras totalPairs parejas
         Card[] cards = new Card[totalPairs * 2];
         int cardIdx = 0;
         for (int i = 0; i < totalPairs; i++) {
-            String imagePath = IMAGE_PATH + allIndices[i] + IMAGE_EXT;
+            String imagePath = pool[i];
             Couple couple = new Couple(imagePath);
             cards[cardIdx++] = couple.getCardA();
             cards[cardIdx++] = couple.getCardB();
         }
 
-        // 4. Shuffle de cartas
+        // 3. Shuffle de cartas
         shuffleCardArray(cards);
 
-        // 5. Colocar en el tablero
+        // 4. Colocar en el tablero
         Card[][] result = new Card[numRows][numCols];
         int idx = 0;
         for (int row = 0; row < numRows; row++) {
@@ -131,17 +127,6 @@ public class GameManager {
             }
         }
         return result;
-    }
-
-    // Fisher-Yates shuffle para int[]
-    private void shuffleIntArray(int[] arr) {
-        java.util.Random rand = new java.util.Random();
-        for (int i = arr.length - 1; i > 0; i--) {
-            int j = rand.nextInt(i + 1);
-            int tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-        }
     }
 
     // Fisher-Yates shuffle para Card[]
@@ -156,20 +141,46 @@ public class GameManager {
     }
 
     private int countAvailableImages() {
-        int count = 0;
-        File folder = new File(IMAGE_DIR);
-        if (!folder.exists() || !folder.isDirectory()) return 0;
+        return listAvailableImages().length;
+    }
+
+    private String[] listAvailableImages() {
+        File folder = new File(GameSettings.getCardsDir());
+        if (!folder.exists() || !folder.isDirectory()) return new String[0];
 
         File[] files = folder.listFiles();
-        if (files == null) return 0;
+        if (files == null) return new String[0];
 
+        int count = 0;
         for (File f : files) {
-            String name = f.getName();
-            if (name.startsWith("imagen") && name.endsWith(IMAGE_EXT)) {
+            if (!f.isFile()) continue;
+            String name = f.getName().toLowerCase();
+            if (name.endsWith(".png") && !name.startsWith("backimage")) {
                 count++;
             }
         }
-        return count;
+        if (count == 0) return new String[0];
+
+        String[] images = new String[count];
+        int idx = 0;
+        for (File f : files) {
+            if (!f.isFile()) continue;
+            String name = f.getName().toLowerCase();
+            if (name.endsWith(".png") && !name.startsWith("backimage")) {
+                images[idx++] = f.getPath();
+            }
+        }
+        return images;
+    }
+
+    private void shuffleStringArray(String[] arr) {
+        java.util.Random rand = new java.util.Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            String tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
     }
 
     public boolean checkMatch(Card c1, Card c2) {
@@ -184,6 +195,7 @@ public class GameManager {
         return false;
     }
 
+    public int getMatchesFound() { return matchesFound; }
     public Card[][]      getBoard()       { return board;   }
     public static boolean isRunning()     { return running; }
     public boolean        isWin()         { return win;     }

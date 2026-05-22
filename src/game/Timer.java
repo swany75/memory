@@ -60,6 +60,10 @@ public class Timer extends JProgressBar {
             crono.start();
         } 
     }
+
+    public boolean isRunning() {
+        return crono != null && crono.isRunning();
+    }
     
     public void stop()  { 
         if (crono != null) {
