@@ -27,9 +27,7 @@ public class SoundManager {
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
             applyVolume(clip, soundVolume);
-            clip.addLineListener(event -> {
-                if (event.getType() == LineEvent.Type.STOP) clip.close();
-            });
+            clip.addLineListener(new ClipStopListener(clip));
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("SoundManager: error reproduciendo \"" + path + "\": " + e.getMessage());
@@ -96,14 +94,37 @@ public class SoundManager {
     public static void stopMusicWithFadeOut() {
         if (musicClip == null || !musicClip.isRunning()) return;
 
-        new Thread(() -> {
+        new Thread(new MusicFadeOutTask()).start();
+    }
+
+    private static class ClipStopListener implements LineListener {
+        private final Clip clip;
+
+        private ClipStopListener(Clip clip) {
+            this.clip = clip;
+        }
+
+        @Override
+        public void update(LineEvent event) {
+            if (event.getType() == LineEvent.Type.STOP) {
+                clip.close();
+            }
+        }
+    }
+
+    private static class MusicFadeOutTask implements Runnable {
+        @Override
+        public void run() {
             float vol = musicVolume;
             while (vol > 0f) {
                 vol -= 0.05f;
                 applyVolume(musicClip, Math.max(0f, vol));
-                try { Thread.sleep(50); } catch (InterruptedException ignored) {}
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ignored) {
+                }
             }
             stopMusic();
-        }).start();
+        }
     }
 }

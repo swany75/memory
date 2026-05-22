@@ -66,12 +66,12 @@ public class ContentPanel extends JPanel {
             case HISTORY:
                 statusBar.setText("History");
                 cardLayout.show(this, HISTORY);
-                SwingUtilities.invokeLater(() -> historic.refresh(false));
+                SwingUtilities.invokeLater(new RefreshHistoryTask(false));
                 break;
             case SELECTIVE:
                 statusBar.setText("Selective History");
                 cardLayout.show(this, HISTORY);
-                SwingUtilities.invokeLater(() -> historic.refresh(true));
+                SwingUtilities.invokeLater(new RefreshHistoryTask(true));
                 break;
             default:
                 statusBar.clearText();
@@ -91,4 +91,16 @@ public class ContentPanel extends JPanel {
         return historic;
     }
     
+    private class RefreshHistoryTask implements Runnable {
+        private final boolean selective;
+
+        private RefreshHistoryTask(boolean selective) {
+            this.selective = selective;
+        }
+
+        @Override
+        public void run() {
+            historic.refresh(selective);
+        }
+    }
 }

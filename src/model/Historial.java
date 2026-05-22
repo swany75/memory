@@ -7,6 +7,8 @@ package model;
 import data.FileRead;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Marti Figuls Nolla
@@ -50,7 +52,7 @@ public class Historial extends JPanel {
             searchField.requestFocusInWindow();
         } else {
             loadAll();
-            SwingUtilities.invokeLater(() -> scrollPane.requestFocusInWindow());
+            SwingUtilities.invokeLater(new RequestFocusTask());
         }
     }
 
@@ -92,20 +94,6 @@ public class Historial extends JPanel {
 
         historialPanel = new JPanel(new BorderLayout());
         historialPanel.add(scrollPane, BorderLayout.CENTER);
-    }
-
-    private void setListeners() {
-        searchButton.addActionListener(e -> search());
-        searchField.addActionListener(e -> search());
-
-        clearButton.addActionListener(e -> {
-            searchField.setText("");
-            if (selective) {
-                historialArea.setText("");
-            } else {
-                showLines(allLines, numLines);
-            }
-        });
     }
 
     private void loadAll() {
@@ -176,5 +164,36 @@ public class Historial extends JPanel {
             showLines(results, numResults);
         }
     }
-     
-}
+    
+    private void setListeners() {
+        searchButton.addActionListener(new SearchActionListener());
+        searchField.addActionListener(new SearchActionListener());
+        clearButton.addActionListener(new ClearActionListener());
+    }
+
+    private class SearchActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            search();
+        }
+    }
+
+    private class ClearActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            searchField.setText("");
+            if (selective) {
+                historialArea.setText("");
+            } else {
+                showLines(allLines, numLines);
+            }
+        }
+    }
+
+    private class RequestFocusTask implements Runnable {
+        @Override
+        public void run() {
+            scrollPane.requestFocusInWindow();
+        }
+    }
+} 

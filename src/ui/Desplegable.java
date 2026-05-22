@@ -11,6 +11,8 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import memory.MainFrame;
 
 public class Desplegable extends JMenuBar {
@@ -38,25 +40,11 @@ public class Desplegable extends JMenuBar {
         JMenuItem itemSettings = createStyledMenuItem("Settings");
         JMenuItem itemExit = createStyledMenuItem("Exit");
 
-        itemGame.addActionListener(e -> {
-            cp.switchPanel(ContentPanel.GAME);
-        });
-
-        itemSelective.addActionListener(e -> {
-            cp.switchPanel(ContentPanel.SELECTIVE);
-        });
-
-        itemHistory.addActionListener(e -> {
-            cp.switchPanel(ContentPanel.HISTORY);
-        });
-
-        itemSettings.addActionListener(e -> {
-            cp.switchPanel(ContentPanel.SETTINGS);
-        });
-
-        itemExit.addActionListener(e -> {
-            frame.secureExit();
-        });
+        itemGame.addActionListener(new SwitchPanelActionListener(cp, ContentPanel.GAME));
+        itemSelective.addActionListener(new SwitchPanelActionListener(cp, ContentPanel.SELECTIVE));
+        itemHistory.addActionListener(new SwitchPanelActionListener(cp, ContentPanel.HISTORY));
+        itemSettings.addActionListener(new SwitchPanelActionListener(cp, ContentPanel.SETTINGS));
+        itemExit.addActionListener(new SecureExitActionListener(frame));
         
         menu.add(itemGame);
         menu.addSeparator();
@@ -79,5 +67,33 @@ public class Desplegable extends JMenuBar {
         item.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
         return item;
+    }
+
+    private class SwitchPanelActionListener implements ActionListener {
+        private final ContentPanel contentPanel;
+        private final String panel;
+
+        private SwitchPanelActionListener(ContentPanel contentPanel, String panel) {
+            this.contentPanel = contentPanel;
+            this.panel = panel;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            contentPanel.switchPanel(panel);
+        }
+    }
+
+    private class SecureExitActionListener implements ActionListener {
+        private final MainFrame frame;
+
+        private SecureExitActionListener(MainFrame frame) {
+            this.frame = frame;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frame.secureExit();
+        }
     }
 }

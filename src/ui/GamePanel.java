@@ -6,8 +6,11 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import model.Card;
 import model.Casella;
 import game.GameManager;
@@ -43,19 +46,7 @@ public class GamePanel extends JPanel {
         this.boardBackground  = ImageManager.loadIcon("media/images/board.png").getImage();
         this.setBackground(Color.WHITE);
 
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!inGame) {
-                    boolean start = PopUpManager.confirmAction("start a new Game");
-                    if (start) {
-                        SoundManager.playSound("media/sounds/shuffle.wav");
-                        startGame();
-                    }
-                    else repaint();
-                }
-            }
-        });
+        this.addMouseListener(new StartGameClickListener());
     }
 
     public void startGame() {
@@ -71,7 +62,7 @@ public class GamePanel extends JPanel {
         
         timer.reset();
         timer.prepararCountdown(2);
-        timer.setOnTimeOut(this::showGameOver); 
+        timer.setOnTimeOut(new TimeOutHandler());
         timer.start();
         
         SoundManager.playMusic("media/music/gameTheme.wav");
@@ -105,16 +96,11 @@ public class GamePanel extends JPanel {
     private void addFlipListener(Casella casella) {
         // Remove the default click listener from Casella
         // and manage flipping from here so we control game logic
-        for (var listener : casella.getMouseListeners()) {
+        for (MouseListener listener : casella.getMouseListeners()) {
             casella.removeMouseListener(listener);
         }
 
-        casella.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                handleCardClick(casella);
-            }
-        });
+        casella.addMouseListener(new CardFlipListener(casella));
     }
 
     private void handleCardClick(Casella casella) {
@@ -144,7 +130,7 @@ public class GamePanel extends JPanel {
 
             if (!gameManager.isRunning()) {
                 timer.stop();
-                javax.swing.Timer endDelay = new javax.swing.Timer(600, e -> showGameOver());
+                javax.swing.Timer endDelay = new javax.swing.Timer(600, new EndGameDelayListener());
                 endDelay.setRepeats(false);
                 endDelay.start();
             }
@@ -157,13 +143,7 @@ public class GamePanel extends JPanel {
             Casella toFlipA = firstFlipped;
             Casella toFlipB = secondFlipped;
 
-            javax.swing.Timer resetDelay = new javax.swing.Timer(900, e -> {
-                toFlipA.flip();
-                toFlipB.flip();
-                firstFlipped    = null;
-                secondFlipped   = null;
-                waitingForReset = false;
-            });
+            javax.swing.Timer resetDelay = new javax.swing.Timer(900, new ResetDelayListener(toFlipA, toFlipB));
             
             resetDelay.setRepeats(false);
             resetDelay.start();
@@ -245,5 +225,65 @@ public class GamePanel extends JPanel {
     private void drawWelcomeScreen(Graphics g) {
         if (welcomeIcon == null) return;
         g.drawImage(welcomeIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+    }
+
+    private class StartGameClickListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (!inGame) {
+                boolean start = PopUpManager.confirmAction("start a new Game");
+                if (start) {
+                    SoundManager.playSound("media/sounds/shuffle.wav");
+                    startGame();
+                }
+                else repaint();
+            }
+        }
+    }
+
+    private class CardFlipListener extends MouseAdapter {
+        private final Casella casella;
+
+        private CardFlipListener(Casella casella) {
+            this.casella = casella;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            handleCardClick(casella);
+        }
+    }
+
+    private class EndGameDelayListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            showGameOver();
+        }
+    }
+
+    private class ResetDelayListener implements ActionListener {
+        private final Casella toFlipA;
+        private final Casella toFlipB;
+
+        private ResetDelayListener(Casella toFlipA, Casella toFlipB) {
+            this.toFlipA = toFlipA;
+            this.toFlipB = toFlipB;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            toFlipA.flip();
+            toFlipB.flip();
+            firstFlipped    = null;
+            secondFlipped   = null;
+            waitingForReset = false;
+        }
+    }
+
+    private class TimeOutHandler implements Runnable {
+        @Override
+        public void run() {
+            showGameOver();
+        }
     }
 }

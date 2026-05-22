@@ -12,6 +12,8 @@ package game;
 import ui.CustomColors;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import ui.PopUpManager;
 
 public class Timer extends JProgressBar {
@@ -50,27 +52,7 @@ public class Timer extends JProgressBar {
         setValue(0);
         repaint();
 
-        crono = new javax.swing.Timer(1000, e -> {
-            secRestants--;
-            setValue(secTotals - secRestants);
-            
-            if (secRestants <= secTotals * 0.05) {
-                setForeground(CC.P3_RED_ALERT);
-            } else {
-                setForeground(Color.WHITE);
-            }
-            
-            repaint();                        
-
-            if (secRestants <= 0) {
-                GameManager.timeOut();
-                stop();
-                PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
-                if (onTimeOut != null)  { 
-                    onTimeOut.run();
-                }  
-            }
-        });
+        crono = new javax.swing.Timer(1000, new CronoTickListener());
     }
 
     public void start() { 
@@ -119,6 +101,31 @@ public class Timer extends JProgressBar {
         int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
         g.drawString(text, x, y);
         setBorderPainted(false);
+    }
+
+    private class CronoTickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            secRestants--;
+            setValue(secTotals - secRestants);
+
+            if (secRestants <= secTotals * 0.05) {
+                setForeground(CC.P3_RED_ALERT);
+            } else {
+                setForeground(Color.WHITE);
+            }
+
+            repaint();
+
+            if (secRestants <= 0) {
+                GameManager.timeOut();
+                stop();
+                PopUpManager.displayMessage("Game Over!", GameManager.getGameStatus());
+                if (onTimeOut != null) {
+                    onTimeOut.run();
+                }
+            }
+        }
     }
     
 }

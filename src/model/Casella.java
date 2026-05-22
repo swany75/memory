@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -43,34 +45,6 @@ public class Casella extends JPanel {
         // (Asumiendo que card.getFrontImage() y card.getBackImage() devuelven los String de las rutas)
         this.frontImage = ImageManager.loadIcon(card.getFrontImage()).getImage();
         this.backImage  = ImageManager.loadIcon(card.getBackImage()).getImage();
-    }
-
-    private void startFlip() {
-        if (flipTimer != null && flipTimer.isRunning()) return;
-
-        contractingPhase = true;
-        flipTimer = new Timer(15, null);
-
-        flipTimer.addActionListener(event -> {
-            if (contractingPhase) {
-                scale -= 0.1;
-                if (scale <= 0.0) {
-                    scale = 0.0;
-                    sm.playSound("media/sounds/flip.wav");
-                    card.flip();
-                    contractingPhase = false;
-                }
-            } else {
-                scale += 0.1;
-                if (scale >= 1.0) {
-                    scale = 1.0;
-                    flipTimer.stop();
-                }
-            }
-            repaint();
-        });
-
-        flipTimer.start();
     }
 
     public void flip() {
@@ -110,19 +84,65 @@ public class Casella extends JPanel {
         alpha = 0f;
         javax.swing.Timer delay = new javax.swing.Timer(delayMs, null);
         delay.setRepeats(false);
-        delay.addActionListener(e -> {
-            javax.swing.Timer fadeTimer = new javax.swing.Timer(15, null);
-            fadeTimer.addActionListener(ev -> {
-                alpha += 0.05f;
-                if (alpha >= 1f) {
-                    alpha = 1f;
-                    fadeTimer.stop();
-                }
-                repaint();
-            });
-            fadeTimer.start();
-        });
+        delay.addActionListener(new FadeInDelayListener());
         delay.start();
     }
-    
+
+    private void startFlip() {
+        if (flipTimer != null && flipTimer.isRunning()) return;
+
+        contractingPhase = true;
+        flipTimer = new Timer(15, null);
+        flipTimer.addActionListener(new FlipTimerListener());
+        flipTimer.start();
+    }
+
+    private class FlipTimerListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            if (contractingPhase) {
+                scale -= 0.1;
+                if (scale <= 0.0) {
+                    scale = 0.0;
+                    sm.playSound("media/sounds/flip.wav");
+                    card.flip();
+                    contractingPhase = false;
+                }
+            } else {
+                scale += 0.1;
+                if (scale >= 1.0) {
+                    scale = 1.0;
+                    flipTimer.stop();
+                }
+            }
+            repaint();
+        }
+    }
+
+    private class FadeInDelayListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            javax.swing.Timer fadeTimer = new javax.swing.Timer(15, null);
+            fadeTimer.addActionListener(new FadeInStepListener(fadeTimer));
+            fadeTimer.start();
+        }
+    }
+
+    private class FadeInStepListener implements ActionListener {
+        private final javax.swing.Timer fadeTimer;
+
+        private FadeInStepListener(javax.swing.Timer fadeTimer) {
+            this.fadeTimer = fadeTimer;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ev) {
+            alpha += 0.05f;
+            if (alpha >= 1f) {
+                alpha = 1f;
+                fadeTimer.stop();
+            }
+            repaint();
+        }
+    }
 }

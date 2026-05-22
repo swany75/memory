@@ -15,6 +15,10 @@ import ui.StatusBar;
 import ui.Desplegable;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Random;
 import audio.SoundManager;
 
@@ -54,12 +58,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("Memory - UIB");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                secureExit();
-            }
-        });
+        addWindowListener(new FrameCloseListener());
 
         // LOAD Icons & Images
         ImageIcon icono = new ImageIcon(RUTA_ICONES + ("icon" + (rand.nextInt(4) + 1) + ".png"));
@@ -101,11 +100,11 @@ public class MainFrame extends JFrame {
 
         toolBar.add(new Desplegable(this, contentPanel));
         
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.GAME)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "selectiveHistoric.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SELECTIVE)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.HISTORY)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, e -> contentPanel.switchPanel(ContentPanel.SETTINGS)));
-        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, e -> secureExit()));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "play.png", 32, 32, new SwitchPanelActionListener(ContentPanel.GAME)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "selectiveHistoric.png", 32, 32, new SwitchPanelActionListener(ContentPanel.SELECTIVE)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "historic.png", 32, 32, new SwitchPanelActionListener(ContentPanel.HISTORY)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "settings.png", 32, 32, new SwitchPanelActionListener(ContentPanel.SETTINGS)));
+        toolBar.add(ButtonBuilder.createButton(RUTA_ICONES + "exit.png", 32, 32, new SecureExitActionListener()));
 
         return toolBar;
     }
@@ -126,11 +125,11 @@ public class MainFrame extends JFrame {
         separadorEsquerra.setPreferredSize(new Dimension(1, 0));
         separadorEsquerra.setBackground(panellCos.getBackground());
         
-        addSideButton("GAME", e -> contentPanel.switchPanel(ContentPanel.GAME));
-        addSideButton("SELECTIVE", e -> contentPanel.switchPanel(ContentPanel.SELECTIVE));
-        addSideButton("HISTORY", e -> contentPanel.switchPanel(ContentPanel.HISTORY));
-        addSideButton("SETTINGS", e -> contentPanel.switchPanel(ContentPanel.SETTINGS));
-        addSideButton("EXIT", e -> secureExit());
+        addSideButton("GAME", new SwitchPanelActionListener(ContentPanel.GAME));
+        addSideButton("SELECTIVE", new SwitchPanelActionListener(ContentPanel.SELECTIVE));
+        addSideButton("HISTORY", new SwitchPanelActionListener(ContentPanel.HISTORY));
+        addSideButton("SETTINGS", new SwitchPanelActionListener(ContentPanel.SETTINGS));
+        addSideButton("EXIT", new SecureExitActionListener());
         
         panellCos.add(panellLateral, BorderLayout.WEST);
         panellCos.add(contentPanel, BorderLayout.CENTER);
@@ -167,6 +166,33 @@ public class MainFrame extends JFrame {
 
         if (confirmExit) {
             System.exit(0);
+        }
+    }
+
+    private class FrameCloseListener extends WindowAdapter {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            secureExit();
+        }
+    }
+
+    private class SwitchPanelActionListener implements ActionListener {
+        private final String panel;
+
+        private SwitchPanelActionListener(String panel) {
+            this.panel = panel;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            contentPanel.switchPanel(panel);
+        }
+    }
+
+    private class SecureExitActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            secureExit();
         }
     }
 }
