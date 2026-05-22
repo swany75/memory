@@ -6,33 +6,18 @@ package config;
 
 import data.FileWrite;
 import ui.PopUpManager;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
 
-public class Settings extends JPanel { // Classe dels Settings
+public class SettingsPanel extends JPanel { // Classe dels Settings
 
     private static final String HISTORY_FILE = "media/files/historial";
 
@@ -54,7 +39,7 @@ public class Settings extends JPanel { // Classe dels Settings
     private JButton clearHistoryButton;
     private JButton resetButton;
 
-    public Settings() {
+    public SettingsPanel() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
@@ -228,16 +213,6 @@ public class Settings extends JPanel { // Classe dels Settings
         String dir = selected.getPath();
         GameSettings.setCardsDir(dir);
         cardsFolderField.setText(dir);
-
-        String backImage = GameSettings.findBackImagePath(dir);
-        if (backImage == null) {
-            PopUpManager.displayMessage(
-                "No se encontró un archivo backImage en la carpeta seleccionada.",
-                "BackImage no encontrado"
-            );
-            return;
-        }
-        GameSettings.setBackImagePath(backImage);
     }
 
     private void updateDifficultyLabel(int value) {

@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import memory.MainFrame;
+import audio.SoundManager;
 
 public class Desplegable extends JMenuBar {
 
@@ -60,11 +61,19 @@ public class Desplegable extends JMenuBar {
     
     private JMenuItem createStyledMenuItem(String text) {
         JMenuItem item = new JMenuItem(text);
-        
+
         item.setFont(MENU_FONT);
         item.setForeground(Color.BLACK);
         item.setOpaque(false);
         item.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        // Sonido al clicar
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SoundManager.playSound("media/sounds/click.wav");
+            }
+        });
 
         return item;
     }

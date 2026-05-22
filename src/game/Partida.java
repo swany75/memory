@@ -12,14 +12,14 @@ package game;
 import java.io.Serializable;
 
 public class Partida implements Serializable {
-    // Es una buena práctica añadir un serialVersionUID al implementar Serializable
+
     private static final long serialVersionUID = 1L;
 
     public enum GameState { WIN, LOSE, INTERRUPTED }
-    public enum Difficulty { EASY, NORMAL, HARD } // Corregido: "Difficulty" con doble 'f'
+    public enum Difficulty { EASY, NORMAL, HARD }
     
     private String playerName; 
-    private Difficulty dificultat; // Tipo corregido a Difficulty
+    private Difficulty dificultat;
     private int totalParelles;
     private int parellesEncertades;
     private GameState estat;

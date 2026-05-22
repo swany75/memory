@@ -9,7 +9,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 import model.Historial;
-import config.Settings;
+import config.SettingsPanel;
 import audio.SoundManager;
 import game.Timer;
 
@@ -23,7 +23,7 @@ public class ContentPanel extends JPanel {
     private CardLayout cardLayout;
     private String currentPanel;
     private GamePanel gamePanel;
-    private Settings settings;
+    private SettingsPanel settings;
     private Historial historic;
     private game.Timer timer;
     private SoundManager soundManager;
@@ -42,7 +42,7 @@ public class ContentPanel extends JPanel {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
         gamePanel = new GamePanel(st, timer, sm);
-        settings  = new Settings();
+        settings  = new SettingsPanel();
         historic  = new Historial();
         this.add(gamePanel, GAME);
         this.add(settings,  SETTINGS);
@@ -83,7 +83,7 @@ public class ContentPanel extends JPanel {
         return gamePanel;
     }
     
-    public Settings getSettingsPanel() {
+    public SettingsPanel getSettingsPanel() {
         return settings;
     }
     

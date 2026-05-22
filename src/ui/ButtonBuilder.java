@@ -9,6 +9,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
+import audio.SoundManager;
 
 /**
  * @author Marti Figuls Nolla
@@ -23,19 +24,23 @@ public class ButtonBuilder {
     // Botón simple para la barra de botones superior 
     // Sin texto y con escalado
     public static JButton createButton(String iconPath, int w, int h, ActionListener action) {
-
         JButton button = new JButton();
-
         button.setIcon(ImageManager.loadScaledIcon(iconPath, w, h));
-
         button.addActionListener(action);
+
+        // Sonido al clicar
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SoundManager.playSound("media/sounds/click.wav");
+            }
+        });
 
         button.setFocusable(false);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
-
         return button;
-    }   
+    } 
        
     /**
      * Interfaz de usuario personalizada para botones que simula un botón físico (pulsador).
@@ -74,6 +79,14 @@ public class ButtonBuilder {
             AbstractButton b = (AbstractButton) c;
             b.setOpaque(false);
             b.setBorder(new EmptyBorder(8, 20, 8, 20));
+
+            // Sonido al clicar
+            b.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SoundManager.playSound("media/sounds/click.wav");
+                }
+            });
         }
 
         /**
