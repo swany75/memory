@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ui;
+package ui.panels;
 
+import utils.PopUpManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,13 +14,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.Card;
 import model.Casella;
-import game.GameManager;
-import game.Timer;
-import audio.SoundManager;
-import config.GameSettings;
-import data.FileWrite;
+import core.GameManager;
+import ui.components.Timer;
+import utils.SoundManager;
+import core.settings.GameSettings;
+import utils.data.FileWrite;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import utils.ImageManager;
+import ui.components.StatusBar;
 
 /**
  * @author Marti Figuls Nolla

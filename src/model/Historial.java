@@ -4,7 +4,7 @@
  */
 package model;
 
-import data.FileRead;
+import utils.data.FileRead;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

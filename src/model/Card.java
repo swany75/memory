@@ -4,7 +4,7 @@
  */
 package model;
 
-import config.GameSettings;
+import core.settings.GameSettings;
 
 /**
  * @author Marti Figuls Nolla

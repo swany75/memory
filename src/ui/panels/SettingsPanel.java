@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package config;
+package ui.panels;
 
-import data.FileWrite;
-import ui.PopUpManager;
+import core.settings.GameSettings;
+import utils.data.FileWrite;
+import utils.PopUpManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;

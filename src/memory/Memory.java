@@ -4,6 +4,8 @@
  */
 package memory;
 
+import ui.panels.MainFrame;
+
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu

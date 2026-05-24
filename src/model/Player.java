@@ -5,7 +5,7 @@
 package model;
 
 import java.io.Serializable;
-import game.Partida;
+import core.game.Partida;
 
 /**
  * @author Marti Figuls Nolla

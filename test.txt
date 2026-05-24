@@ -1246,6 +1246,8 @@ C:.
 │   │   │   .netbeans_update_resources
 │   │   │   
 │   │   ├───audio
+│   │   │       SoundManager$ClipStopListener.class
+│   │   │       SoundManager$MusicFadeOutTask.class
 │   │   │       SoundManager.class
 │   │   │       
 │   │   ├───barraprogresiontemporal
@@ -1253,11 +1255,18 @@ C:.
 │   │   │       problemaImplementacionBarraProgresionTemporal_v2$1.class
 │   │   │       
 │   │   ├───config
-│   │   │       Settings.class
-│   │   │       
-│   │   ├───controller
-│   │   │       GameController.class
-│   │   │       GamePanelController.class
+│   │   │       GameSettings.class
+│   │   │       SettingsPanel$1.class
+│   │   │       SettingsPanel$2.class
+│   │   │       SettingsPanel$3.class
+│   │   │       SettingsPanel$4.class
+│   │   │       SettingsPanel$5.class
+│   │   │       SettingsPanel$6.class
+│   │   │       SettingsPanel$DifficultyChangeListener.class
+│   │   │       SettingsPanel$MusicVolumeChangeListener.class
+│   │   │       SettingsPanel$SoundVolumeChangeListener.class
+│   │   │       SettingsPanel$TimerChangeListener.class
+│   │   │       SettingsPanel.class
 │   │   │       
 │   │   ├───data
 │   │   │       FileRead.class
@@ -1268,19 +1277,29 @@ C:.
 │   │   │       Partida$Difficulty.class
 │   │   │       Partida$GameState.class
 │   │   │       Partida.class
+│   │   │       Timer$CronoTickListener.class
 │   │   │       Timer.class
 │   │   │       
 │   │   ├───lecturaLTGraficos
 │   │   │       LTGraficos$1.class
 │   │   │       
 │   │   ├───memory
+│   │   │       MainFrame$FrameCloseListener.class
+│   │   │       MainFrame$SecureExitActionListener.class
+│   │   │       MainFrame$SwitchPanelActionListener.class
 │   │   │       MainFrame.class
 │   │   │       Memory.class
 │   │   │       
 │   │   ├───model
 │   │   │       Card.class
+│   │   │       Casella$FadeInDelayListener.class
+│   │   │       Casella$FadeInStepListener.class
+│   │   │       Casella$FlipTimerListener.class
 │   │   │       Casella.class
 │   │   │       Couple.class
+│   │   │       Historial$ClearActionListener.class
+│   │   │       Historial$RequestFocusTask.class
+│   │   │       Historial$SearchActionListener.class
 │   │   │       Historial.class
 │   │   │       Player.class
 │   │   │       
@@ -1294,13 +1313,22 @@ C:.
 │   │   │       Casilla$1.class
 │   │   │       
 │   │   └───ui
+│   │           ButtonBuilder$1.class
+│   │           ButtonBuilder$PulsadorUI$1.class
 │   │           ButtonBuilder$PulsadorUI.class
 │   │           ButtonBuilder.class
+│   │           ContentPanel$RefreshHistoryTask.class
 │   │           ContentPanel.class
 │   │           CustomColors.class
+│   │           Desplegable$1.class
+│   │           Desplegable$SecureExitActionListener.class
+│   │           Desplegable$SwitchPanelActionListener.class
 │   │           Desplegable.class
-│   │           GamePanel$1.class
-│   │           GamePanel$2.class
+│   │           GamePanel$CardFlipListener.class
+│   │           GamePanel$EndGameDelayListener.class
+│   │           GamePanel$ResetDelayListener.class
+│   │           GamePanel$StartGameClickListener.class
+│   │           GamePanel$TimeOutHandler.class
 │   │           GamePanel.class
 │   │           ImageManager.class
 │   │           PopUpManager.class
@@ -1936,6 +1964,7 @@ C:.
 │   │   │   favicon.png
 │   │   │   logo-uib-horizontal300.png
 │   │   │   LogoUIB (Ben fet).png
+│   │   │   mainImage.jpg
 │   │   │   UIB.jpg
 │   │   │   
 │   │   ├───cards
@@ -2161,20 +2190,31 @@ C:.
 │   │           
 │   ├───music
 │   │       gameTheme.mp3
-│   │       invisible_slowed&reverb.mp3
+│   │       gameTheme.wav
 │   │       
 │   ├───sounds
-│   │       card_flip.mp3
 │   │       click.mp3
+│   │       click.wav
 │   │       error.mp3
+│   │       error.wav
+│   │       flip.mp3
+│   │       flip.wav
+│   │       match.wav
 │   │       press_button.mp3
+│   │       press_button.wav
 │   │       save_settings.mp3
+│   │       save_settings.wav
 │   │       shuffle.mp3
+│   │       shuffle.wav
 │   │       welldone.mp3
 │   │       welldone2.mp3
+│   │       welldone2.wav
 │   │       you_lose.mp3
+│   │       you_lose.wav
 │   │       you_win.mp3
+│   │       you_win.wav
 │   │       you_win2.mp3
+│   │       you_win2.wav
 │   │       
 │   └───themes
 ├───nbproject
@@ -2192,11 +2232,8 @@ C:.
 │   │       SoundManager.java
 │   │       
 │   ├───config
-│   │       Settings.java
-│   │       
-│   ├───controller
-│   │       GameController.java
-│   │       GamePanelController.java
+│   │       GameSettings.java
+│   │       SettingsPanel.java
 │   │       
 │   ├───data
 │   │       FileRead.java

@@ -2,19 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ui;
+package ui.components;
 
 /**
  * @author Marti Figuls Nolla
  * @author Juan Dalmau Santandreu
  */
 
+import ui.panels.ContentPanel;
+import ui.components.CustomColors;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import memory.MainFrame;
-import audio.SoundManager;
+import utils.ImageManager;
+import ui.panels.MainFrame;
+import utils.SoundManager;
 
 public class Desplegable extends JMenuBar {
 

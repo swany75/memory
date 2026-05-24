@@ -4,9 +4,9 @@
  */
 package model;
 
-import audio.SoundManager;
+import utils.SoundManager;
 import java.awt.AlphaComposite;
-import ui.ImageManager;
+import utils.ImageManager;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;

@@ -4,14 +4,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package ui;
+package ui.panels;
 
 import javax.swing.*;
 import java.awt.*;
 import model.Historial;
-import config.SettingsPanel;
-import audio.SoundManager;
-import game.Timer;
+import utils.SoundManager;
+import ui.components.Timer;
+import ui.components.StatusBar;
 
 /**
  * @author Marti Figuls Nolla
@@ -25,7 +25,7 @@ public class ContentPanel extends JPanel {
     private GamePanel gamePanel;
     private SettingsPanel settings;
     private Historial historic;
-    private game.Timer timer;
+    private ui.components.Timer timer;
     private SoundManager soundManager;
    
     public static final String GAME = "GAME";

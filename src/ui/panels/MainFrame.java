@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package memory;
+package ui.panels;
 
-import ui.PopUpManager;
-import game.Timer;
-import game.GameManager;
-import ui.ButtonBuilder;
-import ui.ContentPanel;
-import ui.CustomColors;
-import ui.StatusBar;
-import ui.Desplegable;
+import utils.PopUpManager;
+import ui.components.Timer;
+import core.GameManager;
+import utils.ButtonBuilder;
+import ui.components.CustomColors;
+import ui.components.StatusBar;
+import ui.components.Desplegable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
-import audio.SoundManager;
+import utils.SoundManager;
 
 /**
  * @author Marti Figuls Nolla

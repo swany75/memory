@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package game;
+package core;
 
-import audio.SoundManager;
-import config.GameSettings;
+import utils.SoundManager;
+import core.settings.GameSettings;
+import ui.components.Timer;
 import java.io.File;
 import model.Couple;
 import model.Card;
-import ui.StatusBar;
+import ui.components.StatusBar;
 
 /**
  * @author Marti Figuls Nolla
