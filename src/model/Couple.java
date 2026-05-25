@@ -14,6 +14,7 @@ package model;
  */
 
 public class Couple {
+    
     private Card cardA;
     private Card cardB;
     private boolean isMatched;
@@ -33,4 +34,5 @@ public class Couple {
 
     public boolean isMatched() { return isMatched; }
     public void setMatched(boolean isMatched) { this.isMatched = isMatched; }
+    
 }
