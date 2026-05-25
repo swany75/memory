@@ -15,10 +15,24 @@ import java.awt.image.BufferedImage;
 
 public class ImageManager { // Gestió de les Imatges
     
+    /**
+     * Carga una imagen desde disco como {@link ImageIcon}.
+     *
+     * @param path ruta del archivo
+     * @return icono cargado
+     */
     public static ImageIcon loadIcon(String path) {
         return new ImageIcon(path);
     }
     
+    /**
+     * Carga una imagen y la reescala con calidad de renderizado.
+     *
+     * @param path  ruta del archivo
+     * @param width ancho objetivo
+     * @param height alto objetivo
+     * @return icono reescalado
+     */
     public static ImageIcon loadScaledIcon(String path, int width, int height) {
 
         ImageIcon icon = new ImageIcon(path);
@@ -39,16 +53,4 @@ public class ImageManager { // Gestió de les Imatges
         return new ImageIcon(resized);
     }
  
-    public static BufferedImage loadBufferedImage(String path, int width, int height) {
-        Image src = new ImageIcon(path).getImage();
-        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = bi.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.drawImage(src, 0, 0, width, height, null);
-        g2.dispose();
-        return bi;
-    }
-    
 }

@@ -25,6 +25,15 @@ public class ButtonBuilder {
     
     // Botón simple para la barra de botones superior 
     // Sin texto y con escalado
+    /**
+     * Crea un botón iconográfico para la barra superior con sonido de clic.
+     *
+     * @param iconPath ruta del icono
+     * @param w        ancho del icono
+     * @param h        alto del icono
+     * @param action   acción a ejecutar
+     * @return botón configurado
+     */
     public static JButton createButton(String iconPath, int w, int h, ActionListener action) {
         JButton button = new JButton();
         button.setIcon(ImageManager.loadScaledIcon(iconPath, w, h));
@@ -43,19 +52,15 @@ public class ButtonBuilder {
         button.setContentAreaFilled(false);
         return button;
     } 
-       
+        
     /**
-     * Interfaz de usuario personalizada para botones que simula un botón físico (pulsador).
-     * <p>
-     * Dibuja un efecto de sombra en la parte inferior para dar sensación de relieve (3D). 
-     * Cuando el botón es presionado, el contenido y el fondo se desplazan verticalmente 
-     * hacia abajo para simular la pulsación física.
-     * </p>
-     * * <b>Créditos:</b>
-     * Adaptado a partir de una solución de diseño de botones tipo CSS en Stack Overflow.
-     * * @see <a href="https://stackoverflow.com/questions/23698092/design-button-in-java-like-in-css">Stack Overflow - Design Button in Java like in CSS</a>
+     * Crea un botón de texto con estilo de pulsador físico.
+     *
+     * @param texto  texto del botón
+     * @param color  color de fondo base
+     * @param fuente tipografía del botón
+     * @return botón estilizado
      */
-    
     public static JButton createPulsador(String texto, Color color, Font fuente) {
         JButton button = new JButton(texto);
         button.setFont(fuente);

@@ -36,6 +36,13 @@ public class ContentPanel extends JPanel {
 
     private StatusBar statusBar;
 
+    /**
+     * Crea el contenedor central y registra los paneles principales.
+     *
+     * @param st    barra de estado para mensajes
+     * @param timer temporizador del juego
+     * @param sm    gestor de sonido
+     */
     public ContentPanel(StatusBar st, Timer timer, SoundManager sm) {
         this.statusBar = st;
         this.soundManager = sm;
@@ -50,6 +57,11 @@ public class ContentPanel extends JPanel {
         switchPanel(GAME);
     }
     
+    /**
+     * Cambia la pantalla visible y actualiza el texto de estado.
+     *
+     * @param panelName identificador del panel a mostrar
+     */
     public void switchPanel(String panelName) {
         if (panelName == null || panelName.equals(currentPanel)) {
             return;
@@ -79,25 +91,21 @@ public class ContentPanel extends JPanel {
         }
     }
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
-    
-    public SettingsPanel getSettingsPanel() {
-        return settings;
-    }
-    
-    public Historial getHistoryPanel() {
-        return historic;
-    }
-    
     private class RefreshHistoryTask implements Runnable {
         private final boolean selective;
 
+        /**
+         * Crea la tarea que refresca el historial con o sin filtro.
+         *
+         * @param selective modo selectivo
+         */
         private RefreshHistoryTask(boolean selective) {
             this.selective = selective;
         }
 
+        /**
+         * Ejecuta el refresco en el hilo de la interfaz.
+         */
         @Override
         public void run() {
             historic.refresh(selective);

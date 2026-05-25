@@ -13,6 +13,12 @@ import javax.swing.JOptionPane;
 
 public class PopUpManager {
     
+    /**
+     * Muestra un cuadro de confirmación y obliga a elegir una opción.
+     *
+     * @param actionText texto de la acción a confirmar
+     * @return {@code true} si el usuario confirma
+     */
     public static boolean confirmAction(String actionText) {
         String message = "Are you sure you want to " + actionText + "?";
         int response = -1;
@@ -29,6 +35,12 @@ public class PopUpManager {
     }
 
     
+    /**
+     * Muestra un mensaje modal con título personalizado.
+     *
+     * @param message texto del mensaje
+     * @param title   título de la ventana
+     */
     public static void displayMessage(String message, String title) {
         int response = -1;
         while (response == JOptionPane.CLOSED_OPTION) {
@@ -46,6 +58,11 @@ public class PopUpManager {
     }
 
     
+    /**
+     * Muestra un mensaje modal con el título por defecto.
+     *
+     * @param message texto del mensaje
+     */
     public static void displayMessage(String message) {
         displayMessage(message, "Game Over");
     }

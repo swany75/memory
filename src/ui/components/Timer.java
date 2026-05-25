@@ -26,6 +26,9 @@ public class Timer extends JProgressBar {
     private int gameDuration;
     private CustomColors CC = new CustomColors();
 
+    /**
+     * Crea el temporizador visual con los estilos por defecto.
+     */
     public Timer() {
         super();
         setMinimum(0);
@@ -37,6 +40,11 @@ public class Timer extends JProgressBar {
         setBackground(CC.PASTEL_YELLOW);
     }
 
+    /**
+     * Devuelve el tiempo restante en formato MM:SS.
+     *
+     * @return cadena con el tiempo restante
+     */
     @Override
     public String getString() {
         if (secTotals == 0) return "--:--";
@@ -45,6 +53,11 @@ public class Timer extends JProgressBar {
         return String.format("%02d:%02d", min, seg);
     }
 
+    /**
+     * Prepara la cuenta atrás en segundos a partir de minutos.
+     *
+     * @param minuts minutos de juego
+     */
     public final void prepararCountdown(int minuts) {
         this.secTotals   = minuts * 60;
         this.secRestants = secTotals;
@@ -56,16 +69,27 @@ public class Timer extends JProgressBar {
         crono = new javax.swing.Timer(1000, new CronoTickListener());
     }
 
+    /**
+     * Inicia el temporizador si está configurado.
+     */
     public void start() { 
         if (crono != null) {
             crono.start();
         } 
     }
 
+    /**
+     * Indica si el temporizador está en ejecución.
+     *
+     * @return {@code true} si está activo
+     */
     public boolean isRunning() {
         return crono != null && crono.isRunning();
     }
     
+    /**
+     * Detiene el temporizador y calcula la duración real de la partida.
+     */
     public void stop()  { 
         if (crono != null) {
             crono.stop();
@@ -79,6 +103,9 @@ public class Timer extends JProgressBar {
         
     }
 
+    /**
+     * Reinicia completamente el estado del temporizador.
+     */
     public final void reset() {
         stop();
         secTotals = 0;
@@ -87,14 +114,29 @@ public class Timer extends JProgressBar {
         repaint();
     }
     
+    /**
+     * Devuelve la duración registrada de la partida en segundos.
+     *
+     * @return duración en segundos
+     */
     public int getGameDuration() {
         return gameDuration;
     }
 
+    /**
+     * Define la acción que se ejecuta al agotar el tiempo.
+     *
+     * @param callback tarea a ejecutar
+     */
     public void setOnTimeOut(Runnable callback) {
         this.onTimeOut = callback;
     }
     
+    /**
+     * Renderiza la barra de progreso con el texto centrado.
+     *
+     * @param g contexto gráfico
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -109,6 +151,11 @@ public class Timer extends JProgressBar {
     }
 
     private class CronoTickListener implements ActionListener {
+        /**
+         * Actualiza el contador cada segundo y dispara el fin de partida al llegar a cero.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             secRestants--;

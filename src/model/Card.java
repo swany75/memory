@@ -15,27 +15,46 @@ public class Card {
     private String frontImage;
     private boolean isFlipped;
 
+    /**
+     * Crea una carta con su imagen frontal y la deja boca abajo.
+     *
+     * @param frontImage ruta de la imagen frontal
+     */
     public Card(String frontImage) {
         this.frontImage = frontImage;
         this.isFlipped = false;
     }
 
-    public String getCurrentImage() {
-        return isFlipped ? frontImage : getBackImage();
-    }
-
+    /**
+     * Invierte el estado de la carta (boca arriba/boca abajo).
+     */
     public void flip() {
         isFlipped = !isFlipped;
     }
 
+    /**
+     * Indica si la carta está boca arriba.
+     *
+     * @return {@code true} si está volteada
+     */
     public boolean isFlipped() {
         return isFlipped;
     }
 
+    /**
+     * Devuelve la ruta de la imagen de reverso configurada.
+     *
+     * @return ruta de la imagen de reverso
+     */
     public String getBackImage() {
         return GameSettings.getBackImagePath();
     }
     
+    /**
+     * Devuelve la ruta de la imagen frontal de la carta.
+     *
+     * @return ruta de la imagen frontal
+     */
     public String getFrontImage() {
         return frontImage;
     }

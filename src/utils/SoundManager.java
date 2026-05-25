@@ -20,6 +20,11 @@ public class SoundManager {
     private static float musicVolume = 0.8f;
     private static boolean muted = false;
 
+    /**
+     * Reproduce un efecto de sonido puntual si no está silenciado.
+     *
+     * @param path ruta del archivo de audio
+     */
     public static void playSound(String path) {
         if (muted) return;
         try {
@@ -34,6 +39,11 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Reproduce música de fondo en bucle, reemplazando la pista anterior.
+     *
+     * @param path ruta del archivo de audio
+     */
     public static void playMusic(String path) {
         // Detener siempre la música anterior, independientemente del mute
         if (musicClip != null) {
@@ -54,6 +64,9 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Detiene la música de fondo y libera recursos.
+     */
     public static void stopMusic() {
         if (musicClip != null) {
             musicClip.stop();
@@ -62,15 +75,30 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Ajusta el volumen de efectos de sonido.
+     *
+     * @param volume volumen lineal entre 0.0 y 1.0
+     */
     public static void setSoundVolume(float volume) {
         soundVolume = Math.max(0f, Math.min(1f, volume));
     }
 
+    /**
+     * Ajusta el volumen de la música y actualiza el clip activo.
+     *
+     * @param volume volumen lineal entre 0.0 y 1.0
+     */
     public static void setMusicVolume(float volume) {
         musicVolume = Math.max(0f, Math.min(1f, volume));
         if (musicClip != null) applyVolume(musicClip, musicVolume);
     }
 
+    /**
+     * Activa o desactiva el silencio global.
+     *
+     * @param value estado de silencio
+     */
     public static void setMuted(boolean value) {
         muted = value;
         if (musicClip != null) {
@@ -79,10 +107,12 @@ public class SoundManager {
         }
     }
 
-    public static boolean isMuted() { return muted; }
-    public static float getSoundVolume() { return soundVolume; }
-    public static float getMusicVolume() { return musicVolume; }
-
+    /**
+     * Aplica el volumen al clip usando escala logarítmica en dB.
+     *
+     * @param clip   clip al que aplicar el volumen
+     * @param volume volumen lineal entre 0.0 y 1.0
+     */
     private static void applyVolume(Clip clip, float volume) {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -90,20 +120,24 @@ public class SoundManager {
             gain.setValue(Math.max(gain.getMinimum(), Math.min(gain.getMaximum(), dB)));
         }
     }
-    
-    public static void stopMusicWithFadeOut() {
-        if (musicClip == null || !musicClip.isRunning()) return;
-
-        new Thread(new MusicFadeOutTask()).start();
-    }
 
     private static class ClipStopListener implements LineListener {
         private final Clip clip;
 
+        /**
+         * Crea un listener que cierra el clip al finalizar.
+         *
+         * @param clip clip asociado
+         */
         private ClipStopListener(Clip clip) {
             this.clip = clip;
         }
 
+        /**
+         * Cierra el clip cuando la reproducción se detiene.
+         *
+         * @param event evento de línea
+         */
         @Override
         public void update(LineEvent event) {
             if (event.getType() == LineEvent.Type.STOP) {
@@ -112,19 +146,4 @@ public class SoundManager {
         }
     }
 
-    private static class MusicFadeOutTask implements Runnable {
-        @Override
-        public void run() {
-            float vol = musicVolume;
-            while (vol > 0f) {
-                vol -= 0.05f;
-                applyVolume(musicClip, Math.max(0f, vol));
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException ignored) {
-                }
-            }
-            stopMusic();
-        }
-    }
 }

@@ -28,6 +28,12 @@ public class Desplegable extends JMenuBar {
     private Font MENU_FONT = new Font("Jet Brains Mono", Font.PLAIN, 12);
     private CustomColors CC = new CustomColors();
 
+    /**
+     * Crea el menú desplegable superior y configura sus acciones.
+     *
+     * @param frame ventana principal para gestionar la salida segura
+     * @param cp    panel central para cambiar de pantalla
+     */
     public Desplegable(MainFrame frame, ContentPanel cp) {
         setOpaque(true);
         setBorder(BorderFactory.createEmptyBorder());
@@ -62,6 +68,12 @@ public class Desplegable extends JMenuBar {
         add(menu);
     }
     
+    /**
+     * Fabrica un item del menú con estilo y sonido al pulsar.
+     *
+     * @param text texto a mostrar
+     * @return item configurado
+     */
     private JMenuItem createStyledMenuItem(String text) {
         JMenuItem item = new JMenuItem(text);
 
@@ -85,11 +97,22 @@ public class Desplegable extends JMenuBar {
         private final ContentPanel contentPanel;
         private final String panel;
 
+        /**
+         * Crea el listener que cambia el panel visible.
+         *
+         * @param contentPanel panel contenedor
+         * @param panel        identificador de la vista
+         */
         private SwitchPanelActionListener(ContentPanel contentPanel, String panel) {
             this.contentPanel = contentPanel;
             this.panel = panel;
         }
 
+        /**
+         * Activa el cambio de panel.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             contentPanel.switchPanel(panel);
@@ -99,10 +122,20 @@ public class Desplegable extends JMenuBar {
     private class SecureExitActionListener implements ActionListener {
         private final MainFrame frame;
 
+        /**
+         * Crea el listener que ejecuta la salida segura.
+         *
+         * @param frame ventana principal
+         */
         private SecureExitActionListener(MainFrame frame) {
             this.frame = frame;
         }
 
+        /**
+         * Ejecuta la salida segura desde el menú.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.secureExit();

@@ -37,6 +37,13 @@ public class GameManager {
     private int matchesFound = 0;
     private int totalPairs;
 
+    /**
+     * Crea el gestor lógico del juego y enlaza los componentes de interfaz.
+     *
+     * @param sb    barra de estado para mensajes del juego
+     * @param timer temporizador asociado a la partida
+     * @param sm    gestor de sonido global
+     */
     public GameManager(StatusBar sb, Timer timer, SoundManager sm) {
         this.soundManager = sm;
         this.statusBar = sb;
@@ -45,18 +52,12 @@ public class GameManager {
         
     }
 
-    public int getMaxDifficulty() {
-        int available = countAvailableImages();
-        for (int d = 12; d >= 0; d--) {
-            int[] dims = getDimsForDifficulty(d);
-            int pairs = (dims[0] * dims[1]) / 2;
-            if (pairs <= available) {
-                return d;
-            }
-        }
-        return 0;
-    }
-
+    /**
+     * Mapea un nivel de dificultad a su número de filas y columnas.
+     *
+     * @param difficulty nivel de dificultad (0-12)
+     * @return array con filas y columnas
+     */
     private int[] getDimsForDifficulty(int difficulty) {
         switch (difficulty) {
             case 0:  return new int[]{2,  2};
@@ -76,12 +77,22 @@ public class GameManager {
         }
     }
 
+    /**
+     * Asigna el tamaño del tablero según el nivel de dificultad.
+     *
+     * @param difficulty nivel de dificultad
+     */
     public void setDifficulty(int difficulty) {
         int[] dims = getDimsForDifficulty(difficulty);
         numRows = dims[0];
         numCols = dims[1];
     }
 
+    /**
+     * Inicializa la partida cargando recursos y generando el tablero lógico.
+     *
+     * @throws IllegalStateException si no hay suficientes imágenes para el nivel actual
+     */
     public void startGame() {
         availableImages = listAvailableImages();
         totalAvailableImages = availableImages.length;
@@ -100,6 +111,11 @@ public class GameManager {
         board = generateBoard();
     }
 
+    /**
+     * Genera el tablero lógico barajando imágenes y creando parejas de cartas.
+     *
+     * @return matriz de cartas lista para renderizar
+     */
     private Card[][] generateBoard() {
         // 1. Shuffle de las imágenes disponibles
         String[] pool = new String[availableImages.length];
@@ -131,6 +147,11 @@ public class GameManager {
     }
 
     // Fisher-Yates shuffle para Card[]
+    /**
+     * Baraja un array de cartas usando el algoritmo Fisher-Yates.
+     *
+     * @param arr array de cartas a mezclar
+     */
     private void shuffleCardArray(Card[] arr) {
         java.util.Random rand = new java.util.Random();
         for (int i = arr.length - 1; i > 0; i--) {
@@ -141,10 +162,11 @@ public class GameManager {
         }
     }
 
-    private int countAvailableImages() {
-        return listAvailableImages().length;
-    }
-
+    /**
+     * Lista las imágenes válidas del directorio de cartas, excluyendo el reverso.
+     *
+     * @return rutas absolutas de imágenes .png disponibles
+     */
     private String[] listAvailableImages() {
         File folder = new File(GameSettings.getCardsDir());
         if (!folder.exists() || !folder.isDirectory()) return new String[0];
@@ -174,6 +196,11 @@ public class GameManager {
         return images;
     }
 
+    /**
+     * Baraja un array de cadenas usando el algoritmo Fisher-Yates.
+     *
+     * @param arr array de rutas a mezclar
+     */
     private void shuffleStringArray(String[] arr) {
         java.util.Random rand = new java.util.Random();
         for (int i = arr.length - 1; i > 0; i--) {
@@ -184,6 +211,13 @@ public class GameManager {
         }
     }
 
+    /**
+     * Comprueba si dos cartas forman pareja y actualiza el estado de la partida.
+     *
+     * @param c1 primera carta seleccionada
+     * @param c2 segunda carta seleccionada
+     * @return {@code true} si coinciden; {@code false} en caso contrario
+     */
     public boolean checkMatch(Card c1, Card c2) {
         if (c1.getFrontImage().equals(c2.getFrontImage())) {
             matchesFound++;
@@ -196,12 +230,42 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Devuelve el número de parejas encontradas.
+     *
+     * @return parejas acertadas
+     */
     public int getMatchesFound() { return matchesFound; }
+    /**
+     * Devuelve el tablero lógico actual.
+     *
+     * @return matriz de cartas
+     */
     public Card[][]      getBoard()       { return board;   }
+    /**
+     * Indica si hay una partida en curso.
+     *
+     * @return {@code true} si el juego está activo
+     */
     public static boolean isRunning()     { return running; }
+    /**
+     * Indica si la partida terminó en victoria.
+     *
+     * @return {@code true} si se han encontrado todas las parejas
+     */
     public boolean        isWin()         { return win;     }
+    /**
+     * Devuelve el total de parejas que debe encontrar el jugador.
+     *
+     * @return número total de parejas
+     */
     public int            getTotalPairs() { return totalPairs; }
 
+    /**
+     * Devuelve el estado final de la partida en formato legible.
+     *
+     * @return "You Win!" si se gana; "You Lose..." en caso contrario
+     */
     public static String getGameStatus() {
         String res = "";
         if (win) {
@@ -212,6 +276,9 @@ public class GameManager {
         return res;
     }
     
+    /**
+     * Fuerza la finalización de la partida por tiempo agotado.
+     */
     public static void timeOut() {
         win     = false;
         running = false;

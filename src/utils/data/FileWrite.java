@@ -21,10 +21,21 @@ public class FileWrite {
     private BufferedOutputStream buffer;
     private boolean append;
     
+    /**
+     * Crea un escritor que sobrescribe el fichero destino.
+     *
+     * @param fname nombre base o ruta del fichero
+     */
     public FileWrite(String fname) {
         this(fname, false);
     }
 
+    /**
+     * Crea un escritor con opción de añadir al final del fichero.
+     *
+     * @param fname  nombre base o ruta del fichero
+     * @param append {@code true} para añadir al final
+     */
     public FileWrite(String fname, boolean append) {
         if (fname != null && !fname.toLowerCase().endsWith(".dat")) {
             this.filename = fname + ".dat";
@@ -34,6 +45,9 @@ public class FileWrite {
         this.append = append;
     }
     
+    /**
+     * Abre el flujo de escritura.
+     */
     public void open() {
         try {
             fileStream = new FileOutputStream(filename, append);
@@ -43,6 +57,11 @@ public class FileWrite {
         }
     }
     
+    /**
+     * Escribe una línea en el fichero.
+     *
+     * @param line línea a escribir
+     */
     public void writeLine(String line) {
         try {
             if (buffer != null && line != null) {
@@ -55,6 +74,9 @@ public class FileWrite {
         }
     }
 
+    /**
+     * Cierra el flujo de escritura.
+     */
     public void close() {
         try {
             if (buffer != null) {

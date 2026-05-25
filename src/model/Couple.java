@@ -17,22 +17,28 @@ public class Couple {
     
     private Card cardA;
     private Card cardB;
-    private boolean isMatched;
 
+    /**
+     * Crea una pareja de cartas idénticas a partir de una imagen frontal.
+     *
+     * @param frontImage ruta de la imagen frontal
+     */
     public Couple(String frontImage) {
         this.cardA = new Card(frontImage);
         this.cardB = new Card(frontImage);
-        this.isMatched = false;
     }
 
-    public boolean isCouple(Card c1, Card c2) {
-        return c1.getFrontImage().equals(c2.getFrontImage());
-    }
-
+    /**
+     * Devuelve la primera carta de la pareja.
+     *
+     * @return carta A
+     */
     public Card getCardA() { return cardA; }
+    /**
+     * Devuelve la segunda carta de la pareja.
+     *
+     * @return carta B
+     */
     public Card getCardB() { return cardB; }
 
-    public boolean isMatched() { return isMatched; }
-    public void setMatched(boolean isMatched) { this.isMatched = isMatched; }
-    
 }

@@ -104,6 +104,9 @@ public class StatusBar extends JPanel {
         "Error 404: Match not found."
     };
 
+    /**
+     * Crea la barra de estado con el estilo base y la etiqueta central.
+     */
     public StatusBar() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -117,28 +120,50 @@ public class StatusBar extends JPanel {
         add(label, BorderLayout.CENTER);
     }
     
+    /**
+     * Limpia el texto actual de la barra de estado.
+     */
     public void clearText() {
         label.setText("");
     }
     
+    /**
+     * Establece un texto específico en la barra de estado.
+     *
+     * @param text texto a mostrar
+     */
     public void setText(String text) {
         label.setText(text);
     }
     
+    /**
+     * Devuelve una frase aleatoria de la lista general.
+     *
+     * @return frase aleatoria
+     */
     private String getRandomText() {
         return PHRASES[RANDOM.nextInt(PHRASES.length)];
         // return  "DEFAULT TEXT";
     }
     
+    /**
+     * Muestra una frase genérica aleatoria en la barra de estado.
+     */
     public void setDefaultText() {
         label.setText(getRandomText());
     }
     
+    /**
+     * Muestra una frase aleatoria de acierto.
+     */
     public void setRandomNiceMovePhrase() {
         String phrase = NICE_MOVE_PHRASES[RANDOM.nextInt(NICE_MOVE_PHRASES.length)];
         label.setText(phrase);
     }
     
+    /**
+     * Muestra una frase aleatoria de fallo.
+     */
     public void setRandomBadMovePhrase() {
         String phrase = BAD_MOVE_PHRASES[RANDOM.nextInt(BAD_MOVE_PHRASES.length)];
         label.setText(phrase);

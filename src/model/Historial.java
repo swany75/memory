@@ -34,6 +34,9 @@ public class Historial extends JPanel {
     private static final String FILENAME = "media/files/historial";
     private static final int INCREMENT = 10;
 
+    /**
+     * Construye la pantalla de historial e inicializa sus componentes.
+     */
     public Historial() {
         allLines = new String[10];
         numLines = 0;
@@ -43,6 +46,11 @@ public class Historial extends JPanel {
         setListeners();
     }
 
+    /**
+     * Refresca el panel de historial, con o sin filtro selectivo.
+     *
+     * @param selective {@code true} para modo búsqueda selectiva
+     */
     public void refresh(boolean selective) {
         this.selective = selective;
         searchField.setText("");
@@ -56,6 +64,9 @@ public class Historial extends JPanel {
         }
     }
 
+    /**
+     * Configura y añade los subpaneles principales.
+     */
     private void setPanels() {
         setTopPanel();
         setHistorialPanel();
@@ -63,6 +74,9 @@ public class Historial extends JPanel {
         add(historialPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el panel superior con buscador y botones.
+     */
     private void setTopPanel() {
         searchPanel = new JPanel(new BorderLayout(6, 0));
         searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -80,6 +94,9 @@ public class Historial extends JPanel {
         searchPanel.add(buttonsPanel, BorderLayout.EAST);
     }
 
+    /**
+     * Construye el panel de resultados con área de texto y scroll.
+     */
     private void setHistorialPanel() {
         historialArea = new JTextArea();
         historialArea.setEditable(false);
@@ -96,6 +113,9 @@ public class Historial extends JPanel {
         historialPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Carga todas las líneas del historial desde disco.
+     */
     private void loadAll() {
         int[] count = {0};
         allLines = readFileInto(count);
@@ -103,6 +123,12 @@ public class Historial extends JPanel {
         showLines(allLines, numLines);
     }
 
+    /**
+     * Lee el fichero de historial en memoria, ampliando el array si es necesario.
+     *
+     * @param count salida con el número de líneas leídas
+     * @return array con las líneas leídas
+     */
     private String[] readFileInto(int[] count) {
         String[] lines = new String[10];
         int n = 0;
@@ -122,6 +148,12 @@ public class Historial extends JPanel {
         return lines;
     }
 
+    /**
+     * Muestra en pantalla un subconjunto de líneas del historial.
+     *
+     * @param lines líneas a mostrar
+     * @param n     número de líneas válidas
+     */
     private void showLines(String[] lines, int n) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
@@ -131,6 +163,9 @@ public class Historial extends JPanel {
         historialArea.setCaretPosition(0);
     }
 
+    /**
+     * Ejecuta una búsqueda en el historial según el texto introducido.
+     */
     private void search() {
         String query = searchField.getText().trim().toLowerCase();
 
@@ -165,6 +200,9 @@ public class Historial extends JPanel {
         }
     }
     
+    /**
+     * Enlaza los listeners de búsqueda y limpieza.
+     */
     private void setListeners() {
         searchButton.addActionListener(new SearchActionListener());
         searchField.addActionListener(new SearchActionListener());
@@ -172,6 +210,11 @@ public class Historial extends JPanel {
     }
 
     private class SearchActionListener implements ActionListener {
+        /**
+         * Dispara la búsqueda del historial.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             search();
@@ -179,6 +222,11 @@ public class Historial extends JPanel {
     }
 
     private class ClearActionListener implements ActionListener {
+        /**
+         * Limpia el campo de búsqueda y la salida.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             searchField.setText("");
@@ -190,6 +238,9 @@ public class Historial extends JPanel {
 
 
     private class RequestFocusTask implements Runnable {
+        /**
+         * Transfiere el foco al panel de scroll del historial.
+         */
         @Override
         public void run() {
             scrollPane.requestFocusInWindow();

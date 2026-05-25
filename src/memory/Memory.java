@@ -14,14 +14,18 @@ import ui.panels.MainFrame;
 public class Memory { // Codi Principal
 
     /**
-     * @param args the command line arguments
+     * Punto de entrada de la aplicación. Arranca la interfaz principal del juego.
+     *
+     * @param args argumentos de línea de comandos (no usados)
      */
-    
     public static void main(String[] args) {
         // TODO code application logic here
         (new Memory()).run();
     }
     
+    /**
+     * Inicializa y muestra la ventana principal del juego.
+     */
     private void run() {
         new MainFrame();
     }

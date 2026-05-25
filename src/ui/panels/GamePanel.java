@@ -47,6 +47,13 @@ public class GamePanel extends JPanel {
     private Image boardBackground;
     private int currentDifficulty = GameSettings.getDifficulty();
     
+    /**
+     * Crea el panel principal de juego y precarga recursos visuales.
+     *
+     * @param sb    barra de estado
+     * @param timer temporizador del juego
+     * @param sm    gestor de sonido
+     */
     public GamePanel(StatusBar sb, Timer timer, SoundManager sm) {
         this.gameManager = new GameManager(sb, timer, sm);
         this.statusBar   = sb;
@@ -59,6 +66,9 @@ public class GamePanel extends JPanel {
         this.addMouseListener(new StartGameClickListener());
     }
 
+    /**
+     * Inicia una nueva partida, configura el temporizador y construye el tablero.
+     */
     public void startGame() {
         currentDifficulty = GameSettings.getDifficulty();
         gameManager.setDifficulty(currentDifficulty);
@@ -95,6 +105,9 @@ public class GamePanel extends JPanel {
         buildBoard();
     }
 
+    /**
+     * Genera la matriz visual de casillas y las añade al panel.
+     */
     private void buildBoard() {
         this.removeAll();
         Card[][] board = gameManager.getBoard();
@@ -119,6 +132,11 @@ public class GamePanel extends JPanel {
         repaint();
     }
     
+    /**
+     * Sustituye el listener de la casilla por el controlado desde el panel.
+     *
+     * @param casella casilla a la que añadir el listener
+     */
     private void addFlipListener(Casella casella) {
         // Remove the default click listener from Casella
         // and manage flipping from here so we control game logic
@@ -129,6 +147,11 @@ public class GamePanel extends JPanel {
         casella.addMouseListener(new CardFlipListener(casella));
     }
 
+    /**
+     * Gestiona un clic sobre una casilla y dispara la comparación si procede.
+     *
+     * @param casella casilla seleccionada
+     */
     private void handleCardClick(Casella casella) {
         // Ignore clicks during reset delay or if already flipped/matched
         if (waitingForReset)              return;
@@ -145,6 +168,9 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * Comprueba si las dos cartas seleccionadas forman pareja.
+     */
     private void checkMatch() {
         Card c1 = firstFlipped.getCard();
         Card c2 = secondFlipped.getCard();
@@ -178,11 +204,14 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * Detiene la partida y muestra la pantalla de final con guardado en historial.
+     */
     private void showGameOver() {
         if (timer.isRunning()) {
             timer.stop();
         }
-        SoundManager.stopMusicWithFadeOut();
+        SoundManager.stopMusic();
         
         if (gameManager.isWin()) {
             SoundManager.playSound("media/sounds/you_win.wav");
@@ -205,6 +234,9 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * Añade la partida actual al fichero de historial.
+     */
     private void appendHistoryEntry() {
         String player = GameSettings.getPlayerName();
         String timestamp = LocalDateTime.now()
@@ -226,6 +258,11 @@ public class GamePanel extends JPanel {
         writer.close();
     }
 
+    /**
+     * Dibuja el fondo del tablero o la pantalla de bienvenida.
+     *
+     * @param g contexto gráfico
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -235,6 +272,9 @@ public class GamePanel extends JPanel {
         if (!inGame) drawWelcomeScreen(g);
     }
 
+    /**
+     * Recalcula el layout para mantener cartas cuadradas y centradas.
+     */
     @Override
     public void doLayout() {
         if (!inGame || casellas == null) {
@@ -272,12 +312,22 @@ public class GamePanel extends JPanel {
         }
     }
     
+    /**
+     * Dibuja la pantalla de bienvenida cuando no hay partida activa.
+     *
+     * @param g contexto gráfico
+     */
     private void drawWelcomeScreen(Graphics g) {
         if (welcomeIcon == null) return;
         g.drawImage(welcomeIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 
     private class StartGameClickListener extends MouseAdapter {
+        /**
+         * Lanza el diálogo de inicio al hacer clic en la pantalla.
+         *
+         * @param e evento del ratón
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             if (!inGame) {
@@ -294,10 +344,20 @@ public class GamePanel extends JPanel {
     private class CardFlipListener extends MouseAdapter {
         private final Casella casella;
 
+        /**
+         * Crea el listener asociado a una casilla concreta.
+         *
+         * @param casella casilla asociada
+         */
         private CardFlipListener(Casella casella) {
             this.casella = casella;
         }
 
+        /**
+         * Gestiona el clic de la casilla.
+         *
+         * @param e evento del ratón
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             handleCardClick(casella);
@@ -305,6 +365,11 @@ public class GamePanel extends JPanel {
     }
 
     private class EndGameDelayListener implements ActionListener {
+        /**
+         * Dispara el fin de partida tras el retardo configurado.
+         *
+         * @param e evento del temporizador
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             showGameOver();
@@ -315,11 +380,22 @@ public class GamePanel extends JPanel {
         private final Casella toFlipA;
         private final Casella toFlipB;
 
+        /**
+         * Crea el listener que voltea las dos cartas tras fallo.
+         *
+         * @param toFlipA primera casilla
+         * @param toFlipB segunda casilla
+         */
         private ResetDelayListener(Casella toFlipA, Casella toFlipB) {
             this.toFlipA = toFlipA;
             this.toFlipB = toFlipB;
         }
 
+        /**
+         * Restablece el turno tras el retardo de error.
+         *
+         * @param e evento del temporizador
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             toFlipA.flip();
@@ -331,6 +407,9 @@ public class GamePanel extends JPanel {
     }
 
     private class TimeOutHandler implements Runnable {
+        /**
+         * Ejecuta el fin de partida cuando el tiempo se agota.
+         */
         @Override
         public void run() {
             showGameOver();

@@ -40,6 +40,9 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     private JButton clearHistoryButton;
     private JButton resetButton;
 
+    /**
+     * Construye el panel de ajustes y sus componentes.
+     */
     public SettingsPanel() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -63,6 +66,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         add(buildActionsPanel(), BorderLayout.SOUTH);
     }
 
+    /**
+     * Construye la fila del nombre del jugador con validación automática.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildPlayerRow() {
         JPanel panel = new JPanel(new BorderLayout(8, 0));
         playerNameField = new JTextField(GameSettings.getPlayerName());
@@ -82,6 +90,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
+    /**
+     * Construye la fila de selección de carpeta de cartas.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildCardsFolderRow() {
         JPanel panel = new JPanel(new BorderLayout(8, 0));
         cardsFolderField = new JTextField(GameSettings.getCardsDir());
@@ -100,6 +113,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
+    /**
+     * Construye la fila del selector de dificultad.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildDifficultyRow() {
         difficultySlider = createSlider(0, 12, GameSettings.getDifficulty(), 1);
         difficultyValue = new JLabel();
@@ -109,6 +127,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return buildSliderRow(difficultySlider, difficultyValue);
     }
 
+    /**
+     * Construye la fila del selector de tiempo máximo.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildTimerRow() {
         timerSlider = createSlider(1, 10, GameSettings.getTimerMinutes(), 1);
         timerValue = new JLabel();
@@ -118,6 +141,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return buildSliderRow(timerSlider, timerValue);
     }
 
+    /**
+     * Construye la fila del selector de volumen de efectos.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildSoundRow() {
         soundSlider = createSlider(0, 100, GameSettings.getSoundVolume(), 10);
         soundValue = new JLabel();
@@ -127,6 +155,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return buildSliderRow(soundSlider, soundValue);
     }
 
+    /**
+     * Construye la fila del selector de volumen de música.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildMusicRow() {
         musicSlider = createSlider(0, 100, GameSettings.getMusicVolume(), 10);
         musicValue = new JLabel();
@@ -136,6 +169,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return buildSliderRow(musicSlider, musicValue);
     }
 
+    /**
+     * Construye la fila de silenciamiento rápido.
+     *
+     * @return panel de la fila
+     */
     private JPanel buildMuteRow() {
         JPanel panel = new JPanel(new BorderLayout(8, 0));
         muteCheckBox = new JCheckBox("Silenciar todo");
@@ -150,6 +188,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
+    /**
+     * Construye el panel inferior con acciones globales.
+     *
+     * @return panel de acciones
+     */
     private JPanel buildActionsPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
@@ -174,6 +217,15 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
+    /**
+     * Crea un slider con marcas y ajuste a pasos fijos.
+     *
+     * @param min       mínimo permitido
+     * @param max       máximo permitido
+     * @param value     valor inicial
+     * @param majorTick separación entre marcas principales
+     * @return slider configurado
+     */
     private JSlider createSlider(int min, int max, int value, int majorTick) {
         JSlider slider = new JSlider(min, max, value);
         slider.setPaintTicks(true);
@@ -182,6 +234,13 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return slider;
     }
 
+    /**
+     * Monta una fila estándar con slider y etiqueta a la derecha.
+     *
+     * @param slider     barra de control
+     * @param valueLabel etiqueta del valor
+     * @return panel de la fila
+     */
     private JPanel buildSliderRow(JSlider slider, JLabel valueLabel) {
         JPanel panel = new JPanel(new BorderLayout(8, 0));
         panel.add(slider, BorderLayout.CENTER);
@@ -189,6 +248,15 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
+    /**
+     * Añade una fila con etiqueta a la izquierda y contenido a la derecha.
+     *
+     * @param form     panel contenedor
+     * @param gbc      constraints reutilizables
+     * @param row      índice de fila
+     * @param labelText texto de la etiqueta
+     * @param content  panel de contenido
+     */
     private void addRow(JPanel form, GridBagConstraints gbc, int row, String labelText, JPanel content) {
         gbc.gridx = 0;
         gbc.gridy = row;
@@ -200,6 +268,9 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         form.add(content, gbc);
     }
 
+    /**
+     * Abre el selector de carpetas y actualiza la ruta de cartas.
+     */
     private void openFolderChooser() {
         JFileChooser chooser = new JFileChooser(new File(GameSettings.getCardsDir()));
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -216,18 +287,37 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         cardsFolderField.setText(dir);
     }
 
+    /**
+     * Actualiza la etiqueta de dificultad según el valor del slider.
+     *
+     * @param value nivel de dificultad
+     */
     private void updateDifficultyLabel(int value) {
         difficultyValue.setText("Nivel " + value + " (" + GameSettings.getDifficultyLabel(value) + ")");
     }
 
+    /**
+     * Actualiza la etiqueta del tiempo máximo.
+     *
+     * @param value minutos configurados
+     */
     private void updateTimerLabel(int value) {
         timerValue.setText(value + " min");
     }
 
+    /**
+     * Actualiza una etiqueta de porcentaje de volumen.
+     *
+     * @param label etiqueta a actualizar
+     * @param value porcentaje
+     */
     private void updateVolumeLabel(JLabel label, int value) {
         label.setText(value + "%");
     }
 
+    /**
+     * Restaura todos los valores a los ajustes por defecto.
+     */
     private void restoreDefaults() {
         GameSettings.resetDefaults();
         cardsFolderField.setText(GameSettings.getCardsDir());
@@ -245,6 +335,9 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         updateVolumeLabel(musicValue, GameSettings.getMusicVolume());
     }
 
+    /**
+     * Valida y aplica el nombre del jugador desde el campo de texto.
+     */
     private void applyPlayerName() {
         String value = playerNameField.getText().trim();
         if (value.isEmpty()) {
@@ -255,6 +348,9 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         playerNameField.setText(GameSettings.getPlayerName());
     }
 
+    /**
+     * Borra el historial almacenado tras confirmación.
+     */
     private void clearHistory() {
         boolean confirmed = PopUpManager.confirmAction("vaciar el historial");
         if (!confirmed) return;
@@ -266,6 +362,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     private class DifficultyChangeListener implements ChangeListener {
+        /**
+         * Actualiza la dificultad al mover el slider.
+         *
+         * @param e evento de cambio
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             int value = difficultySlider.getValue();
@@ -275,6 +376,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     private class TimerChangeListener implements ChangeListener {
+        /**
+         * Actualiza el tiempo máximo al mover el slider.
+         *
+         * @param e evento de cambio
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             int value = timerSlider.getValue();
@@ -284,6 +390,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     private class SoundVolumeChangeListener implements ChangeListener {
+        /**
+         * Actualiza el volumen de efectos al mover el slider.
+         *
+         * @param e evento de cambio
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             int value = soundSlider.getValue();
@@ -293,6 +404,11 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     private class MusicVolumeChangeListener implements ChangeListener {
+        /**
+         * Actualiza el volumen de música al mover el slider.
+         *
+         * @param e evento de cambio
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             int value = musicSlider.getValue();

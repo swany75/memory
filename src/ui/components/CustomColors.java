@@ -48,10 +48,22 @@ public class CustomColors {
     public static final Color UIB_BLUE = new Color(1, 93, 185);
         
     // Metodos para los colores
+    /**
+     * Genera un color de sombra a partir de un color base.
+     *
+     * @param base color base
+     * @return color de sombra
+     */
     public static Color shadowColor(Color base) {
         return scaleColor(base, 0.68f);
     }
 
+    /**
+     * Genera un color de hover ligeramente más brillante.
+     *
+     * @param base color base
+     * @return color para estado hover
+     */
     public static Color hoverColor(Color base) {
         int r = base.getRed();
         int g = base.getGreen();
@@ -64,6 +76,13 @@ public class CustomColors {
         );
     }
 
+    /**
+     * Escala los canales RGB de un color por un factor.
+     *
+     * @param c      color original
+     * @param factor factor de escala
+     * @return color escalado
+     */
     private static Color scaleColor(Color c, float factor) {
         return new Color(
             clamp((int)(c.getRed()   * factor)),
@@ -72,14 +91,14 @@ public class CustomColors {
         );
     }
 
+    /**
+     * Limita un canal RGB al rango 0-255.
+     *
+     * @param v valor a limitar
+     * @return valor acotado
+     */
     private static int clamp(int v) {
         return Math.min(255, Math.max(0, v));
     }
        
-    private Color brighterColor(Color color) {
-        int r = Math.min(255, (int) (color.getRed() * 1.10) + 10);
-        int g = Math.min(255, (int) (color.getGreen() * 1.10) + 10);
-        int b = Math.min(255, (int) (color.getBlue() * 1.10) + 10);
-        return new Color(r, g, b);
-    }
 }

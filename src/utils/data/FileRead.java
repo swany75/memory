@@ -20,6 +20,11 @@ public class FileRead {
     private FileInputStream fileInputStream;
     private BufferedInputStream reader;
 
+    /**
+     * Crea un lector para un fichero de texto, asegurando extensión .dat.
+     *
+     * @param fname nombre base o ruta del fichero
+     */
     public FileRead(String fname) {
         if (fname != null && !fname.toLowerCase().endsWith(".dat")) {
             this.filename = fname + ".dat";
@@ -28,6 +33,9 @@ public class FileRead {
         }
     }
 
+    /**
+     * Abre el flujo de lectura del fichero.
+     */
     public void open() {
         try {
             fileInputStream = new FileInputStream(filename);
@@ -37,6 +45,11 @@ public class FileRead {
         }
     }
 
+    /**
+     * Lee una línea del fichero.
+     *
+     * @return línea leída o {@code null} si no hay más contenido
+     */
     public String readLine() {
         if (reader == null) {
             return null;
@@ -60,6 +73,9 @@ public class FileRead {
         }
     }
 
+    /**
+     * Cierra los recursos asociados al lector.
+     */
     public void close() {
         try {
             if (reader != null) {

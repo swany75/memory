@@ -53,6 +53,9 @@ public class MainFrame extends JFrame {
     // Constructor /////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     
+    /**
+     * Construye la ventana principal y distribuye la interfaz en zonas.
+     */
     public MainFrame() {
         super("Memory - UIB");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -75,11 +78,16 @@ public class MainFrame extends JFrame {
         
         setVisible(true);
     }
-
+    
     ////////////////////////////////////////////////////////////////////////////
     /// TOP PANEL //////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     
+    /**
+     * Construye la zona superior con el menú y la barra de estado.
+     *
+     * @return panel superior
+     */
     private JPanel topPanel() {
         JPanel topPanel = new JPanel(new BorderLayout());
 
@@ -92,6 +100,11 @@ public class MainFrame extends JFrame {
         return topPanel;
     }
     
+    /**
+     * Crea la barra de herramientas con accesos rápidos.
+     *
+     * @return barra de herramientas configurada
+     */
     private JToolBar buttonMenu() {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
@@ -111,6 +124,11 @@ public class MainFrame extends JFrame {
     /// CENTER PANEL ///////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     
+    /**
+     * Construye la zona central con el menú lateral y el panel de contenido.
+     *
+     * @return panel central
+     */
     private JPanel centerPanel() {
         panellCos = new JPanel(new BorderLayout(4, 0));
 
@@ -136,6 +154,12 @@ public class MainFrame extends JFrame {
    
     
     
+    /**
+     * Añade un botón lateral estilizado al panel de navegación.
+     *
+     * @param baseName texto del botón
+     * @param action   acción a ejecutar
+     */
     private void addSideButton(String baseName, java.awt.event.ActionListener action) {
         JButton button = ButtonBuilder.createPulsador(
             baseName, 
@@ -150,6 +174,9 @@ public class MainFrame extends JFrame {
     
     
     // METHODS
+    /**
+     * Solicita confirmación y controla la salida segura de la aplicación.
+     */
     public void secureExit() {
         if (GameManager.isRunning()) {
             statusBar.setText("A game is currently in progress");
@@ -168,6 +195,11 @@ public class MainFrame extends JFrame {
     }
 
     private class FrameCloseListener extends WindowAdapter {
+        /**
+         * Intercepta el cierre de la ventana para ejecutar la salida segura.
+         *
+         * @param e evento de ventana
+         */
         @Override
         public void windowClosing(WindowEvent e) {
             secureExit();
@@ -177,10 +209,20 @@ public class MainFrame extends JFrame {
     private class SwitchPanelActionListener implements ActionListener {
         private final String panel;
 
+        /**
+         * Crea el listener que cambia de panel.
+         *
+         * @param panel identificador del panel
+         */
         private SwitchPanelActionListener(String panel) {
             this.panel = panel;
         }
 
+        /**
+         * Ejecuta el cambio de panel.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             contentPanel.switchPanel(panel);
@@ -188,6 +230,11 @@ public class MainFrame extends JFrame {
     }
 
     private class SecureExitActionListener implements ActionListener {
+        /**
+         * Ejecuta la salida segura desde un botón.
+         *
+         * @param e evento de acción
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             secureExit();
