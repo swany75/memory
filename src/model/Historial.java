@@ -22,6 +22,7 @@ public class Historial extends JPanel {
     private JPanel searchPanel;
     private JTextField searchField;
     private JButton searchButton;
+    private JButton loadAllButton;
     private JButton clearButton;
 
     private JPanel historialPanel;
@@ -33,6 +34,9 @@ public class Historial extends JPanel {
 
     private static final String FILENAME = "media/files/historial";
     private static final int INCREMENT = 10;
+    private static final int MAX_PLAYER_NAME_LENGTH = 12;
+    private static final int TIMESTAMP_LENGTH = 16;
+    private static final String OLD_SEPARATOR = " - ";
 
     /**
      * Construye la pantalla de historial e inicializa sus componentes.
@@ -82,12 +86,14 @@ public class Historial extends JPanel {
         searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         searchField = new JTextField();
-        searchField.setToolTipText("Buscar en el historial...");
+        searchField.setToolTipText("Search in history...");
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(1, 2, 4, 0));
-        searchButton = new JButton("Buscar");
+        JPanel buttonsPanel = new JPanel(new GridLayout(1, 3, 4, 0));
+        searchButton = new JButton("Search");
+        loadAllButton = new JButton("Load all");
         clearButton  = new JButton("Clear");
         buttonsPanel.add(searchButton);
+        buttonsPanel.add(loadAllButton);
         buttonsPanel.add(clearButton);
 
         searchPanel.add(searchField,  BorderLayout.CENTER);
@@ -101,6 +107,7 @@ public class Historial extends JPanel {
         historialArea = new JTextArea();
         historialArea.setEditable(false);
         historialArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        historialArea.setTabSize(MAX_PLAYER_NAME_LENGTH);
         historialArea.setLineWrap(true);
         historialArea.setWrapStyleWord(true);
         historialArea.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
@@ -157,10 +164,48 @@ public class Historial extends JPanel {
     private void showLines(String[] lines, int n) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
-            sb.append("- ").append(lines[i]).append("\n");
+            sb.append(formatHistoryLine(lines[i])).append("\n");
         }
         historialArea.setText(sb.toString());
         historialArea.setCaretPosition(0);
+    }
+
+    /**
+     * Normaliza una línea de historial para mostrarla con tabulaciones.
+     *
+     * @param line línea original del fichero
+     * @return línea formateada para el área de texto
+     */
+    private String formatHistoryLine(String line) {
+        if (line == null) return "";
+        if (line.contains("\t")) return line;
+        if (!line.contains(OLD_SEPARATOR)) return line;
+
+        String[] parts = line.split(OLD_SEPARATOR);
+        if (parts.length < 2) return line;
+
+        String header = parts[0];
+        if (header.length() <= TIMESTAMP_LENGTH) {
+            return line.replace(OLD_SEPARATOR, "\t");
+        }
+
+        int timestampStart = header.length() - TIMESTAMP_LENGTH;
+        if (timestampStart <= 0 || header.charAt(timestampStart - 1) != ' ') {
+            return line.replace(OLD_SEPARATOR, "\t");
+        }
+
+        String player = header.substring(0, timestampStart - 1);
+        String timestamp = header.substring(timestampStart);
+        if (player.length() > MAX_PLAYER_NAME_LENGTH) {
+            player = player.substring(0, MAX_PLAYER_NAME_LENGTH);
+        }
+
+        StringBuilder formatted = new StringBuilder();
+        formatted.append(player).append("\t").append(timestamp);
+        for (int i = 1; i < parts.length; i++) {
+            formatted.append("\t").append(parts[i]);
+        }
+        return formatted.toString();
     }
 
     /**
@@ -194,7 +239,7 @@ public class Historial extends JPanel {
         }
 
         if (numResults == 0) {
-            historialArea.setText("No se encontraron resultados para: \"" + query + "\"");
+            historialArea.setText("No results found for: \"" + query + "\"");
         } else {
             showLines(results, numResults);
         }
@@ -206,6 +251,7 @@ public class Historial extends JPanel {
     private void setListeners() {
         searchButton.addActionListener(new SearchActionListener());
         searchField.addActionListener(new SearchActionListener());
+        loadAllButton.addActionListener(new LoadAllActionListener());
         clearButton.addActionListener(new ClearActionListener());
     }
 
@@ -232,6 +278,19 @@ public class Historial extends JPanel {
             searchField.setText("");
             historialArea.setText("");
             historialArea.setCaretPosition(0);
+        }
+    }
+
+    private class LoadAllActionListener implements ActionListener {
+        /**
+         * Carga todo el historial sin filtrar.
+         *
+         * @param e evento de acción
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            searchField.setText("");
+            loadAll();
         }
     }
 

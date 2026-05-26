@@ -75,10 +75,10 @@ public class GamePanel extends JPanel {
         try {
             gameManager.startGame();
         } catch (IllegalStateException ex) {
-            statusBar.setText("No hay suficientes cartas");
+            statusBar.setText("Not enough cards");
             PopUpManager.displayMessage(
-                "No hay suficientes cartas para la dificultad seleccionada.",
-                "Cartas insuficientes"
+                "Not enough cards for the selected difficulty.",
+                "Not enough cards"
             );
             inGame = false;
             setBackground(Color.WHITE);
@@ -248,9 +248,9 @@ public class GamePanel extends JPanel {
         int points = matches * 100;
         int duration = timer.getGameDuration();
 
-        String line = player + " " + timestamp + " - " + difficultyTag + " - " +
-            matches + "/" + totalPairs + " - " + result + " - " +
-            points + "pts - " + duration + "s";
+        String line = player + "\t" + timestamp + "\t" + difficultyTag + "\t" +
+            matches + "/" + totalPairs + "\t" + result + "\t" +
+            points + "pts" + "\t" + duration + "s";
 
         FileWrite writer = new FileWrite(HISTORY_FILE, true);
         writer.open();

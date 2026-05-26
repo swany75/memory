@@ -46,7 +46,7 @@ public class Desplegable extends JMenuBar {
         
         JMenuItem itemGame = createStyledMenuItem("Game");
         JMenuItem itemSelective = createStyledMenuItem("Selective");
-        JMenuItem itemHistory = createStyledMenuItem("Historic");
+        JMenuItem itemHistory = createStyledMenuItem("History");
         JMenuItem itemSettings = createStyledMenuItem("Settings");
         JMenuItem itemExit = createStyledMenuItem("Exit");
 

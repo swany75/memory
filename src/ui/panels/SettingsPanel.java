@@ -36,6 +36,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     private JSlider musicSlider;
 
     private JCheckBox muteCheckBox;
+    private JCheckBox fullScreenCheckBox;
     private JTextField cardsFolderField;
     private JButton clearHistoryButton;
     private JButton resetButton;
@@ -54,16 +55,26 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         int row = 0;
-        addRow(form, gbc, row++, "Nombre jugador", buildPlayerRow());
-        addRow(form, gbc, row++, "Carpeta de cartas", buildCardsFolderRow());
-        addRow(form, gbc, row++, "Dificultad", buildDifficultyRow());
-        addRow(form, gbc, row++, "Tiempo máximo", buildTimerRow());
-        addRow(form, gbc, row++, "Volumen sonidos", buildSoundRow());
-        addRow(form, gbc, row++, "Volumen música", buildMusicRow());
-        addRow(form, gbc, row++, "Mute rápido", buildMuteRow());
+        addRow(form, gbc, row++, "Player name", buildPlayerRow());
+        addRow(form, gbc, row++, "Cards folder", buildCardsFolderRow());
+        addRow(form, gbc, row++, "Difficulty", buildDifficultyRow());
+        addRow(form, gbc, row++, "Time limit", buildTimerRow());
+        addRow(form, gbc, row++, "Sound volume", buildSoundRow());
+        addRow(form, gbc, row++, "Music volume", buildMusicRow());
+        addRow(form, gbc, row++, "Quick mute", buildMuteRow());
+        addRow(form, gbc, row++, "Full screen", buildFullScreenRow());
 
         add(form, BorderLayout.NORTH);
         add(buildActionsPanel(), BorderLayout.SOUTH);
+    }
+
+    /**
+     * Sincroniza el estado del checkbox de pantalla completa al añadirse al árbol.
+     */
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        syncFullScreenState();
     }
 
     /**
@@ -100,7 +111,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         cardsFolderField = new JTextField(GameSettings.getCardsDir());
         cardsFolderField.setEditable(false);
 
-        JButton browseButton = new JButton("Explorar...");
+        JButton browseButton = new JButton("Browse...");
         browseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,7 +187,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
      */
     private JPanel buildMuteRow() {
         JPanel panel = new JPanel(new BorderLayout(8, 0));
-        muteCheckBox = new JCheckBox("Silenciar todo");
+        muteCheckBox = new JCheckBox("Mute all");
         muteCheckBox.setSelected(GameSettings.isMuted());
         muteCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -189,6 +200,25 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     /**
+     * Construye la fila del selector de pantalla completa.
+     *
+     * @return panel de la fila
+     */
+    private JPanel buildFullScreenRow() {
+        JPanel panel = new JPanel(new BorderLayout(8, 0));
+        fullScreenCheckBox = new JCheckBox("Enable");
+        fullScreenCheckBox.setSelected(false);
+        fullScreenCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                applyFullScreen(fullScreenCheckBox.isSelected());
+            }
+        });
+        panel.add(fullScreenCheckBox, BorderLayout.WEST);
+        return panel;
+    }
+
+    /**
      * Construye el panel inferior con acciones globales.
      *
      * @return panel de acciones
@@ -197,7 +227,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
 
-        clearHistoryButton = new JButton("Vaciar historial");
+        clearHistoryButton = new JButton("Clear history");
         clearHistoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -206,7 +236,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         });
         panel.add(clearHistoryButton);
 
-        resetButton = new JButton("Restaurar ajustes");
+        resetButton = new JButton("Restore defaults");
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -274,7 +304,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     private void openFolderChooser() {
         JFileChooser chooser = new JFileChooser(new File(GameSettings.getCardsDir()));
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.setDialogTitle("Seleccionar carpeta de cartas");
+        chooser.setDialogTitle("Select cards folder");
 
         int result = chooser.showOpenDialog(this);
         if (result != JFileChooser.APPROVE_OPTION) return;
@@ -293,7 +323,7 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
      * @param value nivel de dificultad
      */
     private void updateDifficultyLabel(int value) {
-        difficultyValue.setText("Nivel " + value + " (" + GameSettings.getDifficultyLabel(value) + ")");
+        difficultyValue.setText("Level " + value + " (" + GameSettings.getDifficultyLabel(value) + ")");
     }
 
     /**
@@ -323,6 +353,8 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         cardsFolderField.setText(GameSettings.getCardsDir());
         playerNameField.setText(GameSettings.getPlayerName());
         muteCheckBox.setSelected(GameSettings.isMuted());
+        fullScreenCheckBox.setSelected(false);
+        applyFullScreen(false);
 
         difficultySlider.setValue(GameSettings.getDifficulty());
         timerSlider.setValue(GameSettings.getTimerMinutes());
@@ -349,16 +381,38 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     }
 
     /**
+     * Aplica el cambio de pantalla completa sobre la ventana principal.
+     *
+     * @param enabled {@code true} para activar pantalla completa
+     */
+    private void applyFullScreen(boolean enabled) {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof MainFrame) {
+            ((MainFrame) window).setFullScreen(enabled);
+        }
+    }
+
+    /**
+     * Actualiza el checkbox según el estado actual de la ventana.
+     */
+    private void syncFullScreenState() {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof MainFrame) {
+            fullScreenCheckBox.setSelected(((MainFrame) window).isFullScreen());
+        }
+    }
+
+    /**
      * Borra el historial almacenado tras confirmación.
      */
     private void clearHistory() {
-        boolean confirmed = PopUpManager.confirmAction("vaciar el historial");
+        boolean confirmed = PopUpManager.confirmAction("clear the history");
         if (!confirmed) return;
 
         FileWrite writer = new FileWrite(HISTORY_FILE);
         writer.open();
         writer.close();
-        PopUpManager.displayMessage("Historial vaciado.", "Historial");
+        PopUpManager.displayMessage("History cleared.", "History");
     }
 
     private class DifficultyChangeListener implements ChangeListener {

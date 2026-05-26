@@ -45,6 +45,9 @@ public class MainFrame extends JFrame {
     private CustomColors CC = new CustomColors();
     private ContentPanel contentPanel;
     private SoundManager sm = new SoundManager();
+    private boolean fullScreen = false;
+    private Rectangle windowedBounds;
+    private int windowedExtendedState = JFrame.NORMAL;
     
     // Rutes
     private static final String RUTA_ICONES  = "media/icons/default/";
@@ -77,6 +80,54 @@ public class MainFrame extends JFrame {
         add(timer, BorderLayout.SOUTH);
         
         setVisible(true);
+    }
+
+    /**
+     * Indica si la ventana está actualmente en modo pantalla completa.
+     *
+     * @return {@code true} si está en pantalla completa
+     */
+    public boolean isFullScreen() {
+        return fullScreen;
+    }
+
+    /**
+     * Alterna el modo de pantalla completa preservando el tamaño en ventana.
+     *
+     * @param enabled {@code true} para activar pantalla completa
+     */
+    public void setFullScreen(boolean enabled) {
+        if (fullScreen == enabled) {
+            return;
+        }
+
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        if (enabled) {
+            windowedBounds = getBounds();
+            windowedExtendedState = getExtendedState();
+            dispose();
+            setUndecorated(true);
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            if (device.isFullScreenSupported()) {
+                device.setFullScreenWindow(this);
+            }
+            setVisible(true);
+        } else {
+            if (device.getFullScreenWindow() == this) {
+                device.setFullScreenWindow(null);
+            }
+            dispose();
+            setUndecorated(false);
+            if (windowedBounds != null) {
+                setBounds(windowedBounds);
+            } else {
+                setSize(1280, 720);
+                setLocationRelativeTo(null);
+            }
+            setExtendedState(windowedExtendedState);
+            setVisible(true);
+        }
+        fullScreen = enabled;
     }
     
     ////////////////////////////////////////////////////////////////////////////
@@ -141,11 +192,11 @@ public class MainFrame extends JFrame {
         separadorEsquerra.setPreferredSize(new Dimension(1, 0));
         separadorEsquerra.setBackground(panellCos.getBackground());
         
-        addSideButton("GAME", new SwitchPanelActionListener(ContentPanel.GAME));
-        addSideButton("SELECTIVE", new SwitchPanelActionListener(ContentPanel.SELECTIVE));
-        addSideButton("HISTORY", new SwitchPanelActionListener(ContentPanel.HISTORY));
-        addSideButton("SETTINGS", new SwitchPanelActionListener(ContentPanel.SETTINGS));
-        addSideButton("EXIT", new SecureExitActionListener());
+        addSideButton("Game", new SwitchPanelActionListener(ContentPanel.GAME));
+        addSideButton("Selective", new SwitchPanelActionListener(ContentPanel.SELECTIVE));
+        addSideButton("History", new SwitchPanelActionListener(ContentPanel.HISTORY));
+        addSideButton("Settings", new SwitchPanelActionListener(ContentPanel.SETTINGS));
+        addSideButton("Exit", new SecureExitActionListener());
         
         panellCos.add(panellLateral, BorderLayout.WEST);
         panellCos.add(contentPanel, BorderLayout.CENTER);

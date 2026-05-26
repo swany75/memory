@@ -18,6 +18,7 @@ public final class GameSettings {
     private static final int MAX_TIMER_MINUTES = 10;
     private static final int MIN_VOLUME = 0;
     private static final int MAX_VOLUME = 100;
+    private static final int MAX_PLAYER_NAME_LENGTH = 12;
 
     private static final int DEFAULT_DIFFICULTY = 5;
     private static final int DEFAULT_TIMER_MINUTES = 2;
@@ -64,9 +65,9 @@ public final class GameSettings {
      * @return etiqueta legible ("Fácil", "Normal" o "Difícil")
      */
     public static String getDifficultyLabel(int value) {
-        if (value <= 4) return "Fácil";
+        if (value <= 4) return "Easy";
         if (value <= 8) return "Normal";
-        return "Difícil";
+        return "Hard";
     }
 
     /**
@@ -193,6 +194,9 @@ public final class GameSettings {
         if (name == null) return;
         String trimmed = name.trim();
         if (trimmed.isEmpty()) return;
+        if (trimmed.length() > MAX_PLAYER_NAME_LENGTH) {
+            trimmed = trimmed.substring(0, MAX_PLAYER_NAME_LENGTH);
+        }
         playerName = trimmed;
     }
 
