@@ -36,7 +36,6 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
     private JSlider musicSlider;
 
     private JCheckBox muteCheckBox;
-    private JCheckBox fullScreenCheckBox;
     private JTextField cardsFolderField;
     private JButton clearHistoryButton;
     private JButton resetButton;
@@ -62,19 +61,8 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         addRow(form, gbc, row++, "Sound volume", buildSoundRow());
         addRow(form, gbc, row++, "Music volume", buildMusicRow());
         addRow(form, gbc, row++, "Quick mute", buildMuteRow());
-        addRow(form, gbc, row++, "Full screen", buildFullScreenRow());
-
         add(form, BorderLayout.NORTH);
         add(buildActionsPanel(), BorderLayout.SOUTH);
-    }
-
-    /**
-     * Sincroniza el estado del checkbox de pantalla completa al añadirse al árbol.
-     */
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        syncFullScreenState();
     }
 
     /**
@@ -199,24 +187,6 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         return panel;
     }
 
-    /**
-     * Construye la fila del selector de pantalla completa.
-     *
-     * @return panel de la fila
-     */
-    private JPanel buildFullScreenRow() {
-        JPanel panel = new JPanel(new BorderLayout(8, 0));
-        fullScreenCheckBox = new JCheckBox("Enable");
-        fullScreenCheckBox.setSelected(false);
-        fullScreenCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyFullScreen(fullScreenCheckBox.isSelected());
-            }
-        });
-        panel.add(fullScreenCheckBox, BorderLayout.WEST);
-        return panel;
-    }
 
     /**
      * Construye el panel inferior con acciones globales.
@@ -353,8 +323,6 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         cardsFolderField.setText(GameSettings.getCardsDir());
         playerNameField.setText(GameSettings.getPlayerName());
         muteCheckBox.setSelected(GameSettings.isMuted());
-        fullScreenCheckBox.setSelected(false);
-        applyFullScreen(false);
 
         difficultySlider.setValue(GameSettings.getDifficulty());
         timerSlider.setValue(GameSettings.getTimerMinutes());
@@ -380,27 +348,6 @@ public class SettingsPanel extends JPanel { // Classe dels Settings
         playerNameField.setText(GameSettings.getPlayerName());
     }
 
-    /**
-     * Aplica el cambio de pantalla completa sobre la ventana principal.
-     *
-     * @param enabled {@code true} para activar pantalla completa
-     */
-    private void applyFullScreen(boolean enabled) {
-        Window window = SwingUtilities.getWindowAncestor(this);
-        if (window instanceof MainFrame) {
-            ((MainFrame) window).setFullScreen(enabled);
-        }
-    }
-
-    /**
-     * Actualiza el checkbox según el estado actual de la ventana.
-     */
-    private void syncFullScreenState() {
-        Window window = SwingUtilities.getWindowAncestor(this);
-        if (window instanceof MainFrame) {
-            fullScreenCheckBox.setSelected(((MainFrame) window).isFullScreen());
-        }
-    }
 
     /**
      * Borra el historial almacenado tras confirmación.

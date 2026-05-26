@@ -45,9 +45,6 @@ public class MainFrame extends JFrame {
     private CustomColors CC = new CustomColors();
     private ContentPanel contentPanel;
     private SoundManager sm = new SoundManager();
-    private boolean fullScreen = false;
-    private Rectangle windowedBounds;
-    private int windowedExtendedState = JFrame.NORMAL;
     
     // Rutes
     private static final String RUTA_ICONES  = "media/icons/default/";
@@ -82,53 +79,6 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * Indica si la ventana está actualmente en modo pantalla completa.
-     *
-     * @return {@code true} si está en pantalla completa
-     */
-    public boolean isFullScreen() {
-        return fullScreen;
-    }
-
-    /**
-     * Alterna el modo de pantalla completa preservando el tamaño en ventana.
-     *
-     * @param enabled {@code true} para activar pantalla completa
-     */
-    public void setFullScreen(boolean enabled) {
-        if (fullScreen == enabled) {
-            return;
-        }
-
-        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        if (enabled) {
-            windowedBounds = getBounds();
-            windowedExtendedState = getExtendedState();
-            dispose();
-            setUndecorated(true);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-            if (device.isFullScreenSupported()) {
-                device.setFullScreenWindow(this);
-            }
-            setVisible(true);
-        } else {
-            if (device.getFullScreenWindow() == this) {
-                device.setFullScreenWindow(null);
-            }
-            dispose();
-            setUndecorated(false);
-            if (windowedBounds != null) {
-                setBounds(windowedBounds);
-            } else {
-                setSize(1280, 720);
-                setLocationRelativeTo(null);
-            }
-            setExtendedState(windowedExtendedState);
-            setVisible(true);
-        }
-        fullScreen = enabled;
-    }
     
     ////////////////////////////////////////////////////////////////////////////
     /// TOP PANEL //////////////////////////////////////////////////////////////
