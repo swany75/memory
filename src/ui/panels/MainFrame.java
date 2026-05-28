@@ -142,11 +142,11 @@ public class MainFrame extends JFrame {
         separadorEsquerra.setPreferredSize(new Dimension(1, 0));
         separadorEsquerra.setBackground(panellCos.getBackground());
         
-        addSideButton("Game", new SwitchPanelActionListener(ContentPanel.GAME));
-        addSideButton("Selective", new SwitchPanelActionListener(ContentPanel.SELECTIVE));
-        addSideButton("History", new SwitchPanelActionListener(ContentPanel.HISTORY));
-        addSideButton("Settings", new SwitchPanelActionListener(ContentPanel.SETTINGS));
-        addSideButton("Exit", new SecureExitActionListener());
+        addSideButton("GAME", new SwitchPanelActionListener(ContentPanel.GAME));
+        addSideButton("SELECTIVE", new SwitchPanelActionListener(ContentPanel.SELECTIVE));
+        addSideButton("HISTORY", new SwitchPanelActionListener(ContentPanel.HISTORY));
+        addSideButton("SETTINGS", new SwitchPanelActionListener(ContentPanel.SETTINGS));
+        addSideButton("EXIT", new SecureExitActionListener());
         
         panellCos.add(panellLateral, BorderLayout.WEST);
         panellCos.add(contentPanel, BorderLayout.CENTER);
@@ -173,8 +173,12 @@ public class MainFrame extends JFrame {
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
     
+   
+    ////////////////////////////////////////////////////////////////////////////
+    /// OTHER METHODS //////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     
-    // METHODS
+   
     /**
      * Solicita confirmación y controla la salida segura de la aplicación.
      */

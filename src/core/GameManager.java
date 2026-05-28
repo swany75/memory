@@ -236,30 +236,35 @@ public class GameManager {
      * @return parejas acertadas
      */
     public int getMatchesFound() { return matchesFound; }
+    
     /**
      * Devuelve el tablero lógico actual.
      *
      * @return matriz de cartas
      */
     public Card[][]      getBoard()       { return board;   }
+    
     /**
      * Indica si hay una partida en curso.
      *
      * @return {@code true} si el juego está activo
      */
     public static boolean isRunning()     { return running; }
+    
     /**
      * Indica si la partida terminó en victoria.
      *
      * @return {@code true} si se han encontrado todas las parejas
      */
     public boolean        isWin()         { return win;     }
+    
     /**
      * Devuelve el total de parejas que debe encontrar el jugador.
      *
      * @return número total de parejas
      */
     public int            getTotalPairs() { return totalPairs; }
+    
 
     /**
      * Devuelve el estado final de la partida en formato legible.

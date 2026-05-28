@@ -164,7 +164,7 @@ public class Timer extends JProgressBar {
             if (secRestants <= secTotals * 0.05) {
                 setForeground(CC.P3_RED_ALERT);
             } else {
-                setForeground(Color.WHITE);
+                setForeground(CC.P3_BLUE);
             }
 
             repaint();

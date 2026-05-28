@@ -132,8 +132,8 @@ public class ButtonBuilder {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             Color base   = c.getBackground();
-            Color shadow = CustomColors.shadowColor(base);  // ← se deriva del color base
-            Color hover  = CustomColors.hoverColor(base);   // ← se deriva del color base
+            Color shadow = CustomColors.shadowColor(base);
+            Color hover  = CustomColors.hoverColor(base);
             boolean rollover = b.getModel().isRollover();
             int sombra = 6;
 

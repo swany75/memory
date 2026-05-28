@@ -53,7 +53,7 @@ public class StatusBar extends JPanel {
         "Do you think you can survive the top?",
         "This is ten percent luck. Twenty percent skill...",
         "Here I am! Rock you like a hurricane!",
-        "Disturbing the peace. Look into my eyes"
+        "Disturbing the peace. Look into my eyes",
     };
     
     // Nice Moves
