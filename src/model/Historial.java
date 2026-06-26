@@ -34,7 +34,8 @@ public class Historial extends JPanel {
 
     private static final String FILENAME = "media/files/historial";
     private static final int INCREMENT = 10;
-    private static final int MAX_PLAYER_NAME_LENGTH = 12;
+    private static final int MAX_PLAYER_NAME_LENGTH = 5;
+    private static final int TAB_SIZE = 12;
     private static final int TIMESTAMP_LENGTH = 16;
     private static final String OLD_SEPARATOR = " - ";
 
@@ -107,7 +108,7 @@ public class Historial extends JPanel {
         historialArea = new JTextArea();
         historialArea.setEditable(false);
         historialArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        historialArea.setTabSize(MAX_PLAYER_NAME_LENGTH);
+        historialArea.setTabSize(TAB_SIZE);
         historialArea.setLineWrap(true);
         historialArea.setWrapStyleWord(true);
         historialArea.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
@@ -178,7 +179,17 @@ public class Historial extends JPanel {
      */
     private String formatHistoryLine(String line) {
         if (line == null) return "";
-        if (line.contains("\t")) return line;
+        if (line.contains("\t")) {
+            String[] parts = line.split("\t", -1);
+            if (parts.length == 0) return line;
+
+            StringBuilder formatted = new StringBuilder();
+            formatted.append(truncatePlayerName(parts[0]));
+            for (int i = 1; i < parts.length; i++) {
+                formatted.append("\t").append(parts[i]);
+            }
+            return formatted.toString();
+        }
         if (!line.contains(OLD_SEPARATOR)) return line;
 
         String[] parts = line.split(OLD_SEPARATOR);
@@ -196,16 +207,25 @@ public class Historial extends JPanel {
 
         String player = header.substring(0, timestampStart - 1);
         String timestamp = header.substring(timestampStart);
-        if (player.length() > MAX_PLAYER_NAME_LENGTH) {
-            player = player.substring(0, MAX_PLAYER_NAME_LENGTH);
-        }
 
         StringBuilder formatted = new StringBuilder();
-        formatted.append(player).append("\t").append(timestamp);
+        formatted.append(truncatePlayerName(player)).append("\t").append(timestamp);
         for (int i = 1; i < parts.length; i++) {
             formatted.append("\t").append(parts[i]);
         }
         return formatted.toString();
+    }
+
+    /**
+     * Trunca el nombre del jugador para que ocupe como máximo 5 caracteres.
+     *
+     * @param player nombre original
+     * @return nombre truncado si hace falta
+     */
+    private String truncatePlayerName(String player) {
+        if (player == null) return "";
+        if (player.length() <= MAX_PLAYER_NAME_LENGTH) return player;
+        return player.substring(0, MAX_PLAYER_NAME_LENGTH);
     }
 
     /**

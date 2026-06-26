@@ -8,7 +8,9 @@ package ui.panels;
 
 import javax.swing.*;
 import java.awt.*;
+import core.GameManager;
 import model.Historial;
+import utils.PopUpManager;
 import utils.SoundManager;
 import ui.components.Timer;
 import ui.components.StatusBar;
@@ -64,6 +66,14 @@ public class ContentPanel extends JPanel {
      */
     public void switchPanel(String panelName) {
         if (panelName == null || panelName.equals(currentPanel)) {
+            return;
+        }
+        if (GameManager.isRunning() && !GAME.equals(panelName)) {
+            statusBar.setText("Finish the current game before changing screens");
+            PopUpManager.displayMessage(
+                "You must finish the current game before changing screens.",
+                "Game in progress"
+            );
             return;
         }
         cardLayout.show(this, panelName);
