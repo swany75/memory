@@ -35,7 +35,7 @@ public final class GameSettings {
     private static boolean muted = false;
     private static String cardsDir = DEFAULT_CARDS_DIR;
     private static String backImagePath = DEFAULT_BACK_IMAGE_PATH;
-    private static String playerName = randomDefaultPlayerName();
+    private static String playerName = "";
 
     private GameSettings() {
     }
@@ -230,7 +230,7 @@ public final class GameSettings {
         setMuted(false);
         setCardsDir(DEFAULT_CARDS_DIR);
         setBackImagePath(DEFAULT_BACK_IMAGE_PATH);
-        setPlayerName(randomDefaultPlayerName());
+        setPlayerName(getRandomDefaultPlayerName());
     }
 
     /**
@@ -250,7 +250,7 @@ public final class GameSettings {
      *
      * @return nombre por defecto
      */
-    private static String randomDefaultPlayerName() {
+    public static String getRandomDefaultPlayerName() {
         int idx = (int) (Math.random() * DEFAULT_PLAYER_NAMES.length);
         return DEFAULT_PLAYER_NAMES[idx];
     }

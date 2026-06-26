@@ -7,11 +7,7 @@ package ui.panels;
 import utils.PopUpManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import model.Card;
 import model.Casella;
 import core.GameManager;
@@ -221,7 +217,9 @@ public class GamePanel extends JPanel {
         
         statusBar.setText(gameManager.getGameStatus()); 
         appendHistoryEntry();
-        PopUpManager.displayMessage(gameManager.getGameStatus());
+        int points = gameManager.getMatchesFound() * 100;
+        String finalMessage = gameManager.getGameStatus() + "    Score: " + points + " pts";
+        PopUpManager.displayMessage(finalMessage);
         boolean playAgain = PopUpManager.confirmAction("play again");
         if (playAgain) {
             startGame();

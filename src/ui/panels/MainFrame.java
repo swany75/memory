@@ -64,6 +64,10 @@ public class MainFrame extends JFrame {
         // LOAD Icons & Images
         ImageIcon icono = new ImageIcon(RUTA_ICONES + ("icon" + (rand.nextInt(4) + 1) + ".png"));
         setIconImage(icono.getImage());
+
+        if (!PopUpManager.showStartupConfigurationDialog()) {
+            System.exit(0);
+        }
         
         setSize(1280, 720);
         setMinimumSize(new Dimension(1280, 720));
